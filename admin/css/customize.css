@@ -1,0 +1,160 @@
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 8px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.d-flex {
+    display: flex;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.mg-t-16 {
+    margin-top: 16px;
+}
+.p-absolute {
+    position: absolute;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.icon-search {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+.input__search {
+    max-width: 250px;
+    width: 100%;
+}
+
+.dialog__control {
+    display: none;
+}
+
+.dialog__control.active {
+    display: block;
+}
+
+.control__box {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.control__box a {
+    padding: 3px 12px;
+    margin: 0 10px;
+    border: solid 1px #ccc;
+    background-color: #ffffff;
+    display: inline-block;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.product__status {
+    display: inline-block;
+    border-radius: 12px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.product__status--active {
+    background-color: #A1EDD0;
+}
+
+.product__status--pause {
+    background-color: #fff5da;
+}
+
+.show-status {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.product_image {
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.product__image {
+    padding: 0 30px 30px 30px;
+}
