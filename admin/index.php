@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if (!isset($_SESSION['login'])) {
+    header('Location:login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,6 +71,8 @@
   <script src="js/template.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/todolist.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>

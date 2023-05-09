@@ -115,7 +115,7 @@
                         </a>
                     </div>
                     <div class="header__action--item align-center d-none md-flex">
-                        <a class="header__action--link d-inline-block" href="index.php?page=person">
+                        <a class="header__action--link d-inline-block" href="index.php?page=login">
                             <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-person.svg" alt="person" />
                         </a>
                     </div>

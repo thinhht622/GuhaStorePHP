@@ -29,6 +29,9 @@ include("./pages/base/header.php");
     elseif ($action == 'product_detail'){
         include("./pages/main/product-detail.php");
     }
+    elseif ($action == 'login'){
+        include("./pages/main/login.php");
+    }
     else {
         include("./pages/main/home.php");
     }
