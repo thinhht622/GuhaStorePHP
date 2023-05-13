@@ -11,11 +11,11 @@
         <div class="container d-flex content__middle-center">
             <div class="banner__container">
                 <div class="banner__content text-center hidden__content">
-                    <h2 class="banner__heading h1">Image banner</h2>
+                    <h2 class="banner__heading h1">Guha Perfume</h2>
                     <span class="banner__description">
-                        Phần nội dung mô tả vể cửa hàng
+                        Cửa hàng nước hoa uy tín hàng đầu Hà Nội
                     </span>
-                    <a href="#" class="btn banner__btn">Show now</a>
+                    <a href="#" class="btn banner__btn">Xem ngay</a>
                 </div>
             </div>
         </div>

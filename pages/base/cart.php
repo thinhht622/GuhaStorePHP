@@ -1,4 +1,7 @@
 <!-- start cart -->
+<?php 
+    // unset($_SESSION['account_email']);
+?>
 <section class="cart pd-section">
     <div class="container">
         <div class="cart__header d-flex space-between align-center">
@@ -70,7 +73,19 @@
                 <p class="cart__footer--context">
                     Thuế và phí vận chuyển được tính khi thanh toán
                 </p>
-                <button class="btn cart__btn">Thanh toán</button>
+                <?php
+                    if (isset($_SESSION['account_email'])) {
+                ?>
+                        <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Đặt hàng</a>
+                <?php } 
+                else 
+                {
+                ?>
+                    <a href="index.php?page=login"><button class="btn cart__btn btn__outline">Đăng nhập đặt hàng</button></a>
+                <?php
+                    } 
+                ?>
+                
             </div>
         <?php
         } else {

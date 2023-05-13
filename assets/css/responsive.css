@@ -49,6 +49,14 @@
         grid-template-areas: "nav logo action";
     }
 
+    .header__topbar .container {
+        justify-content: center;
+    }
+
+    .header__topbar .container .login-btn {
+        right: 60px;
+      }
+
     .header__nav {
         position: static;
         width: 100%;

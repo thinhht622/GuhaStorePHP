@@ -9,8 +9,8 @@
         $row = mysqli_fetch_array($query_account);
         $count = mysqli_num_rows($query_account);
         if ($count>0) {
-            $_SESSION['login'] = $row['account_name'];
-            $_SESSION['account_name'] = $account_name;
+            $_SESSION['login'] = $row['account_email'];
+            $_SESSION['account_name'] = $row['account_name'];
             header('Location:index.php');
         }else {
             echo '<script>alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại");</script>';

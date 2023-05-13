@@ -26,11 +26,23 @@ include("./pages/base/header.php");
     elseif ($action == 'product_category') {
         include("./pages/main/product.php");
     }
+    elseif ($action == 'search'){
+        include("./pages/main/search.php");
+    }
     elseif ($action == 'product_detail'){
         include("./pages/main/product-detail.php");
     }
+    elseif ($action == 'checkout'){
+        include("./pages/main/checkout.php");
+    }
     elseif ($action == 'login'){
         include("./pages/main/login.php");
+    }
+    elseif ($action == 'register'){
+        include("./pages/main/register.php");
+    }
+    elseif ($action == 'account_settings'){
+        include("./pages/main/account_settings.php");
     }
     else {
         include("./pages/main/home.php");

@@ -31,6 +31,18 @@
         elseif($action =='product' && $query == 'product_edit') {
             include("./modules/product/sua.php");
         }
+        elseif($action =='account' && $query == 'my_account') {
+            include("./modules/account/my_account.php");
+        }
+        elseif($action =='account' && $query == 'password_change') {
+            include("./modules/account/password_change.php");
+        }
+        elseif($action =='account' && $query == 'account_list') {
+            include("./modules/account/lietke.php");
+        }
+        elseif($action =='account' && $query == 'account_edit') {
+            include("./modules/account/sua.php");
+        }
         else {
             include("./modules/dashboard.php");
         }

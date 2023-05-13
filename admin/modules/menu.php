@@ -50,19 +50,19 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="index.php?action=customer&query=customer_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Khách hàng</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="index.php?action=account&query=account_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Tài khoản</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="index.php?action=blog&query=blog_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Bài viết</span>
             </a>

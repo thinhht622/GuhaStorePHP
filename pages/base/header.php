@@ -1,7 +1,25 @@
+<?php 
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+    unset($_SESSION['account_email']);
+    unset($_SESSION['account_id']);
+    header('Location:index.php');
+}
+?>
 <header class="header">
     <div class="header__topbar">
-        <div class="container text-center">
-            <p class="h5">Free shipping available on all orders!</p>
+        <div class="container p-relative d-flex space-between align-center">
+            <p class="h5">Miễn ship cho tất cả các đơn hàng khu vực hà nội</p>
+            <?php if (isset($_SESSION['account_email'])) {
+            ?>
+                <a class="h5 login-btn p-absolute" href="index.php?logout=1">ĐĂNG XUẤT</a>
+            <?php
+            }
+            else{
+            ?>
+                <a class="h5 login-btn p-absolute" href="index.php?page=login">ĐĂNG NHẬP</a>
+            <?php
+            } 
+            ?>
         </div>
     </div>
     <div class="header__main">
@@ -25,7 +43,7 @@
                         </li>
                         <li class="nav__item nav__items h7">
                             <span class="nav__anchor p-relative h7 d-flex align-center space-between w-100 cursor-pointer" href="#">
-                                Shop
+                                Cửa hàng
                                 <img class="md-none svg__icon" src="./assets/images/icon/icon-nextlink.svg" alt="next" />
                                 <img class="d-none md-block svg__icon" src="./assets/images/icon/icon-chevron-down.svg" alt="back" style="margin-left: 8px" />
                             </span>
@@ -33,12 +51,12 @@
                                 <li class="nav__item md-none h5">
                                     <span class="nav__anchor cursor-pointer d-flex align-center" style="content: ''">
                                         <img class="md-none svg__icon" src="./assets/images/icon/arrow-left.svg" alt="" style="margin-right: 8px" />
-                                        Shop
+                                        Cửa hàng
                                     </span>
                                 </li>
                                 <li class="nav__item">
                                     <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=product_category">
-                                        Shop all
+                                        Tất cả sản phẩm
                                     </a>
                                 </li>
                                 <?php
@@ -59,7 +77,7 @@
                         </li>
                         <li class="nav__item">
                             <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=about">
-                                About
+                                Giới thiệu
                             </a>
                         </li>
                         <li class="nav__item">
@@ -69,7 +87,7 @@
                         </li>
                         <li class="nav__item">
                             <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=contact">
-                                Contact
+                                Liên hệ
                             </a>
                         </li>
                     </ul>
@@ -77,7 +95,7 @@
                     <div class="header__footer md-none">
                         <div class="person-login d-flex align-center">
                             <img class="svg__icon" src="./assets/images/icon/icon-person.svg" alt="person" />
-                            <span>Log in</span>
+                            <span>Đăng nhập</span>
                         </div>
                         <ul class="social__items d-flex align-center">
                             <li class="social__item">
@@ -109,13 +127,19 @@
                     </div>
                 </nav>
                 <div class="header__action d-flex align-center">
-                    <div class="header__action--item d-flex align-center">
-                        <a class="header__action--link d-inline-block" href="#">
-                            <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-search.svg" alt="search" />
-                        </a>
+                    <div class="header__action--item d-flex align-center p-relative">
+                        <form action="index.php?page=search" method="POST" class="d-flex align-center" id="search-box">
+                            <input type="text" placeholder="Tìm kiếm sản phẩm ..." name="keyword" class="search__input" required>
+                            <button type="submit"  name="search" class="header__action--link search-btn p-absolute d-inline-block">
+                                <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-search.svg" alt="search" />
+                            </button>
+                            <button class="header__action--link voice-btn p-absolute d-inline-block">
+                                <img class="action__icon svg__icon d-block" src="./assets/images/icon/voice-icon.png" alt="search" />
+                            </button>
+                        </form>
                     </div>
                     <div class="header__action--item align-center d-none md-flex">
-                        <a class="header__action--link d-inline-block" href="index.php?page=login">
+                        <a class="header__action--link d-inline-block" href="<?php if (isset($_SESSION['account_email'])) { echo "index.php?page=account_settings";} else { echo "index.php?page=login"; } ?>">
                             <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-person.svg" alt="person" />
                         </a>
                     </div>
@@ -124,15 +148,14 @@
                             <?php
                             if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                             ?>
-                            <div class="icon-cart d-flex align-center justify-center p-relative">
-                                <img class="action__icon svg__icon d-block" src="./assets/images/icon/cart-open.svg" alt="cart">
-                                <span class="cart-count p-absolute d-flex align-center justify-center h6"><?php echo count($_SESSION['cart']) ?></span>
-                            </div>
+                                <div class="icon-cart d-flex align-center justify-center p-relative">
+                                    <img class="action__icon svg__icon d-block" src="./assets/images/icon/cart-open.svg" alt="cart">
+                                    <span class="cart-count p-absolute d-flex align-center justify-center h6"><?php echo count($_SESSION['cart']) ?></span>
+                                </div>
                             <?php
-                            }else
-                            {
+                            } else {
                             ?>
-                            <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-cart.svg" alt="cart">
+                                <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-cart.svg" alt="cart">
                             <?php
                             }
                             ?>

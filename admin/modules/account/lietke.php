@@ -1,6 +1,6 @@
 <?php
-$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id ORDER BY orders.order_id DESC";
-$query_order_list = mysqli_query($mysqli, $sql_order_list);
+$sql_account_list = "SELECT * FROM account ORDER BY account_id DESC";
+$query_account_list = mysqli_query($mysqli, $sql_account_list);
 ?>
 
 <div class="row">
@@ -8,14 +8,14 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
         <div class="card">
             <div class="card-body">
                 <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách đơn hàng</h4>
+                    <h4 class="card-title" style="margin: 0;">Danh sách tài khoản</h4>
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=order&query=order_add" class="btn btn-outline-dark btn-fw">Thêm đơn hàng</a>
+                    <a href="?action=account&query=account_add" class="btn btn-outline-dark btn-fw">Thêm tài khoản</a>
                 </div>
 
 
@@ -29,34 +29,33 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                                         <span class="checkmark"></span>
                                     </label>
                                 </th>
-                                <th>Mã đơn hàng</th>
-                                <th>Thời gian</th>
-                                <th>Tên người đặt</th>
-                                <th>Loại đơn hàng</th>
-                                <th>Tình trạng đơn hàng</th>
+                                <th>Tên người dùng</th>
+                                <th>Email</th>
+                                <th>Loại tài khoản</th>
+                                <th>Tình trạng</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            while ($row = mysqli_fetch_array($query_order_list)) {
+                            while ($row = mysqli_fetch_array($query_account_list)) {
                                 $i++;
                             ?>
                                 <tr>
                                     <td>
                                     <label class="container" id="checkAll" onclick="testChecked();">
-                                        <input type="checkbox" class="checkbox" id="<?php echo $row['order_id'] ?>">
+                                        <input type="checkbox" class="checkbox" id="<?php echo $row['account_id'] ?>">
                                         <span class="checkmark"></span>
                                     </label>
                                     </td>
-                                    <td><?php echo $row['order_code'] ?></td>
-                                    <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
-                                    <td><?php echo $row['order_type'] ?></td>
-                                    <td><?php echo $row['order_status'] ?></td>
+                                    <td><?php echo $row['account_email'] ?></td>
+                                    <td><?php echo $row['account_type'] ?></td>
+                                    <td><?php echo $row['account_status'] ?></td>
                                     <td>
-                                        <a href="modules/order/xuly.php?order_id=<?php echo $row['order_code'] ?>">Xem chi tiết</a>
-                                         | <a href="?action=order&query=order_edit&order_id=<?php echo $row['order_code'] ?>">Duyệt</a>
+                                        <a href="modules/account/xuly.php?account_id=<?php echo $row['account_id'] ?>">Delete</a>
+                                        <a href="?action=account&query=account_edit&account_id=<?php echo $row['account_id'] ?>">Edit</a>
                                     </td>
                                 </tr>
                             <?php
