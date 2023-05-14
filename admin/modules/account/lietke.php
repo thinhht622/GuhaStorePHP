@@ -20,14 +20,12 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
 
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-action">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>
-                                    <label class="container" onclick="testChecked();">
-                                        <input type="checkbox" id="checkAll">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    <input type="checkbox" id="checkAll">
                                 </th>
                                 <th>Tên người dùng</th>
                                 <th>Email</th>
@@ -44,18 +42,21 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                             ?>
                                 <tr>
                                     <td>
-                                    <label class="container" id="checkAll" onclick="testChecked();">
-                                        <input type="checkbox" class="checkbox" id="<?php echo $row['account_id'] ?>">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                        <a href="?action=account&query=account_edit&account_id=<?php echo $row['account_id'] ?>">
+                                            <div class="icon-edit">
+                                                <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['account_id'] ?>">
                                     </td>
                                     <td><?php echo $row['account_name'] ?></td>
                                     <td><?php echo $row['account_email'] ?></td>
-                                    <td><?php echo $row['account_type'] ?></td>
-                                    <td><?php echo $row['account_status'] ?></td>
+                                    <td><?php echo format_account_type($row['account_type']) ?></td>
+                                    <td><?php echo format_account_status($row['account_status']) ?></td>
                                     <td>
                                         <a href="modules/account/xuly.php?account_id=<?php echo $row['account_id'] ?>">Delete</a>
-                                        <a href="?action=account&query=account_edit&account_id=<?php echo $row['account_id'] ?>">Edit</a>
                                     </td>
                                 </tr>
                             <?php
@@ -70,11 +71,13 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
 </div>
 <div class="dialog__control">
     <div class="control__box">
-        <a class="button__control" id="btnDelete">Xóa</a>
-        <a class="button__control" id="btnEdit">Sửa</a>
+        <a href="" class="button__control" id="btnDelete">Tạm khóa</a>
+        <a href="" class="button__control" id="btnEdit">Sửa</a>
     </div>
 </div>
 <script>
+    var url;
+    var btnDelete = document.getElementById("btnDelete");
     var checkAll = document.getElementById("checkAll");
     var checkboxes = document.getElementsByClassName("checkbox");
     var dialogControl = document.querySelector('.dialog__control');
@@ -92,24 +95,32 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                 checkboxes[i].checked = false;
             }
         }
+        testChecked();
+        getCheckedCheckboxes();
     });
-
-    console.log(checkboxes[0]);
 
     function testChecked() {
         var count = 0;
         for (let i = 0; i < checkboxes.length; i++) {
-            if(checkboxes[i].checked)
-            {
+            if (checkboxes[i].checked) {
                 count++;
                 console.log(count);
             }
         }
         if (count > 0) {
             dialogControl.classList.add('active');
-        }
-        else {
+        } else {
             dialogControl.classList.remove('active');
+            checkAll.checked = false;
         }
+    }
+
+    function getCheckedCheckboxes() {
+        var checkeds = document.querySelectorAll('.checkbox:checked');
+        var checkedIds = [];
+        for (var i = 0; i < checkeds.length; i++) {
+            checkedIds.push(checkeds[i].id);
+        }
+        btnDelete.href = "modules/product/xuly.php?data="+ JSON.stringify(checkedIds);
     }
 </script>

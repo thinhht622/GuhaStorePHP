@@ -1,6 +1,7 @@
 <?php
 include('../../config/config.php');
-
+$data = $_GET['data'];
+$product_ids = json_decode($data);
 $product_id = $_GET['product_id'];
 $product_name = $_POST['product_name'];
 $product_category = $_POST['product_category'];
@@ -32,12 +33,14 @@ if (isset($_POST['product_add'])) {
     mysqli_query($mysqli, $sql_update);
     header('Location: ../../index.php?action=product&query=product_list');
 } else {
-    $sql = "SELECT * FROM product WHERE product_id = '$product_id' LIMIT 1";
-    $query = mysqli_query($mysqli, $sql);
-    while ($row = mysqli_fetch_array($query)) {
-        unlink('uploads/' . $row['product_image']);
+    foreach ($product_ids as $id) {
+        $sql = "SELECT * FROM product WHERE product_id = '$id' LIMIT 1";
+        $query = mysqli_query($mysqli, $sql);
+        while ($row = mysqli_fetch_array($query)) {
+            unlink('uploads/' . $row['product_image']);
+        }
+        $sql_delete = "DELETE FROM product WHERE product_id = '" . $id . "'";
+        mysqli_query($mysqli, $sql_delete);
+        header('Location: ../../index.php?action=product&query=product_list');
     }
-    $sql_delete = "DELETE FROM product WHERE product_id = '" . $product_id . "'";
-    mysqli_query($mysqli, $sql_delete);
-    header('Location: ../../index.php?action=product&query=product_list');
 }

@@ -1,44 +1,32 @@
 <?php
     include('../../config/config.php');
-    $category_id = $_GET['category_id'];
-    $category_name = $_POST['category_name'];
-    $category_keyword = $_POST['category_keyword'];
-    $category_description = $_POST['category_description'];
-    $category_image = $_FILES['category_image']['name'];
-    $category_image_tmp = $_FILES['category_image']['tmp_name'];
-    $category_image = $_FILES['category_image']['name'];
-    $category_image = time().'_'.$category_image;
+    if (isset($_GET['data'])) {
+        $data = $_GET['data'];
+        $order_codes = json_decode($data);
+    }
 
-    if (isset($_POST['category_add'])) {
-        $sql_add = "INSERT INTO category(category_name, category_keyword, category_description, category_image) VALUE('".$category_name."', '".$category_keyword."', '".$category_description."', '".$category_image."')";
-        mysqli_query($mysqli, $sql_add);
-        move_uploaded_file($category_image_tmp, 'uploads/'.$category_image);
-        header('Location: ../../index.php?action=category&query=category_list');
-    }
-    elseif (isset($_POST['category_edit'])) {
-        if ($_FILES['category_image']['name'] != '') {
-            move_uploaded_file($category_image_tmp, 'uploads/' . $category_image);
-            $sql = "SELECT * FROM category WHERE category_id = '$category_id' LIMIT 1";
-            $query = mysqli_query($mysqli, $sql);
-            while ($row = mysqli_fetch_array($query)) {
-                unlink('uploads/' . $row['product_image']);
-            }
-            $sql_update = "UPDATE category SET category_name='".$category_name."', category_keyword='".$category_keyword."', category_description = '".$category_description."', category_image = '".$category_image."'  WHERE category_id = '$_GET[category_id]'";
+
+    if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
+        foreach ($order_codes as $code) {
+            // Lay thong tin don hang
+            $sql_order_get = "SELECT * FROM orders WHERE order_code = $code LIMIT 1";
+            $query_order_get = mysqli_query($mysqli, $sql_order_get);
+            $order = mysqli_fetch_array($query_order_get);
+            $order_status = $order['order_status'];
+            $order_status++; 
+            //Chuyen trang thai don hoan
+            $sql_order_confirm = "UPDATE orders SET order_status = $order_status WHERE order_code = $code";
+            mysqli_query($mysqli, $sql_order_confirm);
         }
-        else {
-            $sql_update = "UPDATE category SET category_name='".$category_name."', category_keyword='".$category_keyword."', category_description = '".$category_description."'  WHERE category_id = '$_GET[category_id]'";
-        }
-        
-        mysqli_query($mysqli, $sql_update);
-        header('Location: ../../index.php?action=category&query=category_list');
+        header('Location: ../../index.php?action=order&query=order_list');
     }
-    else {
-        $sql = "SELECT * FROM category WHERE category_id = '$category_id' LIMIT 1";
-        $query = mysqli_query($mysqli, $sql);
-        while ($row = mysqli_fetch_array($query)) {
-            unlink('uploads/' . $row['category_image']);
+
+    if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
+        foreach ($order_codes as $code) {
+            //Chuyen trang thai don hoan
+            $sql_order_cancel = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
+            mysqli_query($mysqli, $sql_order_cancel);
         }
-        $sql_delete = "DELETE FROM category WHERE category_id = '".$category_id."'";
-        mysqli_query($mysqli, $sql_delete);
-        header('Location: ../../index.php?action=category&query=category_list');
+        header('Location: ../../index.php?action=order&query=order_list');
     }
+?>

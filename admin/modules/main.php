@@ -9,9 +9,14 @@
             $action = '';
             $query = '';
         }
-
-        if ($action == 'order') {
+        if ($action == 'dashboard' && $query == 'dashboard') {
+            include("./modules/dashboard.php");
+        }
+        elseif ($action == 'order' && $query == 'order_list') {
             include("./modules/order/lietke.php");
+        }
+        elseif($action =='order' && $query == 'order_detail') {
+            include("./modules/order/chitiet.php");
         }
         elseif($action =='category' && $query == 'category_add') {
             include("./modules/category/them.php");

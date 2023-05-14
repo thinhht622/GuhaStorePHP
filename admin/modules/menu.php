@@ -15,8 +15,8 @@
 ?>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="#">
+        <li class="nav-item <?php if ($action === 'dashboard') { echo "active"; } ?>">
+            <a class="nav-link" href="index.php?action=dashboard&query=dashboard">
                 <i class="menu-icon mdi mdi-chart-line"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
@@ -29,8 +29,9 @@
             </a>
             <div class="collapse <?php if ($action === 'order') { echo "show"; } ?>" id="orders">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="index.php?action=order&query=order">Đang xử lý</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="index.php?action=order&query=order">Đã hoàn thành</a></li>
+                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list">Đang xử lý</a></li>
+                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a></li>
+                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a></li>
                 </ul>
             </div>
         </li>
@@ -49,19 +50,19 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item <?php if ($action === 'customer') { echo "active"; } ?>">
             <a class="nav-link" href="index.php?action=customer&query=customer_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Khách hàng</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item <?php if ($action === 'account') { echo "active"; } ?>">
             <a class="nav-link" href="index.php?action=account&query=account_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Tài khoản</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item <?php if ($action === 'blog') { echo "active"; } ?>">
             <a class="nav-link" href="index.php?action=blog&query=blog_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Bài viết</span>

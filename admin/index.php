@@ -35,6 +35,7 @@
   <div class="container-scroller">
     <?php
     include('config/config.php');
+    include('format/format.php');
     ?>
     <!-- start header -->
     <?php

@@ -20,14 +20,12 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
 
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-action">
                         <thead>
                             <tr>
+                            <th></th>
                                 <th>
-                                    <label class="container" onclick="testChecked();">
-                                        <input type="checkbox" id="checkAll">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    <input type="checkbox" id="checkAll">
                                 </th>
                                 <th></th>
                                 <th>Tiêu đề</th>
@@ -43,10 +41,14 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                             ?>
                                 <tr>
                                     <td>
-                                    <label class="container" id="checkAll" onclick="testChecked();">
-                                        <input type="checkbox" class="checkbox" id="<?php echo $row['category_id'] ?>">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                        <a href="?action=category&query=category_edit&category_id=<?php echo $row['category_id'] ?>">
+                                            <div class="icon-edit">
+                                                <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="checkbox" onclick="testChecked();" id="<?php echo $row['category_id'] ?>">
                                     </td>
                                     <td><img src="modules/category/uploads/<?php echo $row['category_image'] ?>" alt=""></td>
                                     <td><?php echo $row['category_name'] ?></td>
@@ -90,6 +92,8 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                 checkboxes[i].checked = false;
             }
         }
+        testChecked();
+        getCheckedCheckboxes();
     });
 
     console.log(checkboxes[0]);
@@ -97,17 +101,25 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
     function testChecked() {
         var count = 0;
         for (let i = 0; i < checkboxes.length; i++) {
-            if(checkboxes[i].checked)
-            {
+            if (checkboxes[i].checked) {
                 count++;
                 console.log(count);
             }
         }
         if (count > 0) {
             dialogControl.classList.add('active');
-        }
-        else {
+        } else {
             dialogControl.classList.remove('active');
+            checkAll.checked = false;
         }
+    }
+
+    function getCheckedCheckboxes() {
+        var checkeds = document.querySelectorAll('.checkbox:checked');
+        var checkedIds = [];
+        for (var i = 0; i < checkeds.length; i++) {
+            checkedIds.push(checkeds[i].id);
+        }
+        btnDelete.href = "modules/category/xuly.php?data="+ JSON.stringify(checkedIds);
     }
 </script>

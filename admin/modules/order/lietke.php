@@ -1,6 +1,12 @@
 <?php
-$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id ORDER BY orders.order_id DESC";
-$query_order_list = mysqli_query($mysqli, $sql_order_list);
+if (isset($_GET['order_status'])) {
+    $order_status = $_GET['order_status'];
+    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = $order_status ORDER BY orders.order_id DESC";
+    $query_order_list = mysqli_query($mysqli, $sql_order_list);    
+} else {
+    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC";
+    $query_order_list = mysqli_query($mysqli, $sql_order_list);
+}
 ?>
 
 <div class="row">
@@ -15,19 +21,29 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=order&query=order_add" class="btn btn-outline-dark btn-fw">Thêm đơn hàng</a>
+                    <div class="dropdown dropdown__item">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuSizeButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tình trạng
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2">
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list">Tất cả</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuyển bị hàng</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=2">Đang giao hàng</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a>
+                        </div>
+                    </div>
                 </div>
 
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-action">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>
-                                    <label class="container" onclick="testChecked();">
-                                        <input type="checkbox" id="checkAll">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    <input type="checkbox" id="checkAll">
                                 </th>
                                 <th>Mã đơn hàng</th>
                                 <th>Thời gian</th>
@@ -44,20 +60,20 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                             ?>
                                 <tr>
                                     <td>
-                                    <label class="container" id="checkAll" onclick="testChecked();">
-                                        <input type="checkbox" class="checkbox" id="<?php echo $row['order_id'] ?>">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                        <a href="?action=order&query=order_detail&order_code=<?php echo $row['order_code'] ?>">
+                                            <div class="icon-edit">
+                                                <img class="w-100 h-100" src="images/icon-view.png" alt="">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['order_code'] ?>">
                                     </td>
                                     <td><?php echo $row['order_code'] ?></td>
                                     <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
-                                    <td><?php echo $row['order_type'] ?></td>
-                                    <td><?php echo $row['order_status'] ?></td>
-                                    <td>
-                                        <a href="modules/order/xuly.php?order_id=<?php echo $row['order_code'] ?>">Xem chi tiết</a>
-                                         | <a href="?action=order&query=order_edit&order_id=<?php echo $row['order_code'] ?>">Duyệt</a>
-                                    </td>
+                                    <td><?php echo format_type($row['order_type']); ?></td>
+                                    <td><?php echo format_status($row['order_status']); ?></td>
                                 </tr>
                             <?php
                             }
@@ -71,11 +87,13 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
 </div>
 <div class="dialog__control">
     <div class="control__box">
-        <a class="button__control" id="btnDelete">Xóa</a>
-        <a class="button__control" id="btnEdit">Sửa</a>
+        <a href="modules/order/xuly.php?confirm=1" class="button__control" id="btnConfirm">Duyệt đơn hàng</a>
+        <a href="modules/order/xuly.php?cancel=1" class="button__control" id="btnCancel">Hủy đơn hàng</a>
     </div>
 </div>
 <script>
+    var btnConfirm = document.getElementById("btnConfirm");
+    var btnCancel = document.getElementById("btnCancel");
     var checkAll = document.getElementById("checkAll");
     var checkboxes = document.getElementsByClassName("checkbox");
     var dialogControl = document.querySelector('.dialog__control');
@@ -93,24 +111,34 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                 checkboxes[i].checked = false;
             }
         }
+        testChecked();
+        getCheckedCheckboxes();
     });
-
-    console.log(checkboxes[0]);
 
     function testChecked() {
         var count = 0;
         for (let i = 0; i < checkboxes.length; i++) {
-            if(checkboxes[i].checked)
-            {
+            if (checkboxes[i].checked) {
                 count++;
                 console.log(count);
             }
         }
         if (count > 0) {
             dialogControl.classList.add('active');
-        }
-        else {
+        } else {
             dialogControl.classList.remove('active');
+            checkAll.checked = false;
         }
     }
+
+    function getCheckedCheckboxes() {
+        var checkeds = document.querySelectorAll('.checkbox:checked');
+        var checkedIds = [];
+        for (var i = 0; i < checkeds.length; i++) {
+            checkedIds.push(checkeds[i].id);
+        }
+        btnConfirm.href = "modules/order/xuly.php?confirm=1&data="+ JSON.stringify(checkedIds);
+        btnCancel.href = "modules/order/xuly.php?cancel=1&data="+ JSON.stringify(checkedIds);
+    }
+    
 </script>

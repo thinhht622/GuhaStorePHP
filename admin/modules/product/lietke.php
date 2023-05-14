@@ -20,14 +20,12 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
 
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-action">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>
-                                    <label class="container" onclick="testChecked();">
-                                        <input type="checkbox" id="checkAll">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    <input type="checkbox" id="checkAll">
                                 </th>
                                 <th></th>
                                 <th>Tên sản phẩm</th>
@@ -48,10 +46,14 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                             ?>
                                 <tr>
                                     <td>
-                                        <label class="container" id="checkAll" onclick="testChecked();">
-                                            <input type="checkbox" class="checkbox" id="<?php echo $row['product_id'] ?>">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                    <a href="?action=product&query=product_edit&product_id=<?php echo $row['product_id'] ?>">
+                                        <div class="icon-edit">
+                                            <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                        </div>
+                                    </a>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['product_id'] ?>" >
                                     </td>
                                     <td><img src="modules/product/uploads/<?php echo $row['product_image'] ?>" class="product_image" alt="image"></td>
                                     <td><?php echo $row['product_name'] ?></td>
@@ -78,7 +80,6 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                     <td><?php echo $row['product_description'] ?></td>
                                     <td>
                                         <a href="modules/product/xuly.php?product_id=<?php echo $row['product_id'] ?>">Delete</a>
-                                        <a href="?action=product&query=product_edit&product_id=<?php echo $row['product_id'] ?>">Edit</a>
                                     </td>
                                 </tr>
                             <?php
@@ -93,11 +94,13 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
 </div>
 <div class="dialog__control">
     <div class="control__box">
-        <a class="button__control" id="btnDelete">Xóa</a>
+        <a href="#" class="button__control" id="btnDelete">Xóa</a>
         <a class="button__control" id="btnEdit">Sửa</a>
     </div>
 </div>
 <script>
+    var url;
+    var btnDelete = document.getElementById("btnDelete");
     var checkAll = document.getElementById("checkAll");
     var checkboxes = document.getElementsByClassName("checkbox");
     var dialogControl = document.querySelector('.dialog__control');
@@ -115,9 +118,9 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                 checkboxes[i].checked = false;
             }
         }
+        testChecked();
+        getCheckedCheckboxes();
     });
-
-    console.log(checkboxes[0]);
 
     function testChecked() {
         var count = 0;
@@ -131,6 +134,16 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
             dialogControl.classList.add('active');
         } else {
             dialogControl.classList.remove('active');
+            checkAll.checked = false;
         }
+    }
+
+    function getCheckedCheckboxes() {
+        var checkeds = document.querySelectorAll('.checkbox:checked');
+        var checkedIds = [];
+        for (var i = 0; i < checkeds.length; i++) {
+            checkedIds.push(checkeds[i].id);
+        }
+        btnDelete.href = "modules/product/xuly.php?data="+ JSON.stringify(checkedIds);
     }
 </script>

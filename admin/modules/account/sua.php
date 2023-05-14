@@ -23,20 +23,19 @@ $query_account_edit = mysqli_query($mysqli, $sql_account_edit);
                     ?>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Tên danh mục</label>
-                            <input type="text" name="account_name" class="form-control" value="<?php echo $item['account_name'] ?>" placeholder="collection name">
+                            <input type="text" name="account_name" class="form-control" value="<?php echo $item['account_name'] ?>">
                         </div>
                         <div class="input-item form-group">
-                            <label for="keyword" class="d-block">Từ khóa phân loại</label>
-                            <input type="text" name="account_keyword" id="keyword" class="form-control" value="<?php echo $item['account_keyword'] ?>" placeholder="keyword">
+                            <label for="email" class="d-block">Email</label>
+                            <input type="text" name="account_email" id="email" class="form-control" value="<?php echo $item['account_email'] ?>">
                         </div>
                         <div class="input-item form-group">
-                            <label for="title" class="d-block">Mô tả danh mục</label>
-                            <textarea class="form-control" name="account_description" type="text" value="" placeholder="collection name" style="height: auto;"><?php echo $item['account_description'] ?></textarea>
+                            <label for="phone" class="d-block">Phone</label>
+                            <input type="text" name="account_phone" id="phone" class="form-control" value="<?php echo $item['account_phone'] ?>">
                         </div>
                         <div class="input-item form-group">
-                            <label for="image" class="d-block">Image</label>
-                            <input type="file" name="account_image" value="<?php echo $row['account_image'] ?>">
-                            <img src="modules/account/uploads/<?php echo $item['account_image'] ?>" class="account_image" style="width: 100px; height: 100px;" alt="image">
+                            <label for="email" class="d-block">Email</label>
+                            <input type="text" name="account_email" id="email" class="form-control" value="<?php echo $item['account_address'] ?>">
                         </div>
                         <button type="submit" name="account_edit" class="btn btn-primary btn-icon-text">
                             <i class="ti-file btn-icon-prepend"></i>

@@ -4,7 +4,8 @@ include('../../admin/config/config.php');
 if (isset($_POST['checkout'])) {
     $account_id = $_SESSION['account_id'];
     $order_code = rand(0, 9999);
-    $order_date = '';
+    $order_date = date('Y-m-d', time());
+    echo $order_date;
     $account_name = $_POST['account_name'];
     $account_address = $_POST['account_address'];
     $account_phone = $_POST['account_phone'];
@@ -24,5 +25,7 @@ if (isset($_POST['checkout'])) {
         }
     }
     unset($_SESSION['cart']);
-    header('Location:index.php?page=thanhkiu');
+
+
+    // header('Location:index.php?page=thanhkiu');
 }
