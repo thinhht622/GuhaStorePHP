@@ -41,8 +41,17 @@ include("./pages/base/header.php");
     elseif ($action == 'register'){
         include("./pages/main/register.php");
     }
-    elseif ($action == 'account_settings'){
-        include("./pages/main/account_settings.php");
+    elseif ($action == 'my_account'){
+        include("./pages/main/my_account.php");
+    }
+    elseif ($action == 'order_detail'){
+        include("./pages/base/order-detail.php");
+    }
+    elseif ($action == 'password_change'){
+        include("./pages/base/password-change.php");
+    }
+    elseif ($action == '404'){
+        include("./pages/main/404.php");
     }
     else {
         include("./pages/main/home.php");

@@ -1,24 +1,7 @@
-<?php
-    if (isset($_POST['login'])) {
-        $account_email = $_POST['account_email'];
-        $account_password = md5($_POST['account_password']);
-        $sql_account = "SELECT * FROM account WHERE account_email='".$account_email."' AND account_password='".$account_password."'";
-        $query_account = mysqli_query($mysqli, $sql_account);
-        $row = mysqli_fetch_array($query_account);
-        $count = mysqli_num_rows($query_account);
-        if ($count>0) {
-            $_SESSION['account_id'] = $row['account_id'];
-            $_SESSION['account_email'] = $row['account_email'];
-            echo '<script>alert("Đăng nhập thành công");</script>';
-        }else {
-            echo '<script>alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại");</script>';
-        }
-    }
-?>
 <section class="login pd-section">
     <div class="form-box">
         <div class="form-value">
-            <form action="" autocomplete="on" method="POST">
+            <form action="pages/handle/login.php" autocomplete="on" method="POST">
                 <h2 class="login-title">Đăng nhập</h2>
                 <div class="inputbox">
                     <ion-icon name="mail-outline"></ion-icon>

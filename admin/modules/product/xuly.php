@@ -32,6 +32,15 @@ if (isset($_POST['product_add'])) {
     }
     mysqli_query($mysqli, $sql_update);
     header('Location: ../../index.php?action=product&query=product_list');
+} elseif (isset($_GET['product_sale'])) {
+    $sale = $_GET['product_sale'];
+    echo $sale;
+    foreach ($product_ids as $id) {
+    $sql_sale = "UPDATE product SET product_sale = $sale WHERE product_id = '" . $id . "'";
+    echo $sql_sale;
+    mysqli_query($mysqli, $sql_sale);
+    }
+    header('Location: ../../index.php?action=product&query=product_list');
 } else {
     foreach ($product_ids as $id) {
         $sql = "SELECT * FROM product WHERE product_id = '$id' LIMIT 1";
@@ -41,6 +50,6 @@ if (isset($_POST['product_add'])) {
         }
         $sql_delete = "DELETE FROM product WHERE product_id = '" . $id . "'";
         mysqli_query($mysqli, $sql_delete);
-        header('Location: ../../index.php?action=product&query=product_list');
     }
+    header('Location: ../../index.php?action=product&query=product_list');
 }

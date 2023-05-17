@@ -143,15 +143,24 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.control__box a {
+.button__control {
   padding: 3px 12px;
   margin: 0 10px;
+  color: #121212;
   border: solid 1px #ccc;
   background-color: #ffffff;
   display: inline-block;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.btn__wanning:hover{
+  color: #f32121;
+}
+
+.btn_change:hover{
+  color: #2196f3;
 }
 
 .product__status {
@@ -341,4 +350,61 @@
 
 .table-action tr:hover .icon-edit img {
   display: block;
+}
+
+
+/* === dialog input === */
+.dialog__input {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.24);
+  z-index: 9999;
+  display: none;
+}
+
+.dialog__input.open {
+  display: block;
+}
+
+.dialog__input .form-group {
+  margin: 0;
+}
+
+.dialog__container {
+  z-index: 10000;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 300px;
+  min-height: 150px;
+  background-color: #fff;
+}
+.dialog__header {
+  padding: 10px;
+  border-bottom: solid 1px #ccc;
+}
+
+.dialog__header h6 {
+  margin: 0;
+}
+
+.input__box {
+  padding: 10px;
+}
+
+.close__btn {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.btn__sale {
+  text-align: right;
+  margin-top: 10px;
 }

@@ -27,6 +27,7 @@
   <div id="wrapper">
     <?php
     session_start();
+    include('admin/format/format.php');
     include('admin/config/config.php');
     include("./pages/main.php");
     ?>

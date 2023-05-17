@@ -5,12 +5,13 @@
 	if(isset($_GET['sum'])){
 		$product_id=$_GET['sum'];
 		foreach($_SESSION['cart'] as $cart_item){
+			$total_count = 0;
 			if($cart_item['product_id']!=$product_id){
 				$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 				$_SESSION['cart'] = $product;
 			}else{
 				$total_count = $cart_item['product_quantity'] + 1;
-				if($cart_item['product_quantity']<=9){
+				if($cart_item['product_quantity']<=20){
 					
 					$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$total_count,'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 				}else{

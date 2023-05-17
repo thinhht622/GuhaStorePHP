@@ -139,7 +139,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                         </form>
                     </div>
                     <div class="header__action--item align-center d-none md-flex">
-                        <a class="header__action--link d-inline-block" href="<?php if (isset($_SESSION['account_email'])) { echo "index.php?page=account_settings";} else { echo "index.php?page=login"; } ?>">
+                        <a class="header__action--link d-inline-block" href="<?php if (isset($_SESSION['account_email'])) { echo "index.php?page=my_account&tab=account_info";} else { echo "index.php?page=login"; } ?>">
                             <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-person.svg" alt="person" />
                         </a>
                     </div>

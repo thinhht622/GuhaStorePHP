@@ -1,5 +1,7 @@
 <?php
     include('../../config/config.php');
+    $data = $_GET['data'];
+    $category_ids = json_decode($data);
     $category_id = $_GET['category_id'];
     $category_name = $_POST['category_name'];
     $category_keyword = $_POST['category_keyword'];
@@ -33,12 +35,14 @@
         header('Location: ../../index.php?action=category&query=category_list');
     }
     else {
-        $sql = "SELECT * FROM category WHERE category_id = '$category_id' LIMIT 1";
+        foreach ($category_ids as $id) {
+        $sql = "SELECT * FROM category WHERE category_id = '$id' LIMIT 1";
         $query = mysqli_query($mysqli, $sql);
         while ($row = mysqli_fetch_array($query)) {
             unlink('uploads/' . $row['category_image']);
         }
-        $sql_delete = "DELETE FROM category WHERE category_id = '".$category_id."'";
+        $sql_delete = "DELETE FROM category WHERE category_id = '".$id."'";
         mysqli_query($mysqli, $sql_delete);
         header('Location: ../../index.php?action=category&query=category_list');
+        }
     }

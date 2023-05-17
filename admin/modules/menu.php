@@ -62,8 +62,8 @@
                 <span class="menu-title">Tài khoản</span>
             </a>
         </li>
-        <li class="nav-item <?php if ($action === 'blog') { echo "active"; } ?>">
-            <a class="nav-link" href="index.php?action=blog&query=blog_list">
+        <li class="nav-item <?php if ($action === 'article') { echo "active"; } ?>">
+            <a class="nav-link" href="index.php?action=article&query=article_list">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Bài viết</span>
             </a>

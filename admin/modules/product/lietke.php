@@ -31,11 +31,8 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                 <th>Tên sản phẩm</th>
                                 <th>Danh mục</th>
                                 <th>Tình trạng</th>
-                                <th class="text-center">Giá nhập sản phẩm</th>
                                 <th>Giá bán sản phẩm</th>
                                 <th>Sale</th>
-                                <th>Mô tả sản phẩm</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,14 +43,14 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                             ?>
                                 <tr>
                                     <td>
-                                    <a href="?action=product&query=product_edit&product_id=<?php echo $row['product_id'] ?>">
-                                        <div class="icon-edit">
-                                            <img class="w-100 h-100" src="images/icon-edit.png" alt="">
-                                        </div>
-                                    </a>
+                                        <a href="?action=product&query=product_edit&product_id=<?php echo $row['product_id'] ?>">
+                                            <div class="icon-edit">
+                                                <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                            </div>
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['product_id'] ?>" >
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['product_id'] ?>">
                                     </td>
                                     <td><img src="modules/product/uploads/<?php echo $row['product_image'] ?>" class="product_image" alt="image"></td>
                                     <td><?php echo $row['product_name'] ?></td>
@@ -74,13 +71,8 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                         }
                                         ?>
                                     </td>
-                                    <td><?php echo number_format($row['product_price_import']).' ₫' ?></td>
-                                    <td><?php echo number_format($row['product_price']).' ₫'?></td>
-                                    <td><?php echo $row['product_sale'] ?></td>
-                                    <td><?php echo $row['product_description'] ?></td>
-                                    <td>
-                                        <a href="modules/product/xuly.php?product_id=<?php echo $row['product_id'] ?>">Delete</a>
-                                    </td>
+                                    <td><?php echo number_format($row['product_price']) . ' ₫' ?></td>
+                                    <td><?php echo $row['product_sale'] ?>%</td>
                                 </tr>
                             <?php
                             }
@@ -94,12 +86,31 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
 </div>
 <div class="dialog__control">
     <div class="control__box">
-        <a href="#" class="button__control" id="btnDelete">Xóa</a>
-        <a class="button__control" id="btnEdit">Sửa</a>
+        <a href="#" class="button__control btn__wanning" onclick="return confirm('Bạn có thực sự muốn xóa sản phẩm này không?')" id="btnDelete">Xóa</a>
+        <button class="button__control btn_change" id="btnSale">Giảm giá</button>
+    </div>
+</div>
+<div class="dialog__input">
+    <div class="dialog__container">
+        <div class="dialog__header d-flex align-center space-between">
+            <h6>Thiết lập giảm giá cho sản phẩm</h6>
+            <div class="close__btn d-flex align-center justify-center">
+                <i class="icon-close"></i>
+            </div>
+        </div>
+        <div class="input__box form-group">
+            <label class="d-block" for="input_sale">Giảm giá (%)</label>
+            <input class="form-control" type="number" id="input_sale" placeholder="Giảm giá theo phần trăm">
+            <div class="w-100 btn__sale"><a href="#" id="sale_btn" class="btn btn-outline-dark btn-fw" onclick="return confirm('Xác nhận giảm giá cho các sản phẩm?')">Giảm giá</a></div>
+        </div>
     </div>
 </div>
 <script>
     var url;
+    var dialogInput = document.querySelector(".dialog__input");
+    var btnSale = document.getElementById("btnSale");
+    var saleBtn = document.querySelector('#sale_btn')
+    var btnClose = document.querySelector(".close__btn");
     var btnDelete = document.getElementById("btnDelete");
     var checkAll = document.getElementById("checkAll");
     var checkboxes = document.getElementsByClassName("checkbox");
@@ -127,7 +138,6 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         for (let i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 count++;
-                console.log(count);
             }
         }
         if (count > 0) {
@@ -138,12 +148,28 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         }
     }
 
+    btnSale.addEventListener('click', function() {
+        dialogInput.classList.add("open");
+    })
+
+    btnClose.addEventListener('click', function() {
+        dialogInput.classList.remove("open");
+    })
+
+    var linklist = '';
+
     function getCheckedCheckboxes() {
         var checkeds = document.querySelectorAll('.checkbox:checked');
         var checkedIds = [];
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnDelete.href = "modules/product/xuly.php?data="+ JSON.stringify(checkedIds);
+        linklist = "modules/product/xuly.php?data=" + JSON.stringify(checkedIds);
+        btnDelete.href = "modules/product/xuly.php?data=" + JSON.stringify(checkedIds);
     }
+    // truyền giá trị sale vào thẻ a
+    var inputSale = document.querySelector('#input_sale');
+    inputSale.addEventListener("input", function() {
+        saleBtn.href = linklist + "&product_sale=" + inputSale.value;
+    })
 </script>

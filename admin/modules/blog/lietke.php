@@ -1,6 +1,6 @@
 <?php
-$sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
-$query_category_list = mysqli_query($mysqli, $sql_category_list);
+$sql_article_list = "SELECT * FROM article ORDER BY article_id DESC";
+$query_article_list = mysqli_query($mysqli, $sql_article_list);
 ?>
 
 <div class="row">
@@ -8,14 +8,14 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
         <div class="card">
             <div class="card-body">
                 <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh mục sản phẩm</h4>
+                    <h4 class="card-title" style="margin: 0;">Danh sách bài viết</h4>
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=category&query=category_add" class="btn btn-outline-dark btn-fw">Thêm danh mục</a>
+                    <a href="?action=article&query=article_add" class="btn btn-outline-dark btn-fw">Thêm bài viết</a>
                 </div>
 
 
@@ -28,30 +28,32 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                                     <input type="checkbox" id="checkAll">
                                 </th>
                                 <th></th>
-                                <th>Tiêu đề</th>
-                                <th>Từ khóa sắp xếp</th>
+                                <th>Ngày đăng</th>
+                                <th>Tiêu đề bài viết</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            while ($row = mysqli_fetch_array($query_category_list)) {
+                            while ($row = mysqli_fetch_array($query_article_list)) {
                                 $i++;
                             ?>
                                 <tr>
                                     <td>
-                                        <a href="?action=category&query=category_edit&category_id=<?php echo $row['category_id'] ?>">
+                                        <a href="?action=article&query=article_edit&article_id=<?php echo $row['article_id'] ?>">
                                             <div class="icon-edit">
                                                 <img class="w-100 h-100" src="images/icon-edit.png" alt="">
                                             </div>
                                         </a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['category_id'] ?>">
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['article_id'] ?>">
                                     </td>
-                                    <td><img src="modules/category/uploads/<?php echo $row['category_image'] ?>" alt=""></td>
-                                    <td><?php echo $row['category_name'] ?></td>
-                                    <td><?php echo $row['category_keyword'] ?></td>
+                                    <td><img src="modules/blog/uploads/<?php echo $row['article_image'] ?>" alt=""></td>
+                                    <td><?php echo $row['article_date'] ?></td>
+                                    <td><?php echo $row['article_title'] ?></td>
+                                    <td><?php echo $row['article_status'] ?></td>
                                 </tr>
                             <?php
                             }
@@ -115,6 +117,6 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnDelete.href = "modules/category/xuly.php?data="+ JSON.stringify(checkedIds);
+        btnDelete.href = "modules/article/xuly.php?data="+ JSON.stringify(checkedIds);
     }
 </script>

@@ -48,6 +48,15 @@
         elseif($action =='account' && $query == 'account_edit') {
             include("./modules/account/sua.php");
         }
+        elseif($action =='article' && $query == 'article_add') {
+            include("./modules/blog/them.php");
+        }
+        elseif($action =='article' && $query == 'article_list') {
+            include("./modules/blog/lietke.php");
+        }
+        elseif($action =='article' && $query == 'article_edit') {
+            include("./modules/blog/sua.php");
+        }
         else {
             include("./modules/dashboard.php");
         }
