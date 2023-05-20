@@ -16,9 +16,9 @@ if (isset($_GET['order_status'])) {
                 <div class="main-pane-top d-flex space-between align-center">
                     <h4 class="card-title" style="margin: 0;">Danh sách đơn hàng</h4>
                     <div class="input__search p-relative">
-                        <form class="search-form" action="#">
+                        <form class="search-form" action="?action=order&query=order_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" name="order_search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
                     <div class="dropdown dropdown__item">

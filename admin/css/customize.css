@@ -132,6 +132,10 @@
   display: block;
 }
 
+.main-pane-top {
+  margin-bottom: 20px;
+}
+
 .control__box {
   position: fixed;
   left: 50%;
@@ -272,6 +276,10 @@
   right: -8px;
   color: white;
   background-color: #464646;
+}
+
+.over-flow-hidden {
+  overflow: hidden;
 }
 
 .quantity-number {

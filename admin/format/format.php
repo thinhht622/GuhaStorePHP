@@ -29,6 +29,17 @@ function format_status($value)
   echo $text;
 }
 
+function format_collection_type($value)
+{
+  $text = '';
+  if ($value == 0) {
+    $text = 'Tùy chọn sản phẩm';
+  } else {
+    $text = 'Sắp xếp theo từ khóa';
+  }
+  echo $text;
+}
+
 function format_account_type($value)
 {
   $text = '';
@@ -47,6 +58,18 @@ function format_account_status($value)
     $text = 'Tạm khóa';
   } else {
     $text = 'Đang hoạt động';
+  }
+  echo $text;
+}
+
+
+function format_article_status($value)
+{
+  $text = '';
+  if ($value == 0) {
+    $text = 'Bản nháp';
+  } else {
+    $text = 'Xuất bản';
   }
   echo $text;
 }

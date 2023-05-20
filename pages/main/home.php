@@ -16,9 +16,6 @@ include("./pages/base/product-list.php");
 ?>
 <!-- end product list -->
 
-<!-- start image width text -->
 <?php
-include("./pages/base/image-text.php");
+include("./pages/base/news.php");
 ?>
-<!-- end image width text -->
-

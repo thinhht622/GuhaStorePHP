@@ -10,8 +10,6 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
             <th>Mã đơn hàng</th>
             <th>Ngày đặt đơn</th>
             <th>Tổng tiền</th>
-            <th>Loại đơn</th>
-            <th>Tình trạng đơn hàng</th>
         </tr>
         <?php
         $i = 0;
@@ -28,12 +26,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                 </td>
                 <td><?php echo $row['order_code'] ?></td>
                 <td><?php echo $row['order_date'] ?></td>
-                <td><?php echo $row['total_amount'] ?></td>
-                <td><?php echo format_type($row['order_type']); ?></td>
-                <td class="h5 d-flex align-center">
-                    <img class="icon-status" src="./assets/images/icon/processing.png" alt="" />
-                    <?php echo format_status($row['order_status']); ?>
-                </td>
+                <td><?php echo number_format($row['total_amount']) . ' ₫' ?></td>
             </tr>
         <?php
         }

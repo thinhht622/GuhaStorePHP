@@ -15,6 +15,15 @@
         elseif ($action == 'order' && $query == 'order_list') {
             include("./modules/order/lietke.php");
         }
+        elseif ($action == 'order' && $query == 'order_live') {
+            include("./modules/order/donhangtructiep.php");
+        }
+        elseif ($action == 'order' && $query == 'order_add') {
+            include("./modules/order/them.php");
+        }
+        elseif ($action == 'order' && $query == 'order_search') {
+            include("./modules/order/timkiem.php");
+        }
         elseif($action =='order' && $query == 'order_detail') {
             include("./modules/order/chitiet.php");
         }
@@ -27,6 +36,15 @@
         elseif($action =='category' && $query == 'category_edit') {
             include("./modules/category/sua.php");
         } 
+        elseif($action =='collection' && $query == 'collection_add') {
+            include("./modules/collection/them.php");
+        }
+        elseif($action =='collection' && $query == 'collection_list') {
+            include("./modules/collection/lietke.php");
+        }
+        elseif($action =='collection' && $query == 'collection_edit') {
+            include("./modules/collection/sua.php");
+        } 
         elseif($action =='product' && $query == 'product_add') {
             include("./modules/product/them.php");
         }
@@ -35,6 +53,9 @@
         }
         elseif($action =='product' && $query == 'product_edit') {
             include("./modules/product/sua.php");
+        }
+        elseif($action =='product' && $query == 'product_search') {
+            include("./modules/product/timkiem.php");
         }
         elseif($action =='account' && $query == 'my_account') {
             include("./modules/account/my_account.php");

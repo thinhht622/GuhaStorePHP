@@ -17,6 +17,9 @@ include("./pages/base/header.php");
     elseif ($action == 'blog') {
         include("./pages/main/blog.php");
     }
+    elseif ($action == 'article') {
+        include("./pages/main/article.php");
+    }
     elseif ($action == 'contact') {
         include("./pages/main/contact.php");
     }

@@ -1,5 +1,5 @@
-<!-- start banner -->
+<!-- start blog -->
 <?php
 include("./pages/base/blog.php");
 ?>
-<!-- end banner -->
+<!-- end blog -->

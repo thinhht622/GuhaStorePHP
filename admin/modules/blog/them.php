@@ -20,13 +20,13 @@
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Nội dung tóm tắt</label>
-                        <textarea class="d-block form-control" cols="30" rows="10" name="article_summary" type="text" value="" placeholder="" style="height: auto;"></textarea>
+                        <textarea name="article_summary"></textarea>
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Nội dung chính bài viết</label>
-                        <textarea class="d-block form-control" cols="30" rows="10" name="article_content" type="text" value="" placeholder="" style="height: auto;"></textarea>
+                        <textarea name="article_content"></textarea>
                     </div>
-                    
+
                     <button type="submit" name="article_add" class="btn btn-primary btn-icon-text mg-t-16">
                         <i class="ti-file btn-icon-prepend"></i>
                         Thêm
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="col-lg-4 grid-margin stretch-card">
-            <div class="card">
+            <div class="card">  
                 <div class="card-body">
                     <div class="main-pane-top">
                         <h4 class="card-title">Sản phẩm theo danh mục</h4>
@@ -57,3 +57,7 @@
         </div>
     </div>
 </form>
+<script>
+    CKEDITOR.replace('article_summary');
+    CKEDITOR.replace('article_content');
+</script>

@@ -53,7 +53,7 @@ $query_article_list = mysqli_query($mysqli, $sql_article_list);
                                     <td><img src="modules/blog/uploads/<?php echo $row['article_image'] ?>" alt=""></td>
                                     <td><?php echo $row['article_date'] ?></td>
                                     <td><?php echo $row['article_title'] ?></td>
-                                    <td><?php echo $row['article_status'] ?></td>
+                                    <td><?php echo format_article_status($row['article_status']) ?></td>
                                 </tr>
                             <?php
                             }
@@ -117,6 +117,6 @@ $query_article_list = mysqli_query($mysqli, $sql_article_list);
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnDelete.href = "modules/article/xuly.php?data="+ JSON.stringify(checkedIds);
+        btnDelete.href = "modules/blog/xuly.php?data="+ JSON.stringify(checkedIds);
     }
 </script>

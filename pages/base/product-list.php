@@ -7,8 +7,8 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="row">
             <div class="col">
                 <div class="product__title">
-                    <h2 class="h2">Product list</h2>
-                    <p class="h9">Mô tả về danh sách bán hàng này</p>
+                    <h2 class="h2">Sản phẩm</h2>
+                    <p class="h9">Một số sản phẩm nổi bật</p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,13 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                         <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
                             <img class="w-100 h-100 object-fit-cover" src="admin/modules/product/uploads/<?php echo $row['product_image'] ?>" alt="product image" />
                         </a>
-                        <span class="product__sale h6 p-absolute"> Sale </span>
+                        <?php
+                            if ($row['product_sale']>0) {
+                        ?>
+                                <span class="product__sale h6 p-absolute"> Sale <?php echo $row['product_sale'] ?>%</span>
+                        <?php
+                            } 
+                        ?>
                     </div>
                     <div class="product__info">
                         <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
@@ -45,7 +51,7 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="row">
             <div class="col">
                 <div class="text-center pd-top">
-                    <a class="btn btn__view--all btn__outline" href="index.php?page=product_category">View all</a>
+                    <a class="btn btn__view--all btn__outline" href="index.php?page=product_category">Xem tất cả</a>
                 </div>
             </div>
         </div>

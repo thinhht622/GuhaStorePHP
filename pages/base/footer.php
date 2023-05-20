@@ -5,24 +5,36 @@
                 <div class="col" style="--w-md: 4">
                     <div class="footer__block pd-top">
                         <div class="block__heading">
-                            Quick links
+                            Danh mục sản phẩm
                         </div>
                         <ul class="block__list">
-                            <li class="block__item"><a class="footer__anchor" href="#">Bags</a></li>
-                            <li class="block__item"><a class="footer__anchor" href="#">Shoes</a></li>
-                            <li class="block__item"><a class="footer__anchor" href="#">Look book</a></li>
+                            <?php
+                            $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
+                            $query_category_list = mysqli_query($mysqli, $sql_category_list);
+                            while ($row_category = mysqli_fetch_array($query_category_list)) {
+                            ?>
+                                <li class="block__item"><a class="footer__anchor" href="index.php?page=product_category&category_id=<?php echo $row_category['category_id'] ?>"><?php echo $row_category['category_name'] ?></a></li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
                 <div class="col" style="--w-md: 4">
                     <div class="footer__block pd-top">
                         <div class="block__heading">
-                            Quick links
+                            Bộ sưu tập
                         </div>
                         <ul class="block__list">
-                            <li class="block__item"><a class="footer__anchor" href="#">Bags</a></li>
-                            <li class="block__item"><a class="footer__anchor" href="#">Shoes</a></li>
-                            <li class="block__item"><a class="footer__anchor" href="#">Look book</a></li>
+                            <?php
+                            $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
+                            $query_category_list = mysqli_query($mysqli, $sql_category_list);
+                            while ($row_category = mysqli_fetch_array($query_category_list)) {
+                            ?>
+                                <li class="block__item"><a class="footer__anchor" href="index.php?page=product_category&category_id=<?php echo $row_category['category_id'] ?>"><?php echo $row_category['category_name'] ?></a></li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -38,7 +50,7 @@
                 <div class="col pd-top" style="--w-md: 4;">
                     <div class="footer__subscribe">
                         <h3 class="block__heading text-center">
-                            Subscribe to our emails
+                            Nhập vào email của bạn để theo dõi chúng tôi
                         </h3>
                         <div class="email-signup__form justify-center d-flex">
                             <div class="w-100 form__container p-relative">
@@ -88,7 +100,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
-                        <p class="footer__copy--right">© 2021, dawn-theme-default Powered by Shopify</p>
+                        <p class="footer__copy--right">© 2023, theme-shopify design by edricdang</p>
                     </div>
                 </div>
             </div>

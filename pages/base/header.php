@@ -1,10 +1,18 @@
-<?php 
+<?php
 if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     unset($_SESSION['account_email']);
     unset($_SESSION['account_id']);
     header('Location:index.php');
 }
 ?>
+<style>
+    .voice-btn.recognizing .action__icon-on {
+        display: block;
+    }
+    .voice-btn.recognizing .action__icon-off {
+        display: none;
+    }
+</style>
 <header class="header">
     <div class="header__topbar">
         <div class="container p-relative d-flex space-between align-center">
@@ -13,12 +21,11 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
             ?>
                 <a class="h5 login-btn p-absolute" href="index.php?logout=1">ĐĂNG XUẤT</a>
             <?php
-            }
-            else{
+            } else {
             ?>
                 <a class="h5 login-btn p-absolute" href="index.php?page=login">ĐĂNG NHẬP</a>
             <?php
-            } 
+            }
             ?>
         </div>
     </div>
@@ -129,17 +136,22 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                 <div class="header__action d-flex align-center">
                     <div class="header__action--item d-flex align-center p-relative">
                         <form action="index.php?page=search" method="POST" class="d-flex align-center" id="search-box">
-                            <input type="text" placeholder="Tìm kiếm sản phẩm ..." name="keyword" class="search__input" required>
-                            <button type="submit"  name="search" class="header__action--link search-btn p-absolute d-inline-block">
+                            <input type="text" placeholder="Tìm kiếm sản phẩm ..." id="input-search" name="keyword" class="search__input" required>
+                            <button type="submit" name="search" class="header__action--link search-btn p-absolute d-inline-block">
                                 <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-search.svg" alt="search" />
                             </button>
-                            <button class="header__action--link voice-btn p-absolute d-inline-block">
-                                <img class="action__icon svg__icon d-block" src="./assets/images/icon/voice-icon.png" alt="search" />
+                            <button type="button" class="header__action--link voice-btn p-absolute d-inline-block" id="search-btn" onclick="voiceInput();">
+                                <img class="action__icon action__icon-off svg__icon d-block" src="./assets/images/icon/voice-icon.png" alt="search" />
+                                <img class="action__icon action__icon-on svg__icon d-none" src="./assets/images/icon/mic-on.png" alt="search" />
                             </button>
                         </form>
                     </div>
                     <div class="header__action--item align-center d-none md-flex">
-                        <a class="header__action--link d-inline-block" href="<?php if (isset($_SESSION['account_email'])) { echo "index.php?page=my_account&tab=account_info";} else { echo "index.php?page=login"; } ?>">
+                        <a class="header__action--link d-inline-block" href="<?php if (isset($_SESSION['account_email'])) {
+                                                                                    echo "index.php?page=my_account&tab=account_info";
+                                                                                } else {
+                                                                                    echo "index.php?page=login";
+                                                                                } ?>">
                             <img class="action__icon svg__icon d-block" src="./assets/images/icon/icon-person.svg" alt="person" />
                         </a>
                     </div>
@@ -167,3 +179,36 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
         <div class="header-nav-overlay"></div>
     </div>
 </header>
+<script>
+    function voiceInput() {
+        var inputSearch = document.getElementById('input-search');
+        var searchBtn = document.querySelector('.voice-btn');
+        // Tạo một đối tượng SpeechRecognition
+        const recognition = new webkitSpeechRecognition();
+        // Đặt thuộc tính cho đối tượng recognition
+        recognition.lang = 'vi-VN'; // Ngôn ngữ được nhận dạng
+        recognition.continuous = false; // Nhận dạng liên tục (true) hoặc một lần (false)
+
+        // Sự kiện khi nhận dạng giọng nói thành công
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            inputSearch.value = transcript; // In ra kết quả nhận dạng giọng nói
+        };
+
+        recognition.onstart = function() {
+            searchBtn.classList.add('recognizing'); // Thêm class để áp dụng hiệu ứng khi bắt đầu nhận dạng
+        };
+
+        recognition.onend = function() {
+            searchBtn.classList.remove('recognizing'); // Xóa class khi kết thúc nhận dạng
+        };
+
+        // Sự kiện khi xảy ra lỗi trong quá trình nhận dạng
+        recognition.onerror = function(event) {
+            console.error(event.error);
+        };
+
+        // Bắt đầu ghi âm và nhận dạng giọng nói
+        recognition.start();
+    }
+</script>

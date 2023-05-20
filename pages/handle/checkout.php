@@ -1,10 +1,15 @@
 <?php
 session_start();
 include('../../admin/config/config.php');
+require '../../carbon/autoload.php';
+
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+
 if (isset($_POST['checkout'])) {
     $account_id = $_SESSION['account_id'];
     $order_code = rand(0, 9999);
-    $order_date = date('Y-m-d', time());
+    $order_date = Carbon::now('Asia/Ho_Chi_Minh');
     $account_name = $_POST['account_name'];
     $account_address = $_POST['account_address'];
     $account_phone = $_POST['account_phone'];
@@ -44,10 +49,10 @@ if (isset($_POST['checkout'])) {
         }
         $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
         $query_total_amount = mysqli_query($mysqli, $update_total_amount);
+
         unset($_SESSION['cart']);
         header('Location:../../index.php?page=my_account&tab=account_order');
-    }
-    else {
+    } else {
         header('Location:../../index.php?page=404');
     }
 }

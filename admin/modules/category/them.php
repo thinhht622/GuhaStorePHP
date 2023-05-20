@@ -16,15 +16,11 @@
                 <form method="POST" action="modules/category/xuly.php" enctype="multipart/form-data">
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Tên danh mục</label>
-                        <input type="text" name="category_name" class="d-block form-control" value="" placeholder="collection name">
-                    </div>
-                    <div class="input-item form-group">
-                        <label for="keyword" class="d-block">Từ khóa phân loại</label>
-                        <input type="text" name="category_keyword" id="keyword" class="d-block form-control" value="" placeholder="keyword">
+                        <input type="text" name="category_name" class="d-block form-control" value="" placeholder="Nhập vào tên danh mục">
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Mô tả danh mục</label>
-                        <textarea class="d-block form-control" style="height: auto;" name="category_description" type="text" value="" placeholder="collection name"></textarea>
+                        <textarea class="d-block form-control" style="height: auto;" name="category_description" type="text" value=""></textarea>
                     </div>
                     <div class="input-item form-group">
                         <label for="image" class="d-block">Image</label>

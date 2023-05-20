@@ -34,7 +34,13 @@ if (isset($_GET['category_id'])) {
                             <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
                                 <img class="w-100 h-100 object-fit-cover" src="admin/modules/product/uploads/<?php echo $row['product_image'] ?>" alt="product image" />
                             </a>
-                            <span class="product__sale h6 p-absolute"> Sale </span>
+                            <?php
+                            if ($row['product_sale'] > 0) {
+                            ?>
+                                <span class="product__sale h6 p-absolute"> Sale <?php echo $row['product_sale'] ?>%</span>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <div class="product__info">
                             <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
@@ -76,7 +82,9 @@ if (isset($_GET['category_id'])) {
                         for ($i = 1; $i <= $totalpage; $i++) {
                         ?>
                             <li class="pagination__item">
-                                <a class="pagination__anchor <?php if ($page = $i) { echo "active"; } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
+                                <a class="pagination__anchor <?php if ($page = $i) {
+                                                                    echo "active";
+                                                                } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
                             </li>
                         <?php
                         }

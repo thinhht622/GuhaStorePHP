@@ -21,11 +21,11 @@ $query_account = mysqli_query($mysqli, $sql_account);
                             </div>
                             <div class="info__item d-flex">
                                 <label class="info__title" for="">Địa chỉ:</label>
-                                <input type="text" class="info__input flex-1" name="account_address" value="<?php echo $account['account_address'] ?>" readonly></input>
+                                <input type="text" class="info__input flex-1" name="account_address" value="" placeholder="Nhập vào địa chỉ nhận hàng"></input>
                             </div>
                             <div class="info__item d-flex">
                                 <label class="info__title" for="">Số điện thoại:</label>
-                                <input type="text" class="info__input flex-1" name="account_phone" value="<?php echo $account['account_phone'] ?>" readonly></input>
+                                <input type="text" class="info__input flex-1" name="account_phone" value="<?php echo $account['account_phone'] ?>"></input>
 
                             </div>
                             <div class="info__item d-flex">

@@ -10,9 +10,9 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                 <div class="main-pane-top d-flex space-between align-center">
                     <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm</h4>
                     <div class="input__search p-relative">
-                        <form class="search-form" action="#">
+                        <form class="search-form" action="?action=product&query=product_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" name="product_search" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
                     <a href="?action=product&query=product_add" class="btn btn-outline-dark btn-fw">Thêm sản phẩm</a>

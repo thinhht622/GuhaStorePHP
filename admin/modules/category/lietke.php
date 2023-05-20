@@ -29,7 +29,6 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                                 </th>
                                 <th></th>
                                 <th>Tiêu đề</th>
-                                <th>Từ khóa sắp xếp</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,7 +50,6 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                                     </td>
                                     <td><img src="modules/category/uploads/<?php echo $row['category_image'] ?>" alt=""></td>
                                     <td><?php echo $row['category_name'] ?></td>
-                                    <td><?php echo $row['category_keyword'] ?></td>
                                 </tr>
                             <?php
                             }

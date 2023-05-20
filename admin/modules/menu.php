@@ -29,9 +29,9 @@
             </a>
             <div class="collapse <?php if ($action === 'order') { echo "show"; } ?>" id="orders">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list">Đang xử lý</a></li>
-                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a></li>
-                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a></li>
+                    <li class="nav-item <?php if ($query === 'order_live') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_live">Đơn hàng tại quầy</a></li>
+                    <li class="nav-item <?php if ($query === 'order_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=order&query=order_list">Đơn hàng trực tuyến</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a></li>
                 </ul>
             </div>
         </li>
@@ -44,6 +44,7 @@
             <div class="collapse <?php if ($action === 'product' or $action === 'category') { echo "show"; } ?>" id="products">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item <?php if ($query === 'product_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=product&query=product_list">Danh sách sản phẩm</a></li>
+                    <li class="nav-item <?php if ($query === 'collection') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=collection&query=collection_list">Bộ sưu tập</a></li>
                     <li class="nav-item <?php if ($query === 'category_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=category&query=category_list">Danh mục sản phẩm</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Hàng tồn kho</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Thẻ quà tặng</a></li>

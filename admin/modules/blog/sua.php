@@ -1,52 +1,78 @@
 <?php
-$sql_category_edit = "SELECT * FROM category WHERE category_id = '$_GET[category_id]' LIMIT 1";
-$query_category_edit = mysqli_query($mysqli, $sql_category_edit);
+$sql_article_edit = "SELECT * FROM article WHERE article_id = '$_GET[article_id]' LIMIT 1";
+$query_article_edit = mysqli_query($mysqli, $sql_article_edit);
 ?>
 <div class="row" style="margin-bottom: 10px;">
     <div class="col d-flex" style="justify-content: space-between; align-items: flex-end;">
         <h3>
-            Sửa danh mục sản phẩm
+            Sửa bài viết
         </h3>
-        <a href="index.php?action=category&query=category_list" class="btn btn-outline-dark btn-fw">
+        <a href="index.php?action=article&query=article_list" class="btn btn-outline-dark btn-fw">
             <i class="mdi mdi-reply"></i>
             Quay lại
         </a>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" action="modules/category/xuly.php?category_id=<?php echo $_GET['category_id'] ?>">
-                    <?php
-                    while ($item = mysqli_fetch_array($query_category_edit)) {
-                    ?>
+<?php while ($row = mysqli_fetch_array($query_article_edit)) {
+?>
+    <form method="POST" action="modules/blog/xuly.php?article_id=<?php echo $row['article_id'] ?>" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-lg-8 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
                         <div class="input-item form-group">
-                            <label for="title" class="d-block">Tên danh mục</label>
-                            <input type="text" name="category_name" class="form-control" value="<?php echo $item['category_name'] ?>" placeholder="collection name">
+                            <label for="title" class="d-block">Tiêu đề bài viết</label>
+                            <input type="text" name="article_title" class="d-block form-control" value="<?php echo $row['article_title'] ?>" placeholder="">
                         </div>
                         <div class="input-item form-group">
-                            <label for="keyword" class="d-block">Từ khóa phân loại</label>
-                            <input type="text" name="category_keyword" id="keyword" class="form-control" value="<?php echo $item['category_keyword'] ?>" placeholder="keyword">
+                            <label for="title" class="d-block">Nội dung tóm tắt</label>
+                            <textarea name="article_summary"><?php echo $row['article_summary'] ?></textarea>
                         </div>
                         <div class="input-item form-group">
-                            <label for="title" class="d-block">Mô tả danh mục</label>
-                            <textarea class="form-control" name="category_description" type="text" value="" placeholder="collection name" style="height: auto;"><?php echo $item['category_description'] ?></textarea>
+                            <label for="title" class="d-block">Nội dung chính bài viết</label>
+                            <textarea name="article_content"><?php echo $row['article_content'] ?></textarea>
                         </div>
-                        <div class="input-item form-group">
-                            <label for="image" class="d-block">Image</label>
-                            <input type="file" name="category_image" value="<?php echo $row['category_image'] ?>">
-                            <img src="modules/category/uploads/<?php echo $item['category_image'] ?>" class="category_image" style="width: 100px; height: 100px;" alt="image">
-                        </div>
-                        <button type="submit" name="category_edit" class="btn btn-primary btn-icon-text">
+
+                        <button type="submit" name="article_edit" class="btn btn-primary btn-icon-text mg-t-16">
                             <i class="ti-file btn-icon-prepend"></i>
-                            Sửa
+                            Lưu lại
                         </button>
-                    <?php
-                    }
-                    ?>
-                </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="over-flow-hidden">
+                            <div class="main-pane-top">
+                            </div>
+                            <div class="input-item form-group">
+                                <label for="article_status" class="d-block">Trang thái</label>
+                                <select name="article_status" id="article_status" class="form-control">
+                                    <option value="0" <?php if ($row['article_status'] == 0) {
+                                                            echo "selected";
+                                                        } ?>>Bản nháp</option>
+                                    <option value="1" <?php if ($row['article_status'] == 1) {
+                                                            echo "selected";
+                                                        } ?>>Xuất bản</option>
+                                </select>
+                            </div>
+                            <div class="input-item form-group">
+                                <label for="image" class="">Image</label>
+                                <img src="modules/blog/uploads/<?php echo $row['article_image'] ?>" class="article__image w-100 h-100" style="width: 100px; height: 100px;" alt="image">
+                                <input type="file" name="article_image" value="<?php echo $row['article_image'] ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+    
+<?php
+}
+?>
+<script>
+    CKEDITOR.replace('article_summary');
+    CKEDITOR.replace('article_content');
+</script>

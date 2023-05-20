@@ -18,7 +18,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="product-detail__slide-control d-flex justify-center">
+                        <div class="product-detail__slide-control d-flex justify-center md-none">
                             <div class="slide-control__slide p-relative">
                                 <button class="slide-control__slide--prev cursor-pointer p-absolute">
                                     <img src="./assets/images/icon/chevron-left.svg" alt="sub" />
@@ -38,7 +38,13 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 <div class="product-detail__price d-flex align-center">
                                     <del class="product__price--old h5"><?php echo number_format($row_product_detail['product_price']) . ' ₫' ?></del>
                                     <span class="product__price--new h4"><?php echo (number_format($row_product_detail['product_price'] - ($row_product_detail['product_price'] / 100 * $row_product_detail['product_sale']))) . ' ₫' ?></span>
-                                    <span class="product__sale h6"> Sale </span>
+                                    <?php
+                                    if ($row_product_detail['product_sale'] > 0) {
+                                    ?>
+                                        <span class="product__sale h6"> Sale <?php echo $row_product_detail['product_sale'] ?>%</span>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div class="product-detail__quantity">
                                     <h3 class="quantity__heading h6">Số lượng</h3>
@@ -56,11 +62,11 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                     </div>
                                 </div>
                                 <?php if ($row_product_detail['product_quantity'] > 0) { ?>
-                                <input class="btn product-detail__addtocart w-100" type="submit" name="addtocart" value="Thêm giỏ hàng" />
+                                    <input class="btn product-detail__addtocart w-100" type="submit" name="addtocart" value="Thêm giỏ hàng" />
 
-                                <input class="btn product-detail__buynow w-100" type="submit" name="buynow" value="Mua ngay" />
+                                    <input class="btn product-detail__buynow w-100" type="submit" name="buynow" value="Mua ngay" />
                                 <?php } else { ?>
-                                <a href="tel:+84878398141" class="btn product-detail__buynow w-100 text-center">Liên hệ</a>
+                                    <a href="tel:+84878398141" class="btn product-detail__buynow w-100 text-center">Liên hệ</a>
                                 <?php } ?>
                                 <div class="product-detail__description">
                                     <?php echo $row_product_detail['product_description'] ?>

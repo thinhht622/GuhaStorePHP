@@ -17,17 +17,13 @@ $query_category_edit = mysqli_query($mysqli, $sql_category_edit);
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="modules/category/xuly.php?category_id=<?php echo $_GET['category_id'] ?>">
+                <form method="POST" action="modules/category/xuly.php?category_id=<?php echo $_GET['category_id'] ?>" enctype="multipart/form-data">
                     <?php
                     while ($item = mysqli_fetch_array($query_category_edit)) {
                     ?>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Tên danh mục</label>
                             <input type="text" name="category_name" class="form-control" value="<?php echo $item['category_name'] ?>" placeholder="collection name">
-                        </div>
-                        <div class="input-item form-group">
-                            <label for="keyword" class="d-block">Từ khóa phân loại</label>
-                            <input type="text" name="category_keyword" id="keyword" class="form-control" value="<?php echo $item['category_keyword'] ?>" placeholder="keyword">
                         </div>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Mô tả danh mục</label>
