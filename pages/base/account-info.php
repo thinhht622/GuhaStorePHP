@@ -23,11 +23,6 @@ $query_account = mysqli_query($mysqli, $sql_account);
                 <label class="info__title" for="">Số điện thoại:</label>
                 <span class="info__content flex-1"><?php echo $account['account_phone'] ?></span>
             </div>
-            <div class="info__item d-flex">
-                <label class="info__title" for="">Địa chỉ:</label>
-                <span class="info__content flex-1"><?php echo $account['account_address'] ?></span>
-            </div>
-
         <?php
         }
         ?>

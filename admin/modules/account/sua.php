@@ -22,20 +22,41 @@ $query_account_edit = mysqli_query($mysqli, $sql_account_edit);
                     while ($item = mysqli_fetch_array($query_account_edit)) {
                     ?>
                         <div class="input-item form-group">
-                            <label for="title" class="d-block">Tên danh mục</label>
+                            <label for="title" class="d-block">Tên tài khoản</label>
                             <input type="text" name="account_name" class="form-control" value="<?php echo $item['account_name'] ?>">
                         </div>
                         <div class="input-item form-group">
                             <label for="email" class="d-block">Email</label>
-                            <input type="text" name="account_email" id="email" class="form-control" value="<?php echo $item['account_email'] ?>">
+                            <input type="text" name="account_email" id="email" class="form-control" value="<?php echo $item['account_email'] ?>" disabled>
                         </div>
                         <div class="input-item form-group">
-                            <label for="phone" class="d-block">Phone</label>
+                            <label for="phone" class="d-block">Số điện thoại</label>
                             <input type="text" name="account_phone" id="phone" class="form-control" value="<?php echo $item['account_phone'] ?>">
                         </div>
                         <div class="input-item form-group">
-                            <label for="email" class="d-block">Email</label>
-                            <input type="text" name="account_email" id="email" class="form-control" value="<?php echo $item['account_address'] ?>">
+                            <label for="account_type" class="d-block">Quyền hạn</label>
+                            <select name="account_type" id="account_type" class="form-control">
+                                <option value="0" <?php if ($item['account_type'] == 0) {
+                                                        echo "selected";
+                                                    } ?>>Khách hàng</option>
+                                <option value="1" <?php if ($item['account_type'] == 1) {
+                                                        echo "selected";
+                                                    } ?>>Nhân viên</option>
+                                <option value="2" <?php if ($item['account_type'] == 2) {
+                                                        echo "selected";
+                                                    } ?>>Quản trị viên</option>
+                            </select>
+                        </div>
+                        <div class="input-item form-group">
+                            <label for="title" class="d-block">Tình trạng</label>
+                            <select name="account_status" id="account_status" class="form-control">
+                                <option value="0" <?php if ($item['account_status'] == 0) {
+                                                        echo "selected";
+                                                    } ?>>Đang hoạt động</option>
+                                <option value="-1" <?php if ($item['account_status'] == -1) {
+                                                        echo "selected";
+                                                    } ?>>Tạm khóa</option>
+                            </select>
                         </div>
                         <button type="submit" name="account_edit" class="btn btn-primary btn-icon-text">
                             <i class="ti-file btn-icon-prepend"></i>

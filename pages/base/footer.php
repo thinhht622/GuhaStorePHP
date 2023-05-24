@@ -23,15 +23,15 @@
                 <div class="col" style="--w-md: 4">
                     <div class="footer__block pd-top">
                         <div class="block__heading">
-                            Bộ sưu tập
+                            Thương hiệu
                         </div>
                         <ul class="block__list">
                             <?php
-                            $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
-                            $query_category_list = mysqli_query($mysqli, $sql_category_list);
-                            while ($row_category = mysqli_fetch_array($query_category_list)) {
+                            $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id DESC";
+                            $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
+                            while ($row_brand = mysqli_fetch_array($query_brand_list)) {
                             ?>
-                                <li class="block__item"><a class="footer__anchor" href="index.php?page=product_category&category_id=<?php echo $row_category['category_id'] ?>"><?php echo $row_category['category_name'] ?></a></li>
+                                <li class="block__item"><a class="footer__anchor" href="index.php?page=product_brand&brand_id=<?php echo $row_brand['brand_id'] ?>"><?php echo $row_brand['brand_name'] ?></a></li>
                             <?php
                             }
                             ?>
@@ -41,7 +41,7 @@
                 <div class="col" style="--w-md: 4">
                     <div class="footer__block pd-top">
                         <div class="footer__logo">
-                            <img src="./assets/images/logo/logo.png" alt="logo">
+                            <img src="./assets/images/logo/logo_guha.png" alt="logo">
                         </div>
                     </div>
                 </div>

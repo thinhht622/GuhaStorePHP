@@ -1,5 +1,5 @@
 <?php
-$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_id DESC;";
+$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_quantity ASC;";
 $query_product_list = mysqli_query($mysqli, $sql_product_list);
 ?>
 
@@ -8,14 +8,14 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="card">
             <div class="card-body">
                 <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm</h4>
+                    <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm tồn kho</h4>
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=product&query=product_search" method="POST">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" name="product_search" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=product&query=product_add" class="btn btn-outline-dark btn-fw">Thêm sản phẩm</a>
+                    <a href="?action=inventory&query=inventory_list" class="btn btn-outline-dark btn-fw">Nhập thêm sản phẩm</a>
                 </div>
 
 
@@ -29,10 +29,9 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                 </th>
                                 <th></th>
                                 <th>Tên sản phẩm</th>
-                                <th>Danh mục</th>
+                                <th>Số lượng tồn</th>
+                                <th>Giá bán</th>
                                 <th>Tình trạng</th>
-                                <th>Giá bán sản phẩm</th>
-                                <th>Sale</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,25 +53,24 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                     </td>
                                     <td><img src="modules/product/uploads/<?php echo $row['product_image'] ?>" class="product_image" alt="image"></td>
                                     <td><?php echo $row['product_name'] ?></td>
-                                    <td><?php echo $row['category_name'] ?></td>
+                                    <td><?php echo $row['product_quantity'] ?></td>
+                                    <td><?php echo number_format($row['product_price']) . ' ₫' ?></td>
                                     <td>
                                         <?php if ($row['product_status'] == 1) {
                                         ?>
                                             <div class="product__status product__status--active">
-                                                <span class="show-status">Đang bán</span>
+                                                <span class="show-status">Active</span>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
                                             <div class="product__status product__status--pause">
-                                                <span class="show-status">Dừng bán</span>
+                                                <span class="show-status">Pause</span>
                                             </div>
                                         <?php
                                         }
                                         ?>
                                     </td>
-                                    <td class="<?php if($row['product_price'] < $row['product_price_import']) { echo "text-danger"; } ?>"><?php echo number_format($row['product_price']) . ' ₫' ?></td>
-                                    <td><?php echo $row['product_sale'] ?>%</td>
                                 </tr>
                             <?php
                             }

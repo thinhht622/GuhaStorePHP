@@ -25,11 +25,6 @@ $query_account = mysqli_query($mysqli, $sql_account);
                     <label class="info__title" for="">Số điện thoại:</label>
                     <input class="info__content flex-1" name="account_phone" value="<?php echo $account['account_phone'] ?>">
                 </div>
-                <div class="info__item d-flex">
-                    <label class="info__title" for="">Địa chỉ:</label>
-                    <input class="info__content flex-1" name="account_address" value="<?php echo $account['account_address'] ?>">
-                </div>
-
             <?php
             }
             ?>

@@ -11,7 +11,10 @@ if (!isset($_SESSION['login'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Star Admin2 </title>
+  <title>Admin</title>
+
+  <link rel="shortcut icon" href="../assets/images/icon/favicon.ico"/>
+
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
@@ -30,6 +33,8 @@ if (!isset($_SESSION['login'])) {
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+
+  <script src="https://kit.fontawesome.com/a2e1cc550d.js" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
@@ -84,14 +89,30 @@ if (!isset($_SESSION['login'])) {
   <script src="js/Chart.roundedBarCharts.js"></script>
   <!-- End custom js for this page-->
 
+
   <!-- morris dashboard -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
   <script>
-    $(document).ready(function(){
+    var donut = new Morris.Donut({
+        element: 'donutchart',
+        data: [{
+            label: "Đơn hàng tại quầy",
+            value: 10
+          },
+          {
+            label: "Đơn hàng online",
+            value: 30
+          },
+          {
+            label: "Đơn hàng hủy",
+            value: 2
+          }
+        ]
+      });
+    $(document).ready(function() {
 
       thongke();
-
       var char = new Morris.Line({
 
         element: 'linechart',
@@ -99,30 +120,29 @@ if (!isset($_SESSION['login'])) {
         xkey: 'date',
 
         ykeys: ['date', 'order', 'sales', 'quantity'],
-        
-        labels: ['Ngày','Đơn hàng', 'Doanh thu', 'Số lượng']
+
+        labels: ['Ngày', 'Đơn hàng', 'Doanh thu', 'Số lượng']
       });
 
-      $('#select-date').change(function(){
+      $('#select-date').change(function() {
         var thoigian = $(this).val();
         if (thoigian == '7ngay') {
           var text = '7 ngày qua';
-        } 
-        else if (thoigian == '28ngay') {
+        } else if (thoigian == '28ngay') {
           var text = '28 ngày qua';
-        } 
-        else if (thoigian == '90ngay') {
+        } else if (thoigian == '90ngay') {
           var text = '90 ngày qua';
-        } 
-        else {
+        } else {
           var text = '90 ngày qua';
         }
         $('#text-date').text(text);
         $.ajax({
-          url:"modules/thongke.php",
-          method:"POST",
-          dataType:"JSON",
-          data: {thoigian:thoigian},
+          url: "modules/thongke.php",
+          method: "POST",
+          dataType: "JSON",
+          data: {
+            thoigian: thoigian
+          },
           success: function(data) {
             char.setData(data);
             $('#text-date').text(text);
@@ -133,9 +153,9 @@ if (!isset($_SESSION['login'])) {
       function thongke() {
         var text = '365 ngày qua';
         $.ajax({
-          url:"modules/thongke.php",
-          method:"POST",
-          dataType:"JSON",
+          url: "modules/thongke.php",
+          method: "POST",
+          dataType: "JSON",
 
           success: function(data) {
             char.setData(data);

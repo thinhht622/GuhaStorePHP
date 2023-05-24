@@ -4,7 +4,7 @@ $sql_order_detail_list = "SELECT od.order_detail_id, p.product_id, p.product_nam
 $query_order_detail_list = mysqli_query($mysqli, $sql_order_detail_list);
 
 //Lay ra thong tin don hang
-$sql_order = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_code = '" . $order_code . "' ORDER BY orders.order_id DESC";
+$sql_order = "SELECT * FROM orders JOIN delivery ON orders.delivery_id = delivery.delivery_id WHERE orders.order_code = '" . $order_code . "' ORDER BY orders.order_id DESC";
 $query_order = mysqli_query($mysqli, $sql_order);
 ?>
 
@@ -37,24 +37,23 @@ $query_order = mysqli_query($mysqli, $sql_order);
                                 ?>
                                     <div class="info__item d-flex">
                                         <label class="info__title" for="">Tên khách hàng:</label>
-                                        <input type="text" class="info__input flex-1" name="account_name" value="<?php echo $account['account_name'] ?>" readonly></input>
+                                        <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['delivery_name'] ?>" readonly></input>
                                     </div>
                                     <div class="info__item d-flex">
                                         <label class="info__title" for="">Địa chỉ:</label>
-                                        <input type="text" class="info__input flex-1" name="account_address" value="<?php echo $account['account_address'] ?>" readonly></input>
+                                        <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['delivery_address'] ?>" readonly></input>
                                     </div>
                                     <div class="info__item d-flex">
                                         <label class="info__title" for="">Số điện thoại:</label>
-                                        <input type="text" class="info__input flex-1" name="account_phone" value="<?php echo $account['account_phone'] ?>" readonly></input>
-
+                                        <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['delivery_phone'] ?>" readonly></input>
+                                    </div>
+                                    <div class="info__item d-flex">
+                                        <label class="info__title" for="">Ghi chú:</label>
+                                        <input type="text" class="info__input flex-1" name="delivery_note" value="<?php echo $account['delivery_note'] ?>" readonly></input>
                                     </div>
                                     <div class="info__item d-flex">
                                         <label for="" class="info__title" for="order_type">Phương thức:</label>
-                                        <input type="text" class="info__input flex-1" name="account_phone" value="<?php if ($account['order_type'] == 0) {
-                                                                                                                        echo "Thanh toán khi nhận hàng";
-                                                                                                                    } else {
-                                                                                                                        echo "Thanh toán chuyển khoản";
-                                                                                                                    } ?>" readonly></input>
+                                        <input type="text" class="info__input flex-1" name="order_type" value="<?php echo format_order_type($account['order_type']) ?>"></input>
                                     </div>
                                 <?php
                                 }
@@ -89,7 +88,7 @@ $query_order = mysqli_query($mysqli, $sql_order);
                             </div>
                         </div>
                     </div>
-                    <a href="modules/order/indonhang.php?order_code=<?php echo $order_code ?>" target="_blank" class="btn btn-outline-dark btn-fw">In Hóa Đơn</a>
+                    <a href="modules/order/indonhang2.php?order_code=<?php echo $order_code ?>" target="_blank" class="btn btn-outline-dark btn-fw">In Hóa Đơn</a>
                 </div>
             </div>
         </div>

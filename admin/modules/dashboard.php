@@ -7,6 +7,7 @@
 
                 </div>
                 <select id="select-date">
+                    <option value="">Chọn thời gian</option>
                     <option value="7ngay">7 ngày qua</option>
                     <option value="28ngay">28 ngày qua</option>
                     <option value="90ngay">90 ngày qua</option>

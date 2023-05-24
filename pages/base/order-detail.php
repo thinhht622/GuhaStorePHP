@@ -1,14 +1,12 @@
 <?php
-$account_id = $_SESSION['account_id'];
-$sql_account = "SELECT * FROM account WHERE account_id = '" . $account_id . "'";
-$query_account = mysqli_query($mysqli, $sql_account);
 $order_code = $_GET['order_code'];
 $sql_order_detail_list = "SELECT od.order_detail_id, p.product_id, p.product_name, od.product_quantity, od.product_price, od.product_sale, p.product_image FROM order_detail od JOIN product p ON od.product_id = p.product_id WHERE od.order_code = '" . $order_code . "' ORDER BY od.order_detail_id DESC";
 $query_order_detail_list = mysqli_query($mysqli, $sql_order_detail_list);
 
-$sql_get_order = "SELECT * FROM orders WHERE order_code = $order_code LIMIT 1";
-$query_get_order = mysqli_query($mysqli, $sql_get_order);
-$order = mysqli_fetch_array($query_get_order);
+//Lay ra thong tin don hang
+$sql_order = "SELECT * FROM orders JOIN delivery ON orders.delivery_id = delivery.delivery_id WHERE orders.order_code = '" . $order_code . "' ORDER BY orders.order_id DESC";
+$query_order = mysqli_query($mysqli, $sql_order);
+$order = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM orders WHERE  order_code = '" . $order_code . "'"));
 ?>
 <section class="checkout pd-section">
     <div class="container">
@@ -17,24 +15,27 @@ $order = mysqli_fetch_array($query_get_order);
                 <h2 class="checkout__title h4 d-flex align-center space-between">Thông tin khách hàng</h2>
                     <div class="checkout__infomation">
                         <?php
-                        while ($account = mysqli_fetch_array($query_account)) {
+                        while ($account = mysqli_fetch_array($query_order)) {
                         ?>
                             <div class="info__item d-flex">
-                                <label class="info__title" for="">Tên khách hàng:</label>
-                                <input type="text" class="info__input flex-1" name="account_name" value="<?php echo $account['account_name'] ?>" readonly></input>
-                            </div>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="">Địa chỉ:</label>
-                                <input type="text" class="info__input flex-1" name="account_address" value="<?php echo $account['account_address'] ?>" readonly></input>
+                                <label class="info__title" for="delivery_name">Tên khách hàng:</label>
+                                <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['delivery_name'] ?>" readonly></input>
                             </div>
                             <div class="info__item d-flex">
                                 <label class="info__title" for="">Số điện thoại:</label>
-                                <input type="text" class="info__input flex-1" name="account_phone" value="<?php echo $account['account_phone'] ?>" readonly></input>
-
+                                <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['delivery_phone'] ?>" readonly></input>
+                            </div>
+                            <div class="info__item d-flex">
+                                <label class="info__title" for="">Địa chỉ:</label>
+                                <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['delivery_address'] ?>" readonly></input>
+                            </div>
+                            <div class="info__item d-flex">
+                                <label class="info__title" for="">Ghi chú</label>
+                                <input type="text" class="info__input flex-1" name="delivery_note" value="<?php echo $account['delivery_note'] ?>" readonly></input>
                             </div>
                             <div class="info__item d-flex">
                                 <label class="info__title" for="order_type">Phương thức:</label>
-                                <input type="text" class="info__input flex-1" name="order_type" value="<?php echo format_type($account['account_phone'])?>" readonly></input>
+                                <input type="text" class="info__input flex-1" name="order_type" value="<?php echo format_order_type($account['order_type'])?>" readonly></input>
                             </div>
                         <?php
                         }

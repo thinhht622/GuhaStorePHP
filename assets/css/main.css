@@ -1507,6 +1507,20 @@ h6,
 .checkout__total {
 }
 
+.payment__title {
+  padding: 10px 0;
+  opacity: .75;
+}
+
+.payment__item {
+  height: 30px;
+}
+
+.payment__item .form-check-input {
+  margin-right: 10px;
+}
+
+
 /* === pagination === */
 .pagination {
   margin-top: 20px;

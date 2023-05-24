@@ -1,18 +1,22 @@
 <?php
-function format_type($value)
+function format_order_type($value)
 {
   $text = '';
   if ($value == 0) {
-    echo "Chờ thanh toán";
+    echo "Thanh toán tiền mặt";
   } elseif ($value == 1) {
-    echo "Đã thanh toán online";
-  } else {
-    echo "COD";
+    echo "Chuyển khoản";
+  } elseif ($value == 2) {
+    echo "MoMo";
+  } elseif ($value == 3) {
+    echo "VNPAY";
+  } elseif ($value == 4) {
+    echo "Mua hàng trực tiếp";
   }
   echo $text;
 }
 
-function format_status($value)
+function format_order_status($value)
 {
   $text = '';
   if ($value == -1) {
@@ -44,9 +48,12 @@ function format_account_type($value)
 {
   $text = '';
   if ($value == 0) {
-    $text = 'Customer';
-  } else {
-    $text = 'Admin';
+    $text = 'Khách hàng';
+  } elseif ($value == 1) {
+    $text = 'Nhân viên';
+  } 
+  else {
+    $text = 'Quản trị viên';
   }
   echo $text;
 }

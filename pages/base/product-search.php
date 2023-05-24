@@ -53,7 +53,7 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="row">
             <div class="col">
                 <div class="text-center pd-top">
-                    <a class="btn btn__view--all btn__outline" href="index.php?page=product_category">View all</a>
+                    <a class="btn btn__view--all btn__outline" href="index.php?page=product_category">Xem tất cả</a>
                 </div>
             </div>
         </div>

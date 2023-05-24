@@ -38,6 +38,9 @@ include("./pages/base/header.php");
     elseif ($action == 'checkout'){
         include("./pages/main/checkout.php");
     }
+    elseif ($action == 'thankiu'){
+        include("./pages/main/thankiu.php");
+    }
     elseif ($action == 'login'){
         include("./pages/main/login.php");
     }

@@ -1,6 +1,11 @@
 <?php
-$sql_account_list = "SELECT * FROM account ORDER BY account_id DESC";
-$query_account_list = mysqli_query($mysqli, $sql_account_list);
+if (isset($_POST['account_keyword'])) {
+    $sql_account_list = "SELECT * FROM account WHERE account_email LIKE '%".$_POST['account_keyword']."%' ORDER BY account_type DESC";
+    $query_account_list = mysqli_query($mysqli, $sql_account_list);
+} else {
+    $sql_account_list = "SELECT * FROM account ORDER BY account_type DESC";
+    $query_account_list = mysqli_query($mysqli, $sql_account_list);
+}
 ?>
 
 <div class="row">
@@ -10,15 +15,12 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                 <div class="main-pane-top d-flex space-between align-center">
                     <h4 class="card-title" style="margin: 0;">Danh sách tài khoản</h4>
                     <div class="input__search p-relative">
-                        <form class="search-form" action="#">
+                        <form class="search-form" action="" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" name="account_keyword" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=account&query=account_add" class="btn btn-outline-dark btn-fw">Thêm tài khoản</a>
                 </div>
-
-
                 <div class="table-responsive">
                     <table class="table table-hover table-action">
                         <thead>
@@ -31,7 +33,6 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                                 <th>Email</th>
                                 <th>Loại tài khoản</th>
                                 <th>Tình trạng</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +43,17 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                             ?>
                                 <tr>
                                     <td>
-                                        <a href="?action=account&query=account_edit&account_id=<?php echo $row['account_id'] ?>">
-                                            <div class="icon-edit">
-                                                <img class="w-100 h-100" src="images/icon-edit.png" alt="">
-                                            </div>
-                                        </a>
+                                        <?php
+                                        if (isset($_SESSION['account_type']) && $_SESSION['account_type'] == 2) {
+                                        ?>
+                                            <a href="?action=account&query=account_edit&account_id=<?php echo $row['account_id'] ?>">
+                                                <div class="icon-edit">
+                                                    <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                                </div>
+                                            </a>
+                                        <?php
+                                        }
+                                        ?>
                                     </td>
                                     <td>
                                         <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['account_id'] ?>">
@@ -55,9 +62,6 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
                                     <td><?php echo $row['account_email'] ?></td>
                                     <td><?php echo format_account_type($row['account_type']) ?></td>
                                     <td><?php echo format_account_status($row['account_status']) ?></td>
-                                    <td>
-                                        <a href="modules/account/xuly.php?account_id=<?php echo $row['account_id'] ?>">Delete</a>
-                                    </td>
                                 </tr>
                             <?php
                             }
@@ -69,12 +73,12 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
         </div>
     </div>
 </div>
-<div class="dialog__control">
+<!-- <div class="dialog__control">
     <div class="control__box">
         <a href="" class="button__control" id="btnDelete">Tạm khóa</a>
         <a href="" class="button__control" id="btnEdit">Sửa</a>
     </div>
-</div>
+</div> -->
 <script>
     var url;
     var btnDelete = document.getElementById("btnDelete");
@@ -121,6 +125,6 @@ $query_account_list = mysqli_query($mysqli, $sql_account_list);
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnDelete.href = "modules/product/xuly.php?data="+ JSON.stringify(checkedIds);
+        btnDelete.href = "modules/product/xuly.php?data=" + JSON.stringify(checkedIds);
     }
 </script>

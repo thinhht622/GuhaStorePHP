@@ -1,6 +1,8 @@
 <?php
     if (isset($_GET['logout']) && $_GET['logout'] == 1) {
         unset($_SESSION['login']);
+        unset($_SESSION['account_name']);
+        unset($_SESSION['account_type']);
         header('Location:login.php');
     }
 ?>
@@ -12,11 +14,8 @@
             </button>
         </div>
         <div>
-            <a class="navbar-brand brand-logo" href="index.html">
-                <img src="images/logo.svg" alt="logo" />
-            </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
-                <img src="images/logo-mini.svg" alt="logo" />
+            <a class="navbar-brand brand-logo" href="index.php?action=home&query">
+                <img src="images/logoadmin.png" alt="logo" />
             </a>
         </div>
     </div>

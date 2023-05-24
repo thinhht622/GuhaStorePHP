@@ -89,6 +89,18 @@
   flex: 1;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .align-center {
   align-items: center;
 }
@@ -194,6 +206,10 @@
 
 .product__image {
   padding: 0 30px 30px 30px;
+}
+
+table tfoot {
+  border-top: solid 1px #e4e4e4;
 }
 
 /* checkout */
@@ -415,4 +431,63 @@
 .btn__sale {
   text-align: right;
   margin-top: 10px;
+}
+
+
+.receipt__info {
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 1px #e4e4e4;
+}
+
+.receipt__info td {
+}
+
+.receipt__table {
+  border-top: solid 1px #e4e4e4;
+}
+
+.receipt__table thead th {
+  border: solid 1px #e4e4e4;
+}
+
+.receipt__table tbody td {
+  border: solid 1px #e4e4e4;
+}
+
+.receipt__info--input {
+  border: none;
+}
+
+/* === home === */
+.box-title {
+  font-size: 16px;
+}
+
+.box-number {
+  display: block;
+  padding: 10px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.color-t-red {
+  color: #fa7642;
+}
+
+.color-t-yellow {
+  color: #faee42;
+}
+
+.color-t-blue {
+  color: #42a7fa;
+}
+
+.color-t-green {
+  color: #61fa42;
+}
+
+.color-t-orange {
+  color: #fab042;
 }

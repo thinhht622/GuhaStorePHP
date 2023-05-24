@@ -7,10 +7,10 @@
             <div class="image-text__text" style="--w:12; --w-md: 6;">
                 <div class="image-text__box h-100 d-flex content__middle-left">
                     <div class="image-text__content text-left">
-                        <h2 class="image-text__title h2">Image with text</h2>
-                        <p class="image-text__context h4">Mô tả về banner này nội dung gì đó</p>
+                        <h2 class="image-text__title h2">Nước hoa chanel</h2>
+                        <p class="image-text__context h4">Thương hiệu hiệu nước hoa bán chạy hàng đầu</p>
                         <a href="#" class="image-text__btn btn btn__outline">
-                            View now
+                            Xem ngay
                         </a>
                     </div>
                 </div>

@@ -1,5 +1,8 @@
 <?php
-$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_id DESC;";
+if (isset($_POST['product_search'])) {
+    $keyword = $_POST['product_search'];
+}
+$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product_name LIKE '%" . $keyword . "%'";
 $query_product_list = mysqli_query($mysqli, $sql_product_list);
 ?>
 
@@ -10,7 +13,7 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                 <div class="main-pane-top d-flex space-between align-center">
                     <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm</h4>
                     <div class="input__search p-relative">
-                        <form class="search-form" action="?action=product&query=product_search" method="POST">
+                        <form class="search-form" action="" method="POST">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" name="product_search" placeholder="Search Here" title="Search here">
                         </form>
@@ -59,19 +62,19 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                         <?php if ($row['product_status'] == 1) {
                                         ?>
                                             <div class="product__status product__status--active">
-                                                <span class="show-status">Đang bán</span>
+                                                <span class="show-status">Active</span>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
                                             <div class="product__status product__status--pause">
-                                                <span class="show-status">Dừng bán</span>
+                                                <span class="show-status">Pause</span>
                                             </div>
                                         <?php
                                         }
                                         ?>
                                     </td>
-                                    <td class="<?php if($row['product_price'] < $row['product_price_import']) { echo "text-danger"; } ?>"><?php echo number_format($row['product_price']) . ' ₫' ?></td>
+                                    <td><?php echo number_format($row['product_price']) . ' ₫' ?></td>
                                     <td><?php echo $row['product_sale'] ?>%</td>
                                 </tr>
                             <?php

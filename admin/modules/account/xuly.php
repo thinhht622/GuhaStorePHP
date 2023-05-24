@@ -1,10 +1,15 @@
 <?php
     include('../../config/config.php');
-    $category_id = $_GET['category_id'];
-    $category_name = $_POST['category_name'];
-    $category_keyword = $_POST['category_keyword'];
-    $category_description = $_POST['category_description'];
-    $category_image = $_FILES['category_image']['name'];
-    $category_image_tmp = $_FILES['category_image']['tmp_name'];
-    $category_image = $_FILES['category_image']['name'];
+    $account_id = $_GET['account_id'];
+    $account_name = $_POST['account_name'];
+    $account_phone = $_POST['account_phone'];
+    $account_type = $_POST['account_type'];
+    $account_status = $_POST['account_status'];
+
+    if (isset($_POST['account_edit'])) {
+        $sql_update_account = "UPDATE account SET account_name = '$account_name', account_phone = '$account_phone', account_type = $account_type, account_status = $account_status WHERE account_id = $account_id";
+        $query_update_account = mysqli_query($mysqli, $sql_update_account);
+        header('Location:../../index.php?action=account&query=account_list');
+    }
+
 ?>

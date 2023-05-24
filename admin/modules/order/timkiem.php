@@ -69,8 +69,8 @@ if (isset($_POST['order_search'])) {
                                     <td><?php echo $row['order_code'] ?></td>
                                     <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
-                                    <td><?php echo format_type($row['order_type']); ?></td>
-                                    <td><?php echo format_status($row['order_status']); ?></td>
+                                    <td><?php echo format_order_type($row['order_type']); ?></td>
+                                    <td><?php echo format_order_status($row['order_status']); ?></td>
                                 </tr>
                             <?php
                             }

@@ -21,6 +21,9 @@
         elseif ($action == 'order' && $query == 'order_add') {
             include("./modules/order/them.php");
         }
+        elseif ($action == 'order' && $query == 'order_add') {
+            include("./modules/order/them.php");
+        }
         elseif ($action == 'order' && $query == 'order_search') {
             include("./modules/order/timkiem.php");
         }
@@ -57,6 +60,9 @@
         elseif($action =='product' && $query == 'product_search') {
             include("./modules/product/timkiem.php");
         }
+        elseif($action =='product' && $query == 'product_inventory') {
+            include("./modules/product/tonkho.php");
+        }
         elseif($action =='account' && $query == 'my_account') {
             include("./modules/account/my_account.php");
         }
@@ -78,8 +84,32 @@
         elseif($action =='article' && $query == 'article_edit') {
             include("./modules/blog/sua.php");
         }
-        else {
+        elseif($action =='brand' && $query == 'brand_list') {
+            include("./modules/brand/lietke.php");
+        }
+        elseif($action =='brand' && $query == 'brand_add') {
+            include("./modules/brand/them.php");
+        }
+        elseif($action =='brand' && $query == 'brand_edit') {
+            include("./modules/brand/sua.php");
+        }
+        elseif($action =='customer' && $query == 'customer_list') {
+            include("./modules/customer/lietke.php");
+        }
+        elseif($action =='inventory' && $query == 'inventory_list') {
+            include("./modules/inventory/lietke.php");
+        }
+        elseif($action =='inventory' && $query == 'inventory_add') {
+            include("./modules/inventory/them.php");
+        }
+        elseif($action =='inventory' && $query == 'inventory_detail') {
+            include("./modules/inventory/chitiet.php");
+        }
+        elseif($action =='dashboard' && $query == 'dashboard') {
             include("./modules/dashboard.php");
+        }
+        else {
+            include("./modules/home.php");
         }
         ?>
     </div>

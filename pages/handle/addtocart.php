@@ -12,7 +12,6 @@
 			}else{
 				$total_count = $cart_item['product_quantity'] + 1;
 				if($cart_item['product_quantity']<=20){
-					
 					$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$total_count,'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 				}else{
 					$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
@@ -73,7 +72,7 @@
 						$found = true;
 					}else{
 						//neu du lieu khong trung
-						$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$product_quantity,'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
+						$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 					}
 				}
 				if($found == false){
@@ -110,7 +109,7 @@
 						$found = true;
 					}else{
 						//neu du lieu khong trung
-						$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$product_quantity,'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
+						$product[]= array('product_id'=>$cart_item['product_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 					}
 				}
 				if($found == false){

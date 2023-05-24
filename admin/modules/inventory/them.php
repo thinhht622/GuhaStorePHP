@@ -1,13 +1,13 @@
 <?php
-//  unset($_SESSION['order']);
-$order_code = rand(0, 9999);
+//  unset($_SESSION['inventory']);
+$inventory_code = rand(0, 9999);
 ?>
 <div class="row" style="margin-bottom: 10px;">
     <div class="col d-flex" style="justify-content: space-between; align-items: flex-end;">
         <h3>
-            Thông tin đơn hàng
+            Thông tin nhập kho
         </h3>
-        <a href="index.php?action=order&query=order_live" class="btn btn-outline-dark btn-fw">
+        <a href="index.php?action=inventory&query=inventory_list" class="btn btn-outline-dark btn-fw">
             <i class="mdi mdi-reply"></i>
             Quay lại
         </a>
@@ -17,26 +17,29 @@ $order_code = rand(0, 9999);
     <div class="col-lg-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form action="modules/order/xuly.php" method="POST">
+                <form action="modules/inventory/xuly.php" method="POST">
                     <div class="receipt">
                         <div class="receipt__header text-center">
-                            <h3 class="receipt__title">Đơn hàng</h3>
-                            <p>Mã đơn hàng: <?php echo $order_code ?></p>
-                            <p class="receipt__date">Ngày lập: <?php echo date("d-m-Y"); ?></p>
+                            <h3 class="receipt__title">Phiếu Nhập Kho</h3>
+                            <p>Mã phiếu : <?php echo $inventory_code ?></p>
+                            <p class="receipt__date">Ngày nhập: <?php echo date("d-m-Y"); ?></p>
                         </div>
                         <div class="receipt__info">
                             <table>
                                 <tr>
                                     <td>
-                                        <p class="receipt__info--name">Tên khách hàng: <input class="receipt__info--input" name="customer_name" style="width: 250px" type="text" placeholder="Nhập vào tên khách hàng" required></p>
+                                        <p class="receipt__info--name">Người nhập kho: <input class="receipt__info--input" name="staf_name" type="text" placeholder="tên người nhập" required></p>
                                     </td>
                                     <td>
-                                        <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="customer_phone" type="text" placeholder="Nhập vào số điện thoại" required></p>
+                                        <p class="receipt__info--company">Tên đơn vị cung cấp: <input class="receipt__info--input" name="supplier_name" type="text" placeholder="tên đơn vị cung cấp" required></p>
                                     </td>
                                 </tr>
-                                <tr>    
-                                    <td colspan="2">
-                                        <p class="receipt__info--note">Địa chỉ: <input class="receipt__info--input" style="width: 400px" name="customer_address" type="text" placeholder="Nhập vào địa chỉ khách hàng" required></p>
+                                <tr>
+                                    <td>
+                                        <p class="receipt__info--note">Ghi chú: <input class="receipt__info--input" name="inventory_note" type="text" placeholder="Lý do nhập kho" required></p>
+                                    </td>
+                                    <td>
+                                        <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="supplier_phone" type="text" placeholder="nhập vào số điện thoại" required></p>
                                     </td>
                                 </tr>
                             </table>
@@ -51,22 +54,21 @@ $order_code = rand(0, 9999);
                                         </th>
                                         <th>Tên sản phẩm</th>
                                         <th class="text-center">Số lượng</th>
-                                        <th class="text-center">Giảm giá</th>
                                         <th class="text-right">Đơn giá</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $total = 0;
-                                    if (isset($_SESSION['order'])) {
+                                    if (isset($_SESSION['inventory'])) {
                                         $i = 0;
-                                        foreach ($_SESSION['order'] as $order_item) {
+                                        foreach ($_SESSION['inventory'] as $inventory_item) {
                                             $i++;
-                                            $total += $order_item['product_price'] * $order_item['product_quantity'];
+                                            $total += $inventory_item['product_price_import'] * $inventory_item['product_quantity'];
                                     ?>
                                             <tr>
                                                 <td>
-                                                    <a href="modules/order/xuly.php?delete=<?php echo $order_item['product_id'] ?>">
+                                                    <a href="modules/inventory/xuly.php?delete=<?php echo $inventory_item['product_id'] ?>">
                                                         <div class="icon-edit">
                                                             <img class="w-100 h-100" src="images/icon-edit.png" alt="">
                                                         </div>
@@ -75,10 +77,9 @@ $order_code = rand(0, 9999);
                                                 <td>
                                                     <?php echo $i ?>
                                                 </td>
-                                                <td><?php echo $order_item['product_name'] ?></td>
-                                                <td class="text-center"><?php echo $order_item['product_quantity'] ?></td>
-                                                <td class="text-center"><?php echo $order_item['product_sale'] ?>%</td>
-                                                <td class="text-right"><?php echo number_format($order_item['product_price']) . '₫' ?></td>
+                                                <td><?php echo $inventory_item['product_name'] ?></td>
+                                                <td class="text-center"><?php echo $inventory_item['product_quantity'] ?></td>
+                                                <td class="text-right"><?php echo number_format($inventory_item['product_price_import']) . '₫' ?></td>
                                             </tr>
                                     <?php
                                         }
@@ -93,9 +94,12 @@ $order_code = rand(0, 9999);
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-right"></td>
@@ -108,11 +112,11 @@ $order_code = rand(0, 9999);
                         </div>
                     </div>
                     <div class="w-100 d-flex align-center space-between">
-                        <button type="submit" name="order_add" class="btn btn-primary btn-icon-text">
+                        <button type="submit" name="inventory_add" class="btn btn-primary btn-icon-text">
                             <i class="ti-file btn-icon-prepend"></i>
-                            Tạo đơn hàng
+                            Tạo phiếu
                         </button>
-                        <a href="modules/order/xuly.php?deleteall=1">Xóa tất cả</a>
+                        <a href="modules/inventory/xuly.php?deleteall=1">Xóa tất cả</a>
                     </div>
                 </form>
             </div>
@@ -121,9 +125,9 @@ $order_code = rand(0, 9999);
     <div class="col-lg-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form action="modules/order/xuly.php" method="POST">
+                <form action="modules/inventory/xuly.php" method="POST">
                     <div class="main-pane-top">
-                        <h4 class="card-title">Tên sản phẩm</h4>
+                        <h4 class="card-title">Sản phẩm nhập</h4>
                     </div>
                     <div class="input-item form-group">
                         <label for="productid" class="d-block">Sản phẩm</label>
@@ -140,11 +144,15 @@ $order_code = rand(0, 9999);
                         </select>
                     </div>
                     <div class="input-item form-group">
-                        <label for="title" class="d-block">Số lượng</label>
-                        <input class="d-block form-control" name="product_quantity" type="number" value="1" placeholder="Nhập vào số lượng" required>
+                        <label for="title" class="d-block">Số lượng nhập</label>
+                        <input class="d-block form-control" name="product_quantity" type="number" value="" placeholder="Nhập vào số lượng" required>
+                    </div>
+                    <div class="input-item form-group">
+                        <label for="title" class="d-block">Giá nhập</label>
+                        <input class="d-block form-control" name="product_price_import" type="text" value="" placeholder="Nhập vào giá sản phẩm" required>
                     </div>
                     <div class="w-100" style="text-align: left;">
-                        <button type="submit" name="addtoorder" class="btn btn-primary btn-icon-text">
+                        <button type="submit" name="addtoinventory" class="btn btn-primary btn-icon-text">
                             <i class="ti-file btn-icon-prepend"></i>
                             Thêm
                         </button>

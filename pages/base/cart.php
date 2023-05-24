@@ -110,7 +110,7 @@
                 <?php
                 if (isset($_SESSION['account_email'])) {
                 ?>
-                    <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Đặt hàng</a>
+                    <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Tiến hành đặt hàng</a>
                 <?php } else {
                 ?>
                     <a href="index.php?page=login"><button class="btn cart__btn btn__outline">Đăng nhập đặt hàng</button></a>
