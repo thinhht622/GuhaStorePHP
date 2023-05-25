@@ -27,13 +27,16 @@ include("./pages/base/header.php");
         include("./pages/main/cart.php");
     }
     elseif ($action == 'product_category') {
-        include("./pages/main/product.php");
+        include("./pages/main/product_category.php");
+    }
+    elseif ($action == 'product_brand') {
+        include("./pages/main/product_brand.php");
     }
     elseif ($action == 'search'){
         include("./pages/main/search.php");
     }
     elseif ($action == 'product_detail'){
-        include("./pages/main/product-detail.php");
+        include("./pages/main/product_detail.php");
     }
     elseif ($action == 'checkout'){
         include("./pages/main/checkout.php");

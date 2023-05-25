@@ -1,5 +1,5 @@
 <?php
-// unset($_SESSION['account_email']);
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 ?>
 <section class="cart pd-section">
     <div class="container">

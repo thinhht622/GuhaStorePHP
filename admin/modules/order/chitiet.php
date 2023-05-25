@@ -88,7 +88,7 @@ $query_order = mysqli_query($mysqli, $sql_order);
                             </div>
                         </div>
                     </div>
-                    <a href="modules/order/indonhang2.php?order_code=<?php echo $order_code ?>" target="_blank" class="btn btn-outline-dark btn-fw">In Hóa Đơn</a>
+                    <a href="modules/order/indonhang.php?order_code=<?php echo $order_code ?>" target="_blank" class="btn btn-outline-dark btn-fw">In Hóa Đơn</a>
                 </div>
             </div>
         </div>

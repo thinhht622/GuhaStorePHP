@@ -1,5 +1,5 @@
 <?php
-    $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC LIMIT 3";
+    $sql_category_list = "SELECT * FROM category ORDER BY category_id ASC LIMIT 3";
     $query_category_list = mysqli_query($mysqli, $sql_category_list);
 ?>
 <section class="collage pd-top">

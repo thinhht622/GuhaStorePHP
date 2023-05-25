@@ -26,10 +26,11 @@ if (isset($_POST['redirect'])) {
         $product = mysqli_fetch_array($query_get_product);
         if ($product['product_quantity'] >= $cart_item['product_quantity']) {
             $validate = 1;
+        } else {
+            $validate = 0;
         }
         $total_amount += ($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale'])) * $cart_item['product_quantity'];
     }
-
     if ($validate == 1) {
         // them dia chi giao hang
         $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address, delivery_note) VALUE ($delivery_id, $account_id, '$delivery_name', $delivery_phone, '$delivery_address', '$delivery_note')";

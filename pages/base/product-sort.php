@@ -23,11 +23,14 @@
                                         <div class="row">
                                             <div class="col d-flex align-center" style="--w:6;">
                                                 <span class="symbol-money">₫</span>
-                                                <input class="w-100" type="text" placeholder="From">
+                                                <input class="w-100" type="text" id="price-from" placeholder="Từ">
                                             </div>
                                             <div class="col d-flex align-center" style="--w:6;">
                                                 <span class="symbol-money">₫</span>
-                                                <input class="w-100" type="text" placeholder="To">
+                                                <input class="w-100" type="text" id="price-to" placeholder="Đến">
+                                            </div>
+                                            <div class="col text-right mg-t-20" style="--w:12;">
+                                                <a href="" onclick="setHref();" class="btn btn__solid" id="sort-price">Áp dụng</a>
                                             </div>
                                         </div>
                                     </div>
@@ -35,31 +38,7 @@
                             </div>
                         </details>
                     </div>
-                    <div class="filter__item h5">
-                        <details class="sort__select p-relative">
-                            <summary class="cursor-pointer d-flex align-center">
-                                Dung tích
-                                <img src="./assets/images/icon/icon-chevron-down.svg" alt="down" class="icon-open d-block" style="margin-left: 8px;">
-                                <img src="./assets/images/icon/chevron-up.svg" alt="up" class="icon-close d-none" style="margin-left: 8px;">
-                            </summary>
-                            <div class="sort__selectbox p-absolute">
-                                <div class="selectbox__top d-flex space-between">
-                                    <span class="selectbox__lable">Tìm kiếm sản phẩm theo dung tích</span>
-                                    <a href="#">Reset</a>
-                                </div>
-                                <div class="selectbox__inputs">
-                                    <div class="selectbox__checkbox d-flex align-center">
-                                        <input class="input-checkbox" type="checkbox">
-                                        <label for="">100ml</label>
-                                    </div>
-                                    <div class="selectbox__checkbox d-flex align-center">
-                                        <input class="input-checkbox" type="checkbox">
-                                        <label for="">200ml</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col" style="--w-md:6;">
@@ -76,10 +55,10 @@
                             </summary>
                             <div class="sort__selectbox p-absolute">
                                 <div class="selectbox__item">
-                                    Giá từ thấp đến cao
+                                    <a href="" onclick="ascPrice()" id="price-asc">Giá từ thấp đến cao</a>
                                 </div>
                                 <div class="selectbox__item">
-                                    Giá từ cao đến thấp
+                                    <a href="" onclick="descPrice()" id="price-desc">Giá từ cao đến thấp</a>
                                 </div>
                             </div>
                         </details>
@@ -89,3 +68,28 @@
         </div>
     </div>
 </div>
+<script>
+    var currentURL = window.location.href;
+    console.log(currentURL);
+    var sortPrice = document.getElementById('sort-price');
+
+    function setHref() {
+        var priceFrom = document.getElementById('price-from').value;
+        var priceTo = document.getElementById('price-to').value;
+        var link = currentURL + "&pricefrom=" + priceFrom + "&priceto=" + priceTo;
+        sortPrice.href = link;
+        console.log(link);
+    }
+
+    function ascPrice() {
+        var priceAsc = document.getElementById('price-asc');
+        var link = currentURL + "&pricesort=1";
+        priceAsc.href = link;
+    }
+
+    function descPrice() {
+        var priceDesc = document.getElementById('price-desc');
+        var link = currentURL + "&pricesort=2";
+        priceDesc.href = link;
+    }
+</script>

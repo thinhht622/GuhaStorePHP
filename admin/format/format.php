@@ -80,3 +80,16 @@ function format_article_status($value)
   }
   echo $text;
 }
+
+function format_gender($value)
+{
+  $text = '';
+  if ($value == 1) {
+    $text = 'Nam';
+  } elseif ($value == 2) {
+    $text = 'Nữ';
+  } else {
+    $text = 'Chưa xác định';
+  }
+  echo $text;
+}

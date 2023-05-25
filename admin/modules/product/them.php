@@ -19,6 +19,34 @@
                         <input type="text" name="product_name" class="d-block form-control" value="" placeholder="product name">
                     </div>
                     <div class="input-item form-group">
+                        <label for="title" class="d-block">Thương hiệu sản phẩm</label>
+                        <select name="product_brand" id="product_brand" class="form-control">
+                            <?php
+                            $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id DESC";
+                            $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
+                            while ($row_brand = mysqli_fetch_array($query_brand_list)) {
+                            ?>
+                                <option value="<?php echo $row_brand['brand_id'] ?>"><?php echo $row_brand['brand_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-item form-group">
+                        <label for="title" class="d-block">Dung tích sản phẩm</label>
+                        <select name="product_capacity" id="product_capacity" class="form-control">
+                            <?php
+                            $sql_capacity_list = "SELECT * FROM capacity ORDER BY capacity_id ASC";
+                            $query_capacity_list = mysqli_query($mysqli, $sql_capacity_list);
+                            while ($row_capacity = mysqli_fetch_array($query_capacity_list)) {
+                            ?>
+                                <option value="<?php echo $row_capacity['capacity_id'] ?>"><?php echo $row_capacity['capacity_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-item form-group">
                         <label for="title" class="d-block">Giá nhập vào sản phẩm</label>
                         <input class="d-block form-control" name="product_price_import" type="text" value="" placeholder="product price">
                     </div>

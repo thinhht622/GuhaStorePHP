@@ -27,7 +27,6 @@ $query_customer_list = mysqli_query($mysqli, $sql_customer_list);
                                 <th>
                                     <input type="checkbox" id="checkAll">
                                 </th>
-                                <th></th>
                                 <th>Tên khách hàng</th>
                                 <th>Giới tính</th>
                                 <th>Email</th>
@@ -52,9 +51,8 @@ $query_customer_list = mysqli_query($mysqli, $sql_customer_list);
                                     <td>
                                         <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['customer_id'] ?>">
                                     </td>
-                                    <td><img src="modules/customer/uploads/<?php echo $row['customer_image'] ?>" alt=""></td>
                                     <td><?php echo $row['customer_name'] ?></td>
-                                    <td><?php echo $row['customer_gender'] ?></td>
+                                    <td><?php echo format_gender($row['customer_gender']) ?></td>
                                     <td><?php echo $row['customer_email'] ?></td>
                                     <td><?php echo $row['customer_phone'] ?></td>
                                     <td><?php echo $row['customer_address'] ?></td>

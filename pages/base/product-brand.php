@@ -12,36 +12,13 @@ if ($page == '' || $page == 1) {
     $begin = ($page * 8) - 8;
 }
 
-if (isset($_GET['pricesort']) && $_GET['pricesort'] == 1) {
-    $sortby = "ORDER BY product_price ASC";
-} elseif (isset($_GET['pricesort']) && $_GET['pricesort'] == 2) {
-    $sortby = "ORDER BY product_price DESC";
+if (isset($_GET['brand_id'])) {
+    $sql_product_list = "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product.product_brand = '" . $_GET['brand_id'] . "' ORDER BY product_id DESC LIMIT $begin,8";
+    $query_product_list = mysqli_query($mysqli, $sql_product_list);
 } else {
-    $sortby = "";
+    $sql_product_list = "SELECT * FROM product ORDER BY product_id DESC LIMIT $begin,8";
+    $query_product_list = mysqli_query($mysqli, $sql_product_list);
 }
-
-if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
-    $price_from = $_GET['pricefrom'];
-    $price_to = $_GET['priceto'];
-    if (isset($_GET['category_id'])) {
-        $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' AND product_price BETWEEN '".$price_from."' AND '".$price_to."' " .$sortby." LIMIT $begin,8";
-        $query_product_list = mysqli_query($mysqli, $sql_product_list);
-    } else {
-        $sql_product_list = "SELECT * FROM product WHERE product_price BETWEEN '".$price_from."' AND '".$price_to."' " .$sortby." LIMIT $begin,8";
-        $query_product_list = mysqli_query($mysqli, $sql_product_list);
-    }
-}
-else {
-    if (isset($_GET['category_id'])) {
-        $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' " .$sortby." LIMIT $begin,8";
-        $query_product_list = mysqli_query($mysqli, $sql_product_list);
-    } else {
-        $sql_product_list = "SELECT * FROM product ".$sortby." LIMIT $begin,8";
-        $query_product_list = mysqli_query($mysqli, $sql_product_list);
-    }
-}
-
-
 ?>
 <div class="product-list">
     <div class="container pd-section">
@@ -86,8 +63,8 @@ else {
             <div class="col">
                 <div class="pagination">
                     <?php
-                    if (isset($_GET['category_id'])) {
-                        $query_pages = mysqli_query($mysqli, "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product_category = '" . $_GET['category_id'] . "' ORDER BY product_id DESC");
+                    if (isset($_GET['brand_id'])) {
+                        $query_pages = mysqli_query($mysqli, "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product_brand = '" . $_GET['brand_id'] . "' ORDER BY product_id DESC");
                     } else {
                         $query_pages = mysqli_query($mysqli, "SELECT * FROM product ORDER BY product_id DESC");
                     }

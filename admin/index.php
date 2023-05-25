@@ -94,22 +94,22 @@ if (!isset($_SESSION['login'])) {
   <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
   <script>
-    var donut = new Morris.Donut({
-        element: 'donutchart',
-        data: [{
-            label: "Đơn hàng tại quầy",
-            value: 10
-          },
-          {
-            label: "Đơn hàng online",
-            value: 30
-          },
-          {
-            label: "Đơn hàng hủy",
-            value: 2
-          }
-        ]
-      });
+    // var donut = new Morris.Donut({
+    //     element: 'donutchart',
+    //     data: [{
+    //         label: "Đơn hàng tại quầy",
+    //         value: 10
+    //       },
+    //       {
+    //         label: "Đơn hàng online",
+    //         value: 30
+    //       },
+    //       {
+    //         label: "Đơn hàng hủy",
+    //         value: 2
+    //       }
+    //     ]
+    //   });
     $(document).ready(function() {
 
       thongke();

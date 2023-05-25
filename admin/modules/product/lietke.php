@@ -1,5 +1,5 @@
 <?php
-$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_id DESC;";
+$sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_id DESC";
 $query_product_list = mysqli_query($mysqli, $sql_product_list);
 ?>
 

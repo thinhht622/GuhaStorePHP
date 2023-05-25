@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 if (isset($_GET['vnp_Amount'])) {
     $vnp_Amount = $_GET['vnp_Amount'];
     $vnp_BankCode = $_GET['vnp_BankCode'];

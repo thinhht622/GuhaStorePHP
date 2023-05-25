@@ -1,5 +1,5 @@
 <?php
-$sql_article_list = "SELECT * FROM article ORDER BY article_id DESC LIMIT 8";
+$sql_article_list = "SELECT * FROM article WHERE article_status = 1 ORDER BY article_id DESC";
 $query_article_list = mysqli_query($mysqli, $sql_article_list);
 ?>
 <!-- start blog -->
