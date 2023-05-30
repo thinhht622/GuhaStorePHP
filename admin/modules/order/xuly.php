@@ -31,9 +31,6 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
             $sql_order_detail = "SELECT * FROM order_detail WHERE order_code = $code";
             $query_order_detail = mysqli_query($mysqli, $sql_order_detail);
 
-            $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
-            $query_thongke = mysqli_query($mysqli, $sql_thongke);
-
             $total = 0;
             $quantity = 0;
 
@@ -41,6 +38,9 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
                 $total += ($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale'])) * $row['product_quantity'];
                 $quantity += $row['product_quantity'];
             }
+
+            $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+            $query_thongke = mysqli_query($mysqli, $sql_thongke);
 
             if (mysqli_num_rows($query_thongke) == 0) {
                 $metric_sales = $total;

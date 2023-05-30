@@ -18,6 +18,9 @@
         elseif ($action == 'order' && $query == 'order_live') {
             include("./modules/order/donhangtructiep.php");
         }
+        elseif ($action == 'order' && $query == 'order_payment') {
+            include("./modules/order/lichsuthanhtoan.php");
+        }
         elseif ($action == 'order' && $query == 'order_add') {
             include("./modules/order/them.php");
         }

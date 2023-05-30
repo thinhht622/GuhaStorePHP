@@ -7,10 +7,12 @@ require_once('config_vnpay.php');
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
+$order_code = rand(0, 9999);
+$delivery_id = rand(0, 9999);
+
+
 if (isset($_POST['redirect'])) {
     $account_id = $_SESSION['account_id'];
-    $order_code = rand(0, 9999);
-    $delivery_id = rand(0, 9999);
     $order_date = Carbon::now('Asia/Ho_Chi_Minh');
     $delivery_name = $_POST['delivery_name'];
     $delivery_address = $_POST['delivery_address'];
@@ -18,7 +20,6 @@ if (isset($_POST['redirect'])) {
     $delivery_note = $_POST['delivery_note'];
     $total_amount = 0;
     $order_type = $_POST['order_type'];
-
     $validate = 0;
     foreach ($_SESSION['cart'] as $cart_item) {
         $product_id = $cart_item['product_id'];
@@ -63,7 +64,19 @@ if (isset($_POST['redirect'])) {
                 $query_total_amount = mysqli_query($mysqli, $update_total_amount);
 
                 unset($_SESSION['cart']);
+                header('Location:../../index.php?page=thankiu');
             }
+        } elseif ($order_type == 2) {
+            $_SESSION['order_code'] = $order_code;
+            $_SESSION['delivery_id'] = $delivery_id;
+            $_SESSION['order_date'] = $order_date;
+            $_SESSION['delivery_name'] = $delivery_name;
+            $_SESSION['delivery_address'] = $delivery_address;
+            $_SESSION['delivery_phone'] = $delivery_phone;
+            $_SESSION['delivery_note'] = $delivery_note;
+            $_SESSION['total_amount'] = $total_amount;
+            $_SESSION['order_type'] = $order_type;
+            header('Location:checkout_momo.php');
         } elseif ($order_type == 3) {
             // xu ly toan bang vnpay
             $vnp_TxnRef = $order_code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
@@ -95,11 +108,7 @@ if (isset($_POST['redirect'])) {
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
-            // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-            // }
 
-            //var_dump($inputData);
             ksort($inputData);
             $query = "";
             $i = 0;
@@ -130,6 +139,7 @@ if (isset($_POST['redirect'])) {
 
                 $query_insert_order = mysqli_query($mysqli, $insert_order);
                 if ($query_insert_order) {
+                    $quantity_tk = 0;
                     //them chi tiet don hang
                     foreach ($_SESSION['cart'] as $cart_item) {
                         $product_id = $cart_item['product_id'];
@@ -137,6 +147,7 @@ if (isset($_POST['redirect'])) {
                         $product = mysqli_fetch_array($query_get_product);
                         if ($product['product_quantity'] >= $cart_item['product_quantity']) {
                             $product_quantity = $cart_item['product_quantity'];
+                            $quantity_tk += $product_quantity;
                             $quantity = $product['product_quantity'] - $product_quantity;
                             $product_price = $cart_item['product_price'];
                             $product_sale = $cart_item['product_sale'];
@@ -147,6 +158,28 @@ if (isset($_POST['redirect'])) {
                     }
                     $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
                     $query_total_amount = mysqli_query($mysqli, $update_total_amount);
+
+                    $now = $order_date->format('Y-m-d');
+
+                    $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+                    $query_thongke = mysqli_query($mysqli, $sql_thongke);
+
+                    if (mysqli_num_rows($query_thongke) == 0) {
+                        $metric_sales = $total_amount;
+                        $metric_quantity = $quantity_tk;
+                        $metric_order = 1;
+                        $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
+                        VALUE ('$order_date', '$metric_order', '$metric_sales', '$metric_quantity')";
+                        mysqli_query($mysqli, $sql_update_metrics);
+                    } elseif (mysqli_num_rows($query_thongke) != 0) {
+                        while ($row_tk = mysqli_fetch_array($query_thongke)) {
+                            $metric_sales = $row_tk['metric_sales'] + $total_amount;
+                            $metric_quantity = $row_tk['metric_quantity'] + $quantity_tk;
+                            $metric_order = $row_tk['metric_order'] + 1;
+                            $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
+                            mysqli_query($mysqli, $sql_update_metrics);
+                        }
+                    }
 
                     unset($_SESSION['cart']);
                 }

@@ -1,5 +1,6 @@
 <?php
-$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status < 0 OR orders.order_status >= 3 ORDER BY orders.order_id DESC";
+$account_id = $_SESSION['account_id'];
+$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status < 0 OR orders.order_status >= 3 AND account.account_id = $account_id ORDER BY orders.order_id DESC";
 $query_order_list = mysqli_query($mysqli, $sql_order_list);
 ?>
 <div class="my-account__content">

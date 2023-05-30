@@ -1,7 +1,9 @@
 <?php
-$account_id = $_SESSION['account_id'];
-$sql_account = "SELECT * FROM account WHERE account_id = '" . $account_id . "'";
-$query_account = mysqli_query($mysqli, $sql_account);
+if (isset($_SESSION['account_id'])) {
+    $account_id = $_SESSION['account_id'];
+    $sql_account = "SELECT * FROM account WHERE account_id = '" . $account_id . "'";
+    $query_account = mysqli_query($mysqli, $sql_account);
+}
 ?>
 <!-- start checkout -->
 <section class="checkout pd-section">
@@ -12,6 +14,7 @@ $query_account = mysqli_query($mysqli, $sql_account);
                     <h2 class="checkout__title h4 d-flex align-center space-between">Thông tin người nhận hàng:</h2>
                     <div class="checkout__infomation">
                         <?php
+                        if (isset($query_account)) {
                         while ($account = mysqli_fetch_array($query_account)) {
                         ?>
                             <div class="info__item d-flex">
@@ -32,6 +35,11 @@ $query_account = mysqli_query($mysqli, $sql_account);
                             </div>
                         <?php
                         }
+                        } else {
+                        ?>
+                            <a href="index.php?page=login">Vui lòng đăng nhập tài khoản</a>
+                        <?php
+                        }
                         ?>
                     </div>
 
@@ -42,8 +50,9 @@ $query_account = mysqli_query($mysqli, $sql_account);
                         <div class="checkout__items">
                             <?php
                             $total = 0;
-                            foreach ($_SESSION['cart'] as $cart_item) {
-                                $total += ($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale'])) * $cart_item['product_quantity'];
+                            if (isset($_SESSION['cart'])) {
+                                foreach ($_SESSION['cart'] as $cart_item) {
+                                    $total += ($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale'])) * $cart_item['product_quantity'];
                             ?>
                                 <div class="checkout__item d-flex align-center">
                                     <div class="checkout__image p-relative">
@@ -55,6 +64,11 @@ $query_account = mysqli_query($mysqli, $sql_account);
                                     </div>
                                     <div class="h6 checkout__price"><?php echo (number_format($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale']))) . ' ₫' ?></div>
                                 </div>
+                            <?php
+                                }
+                            } else {
+                            ?>
+                                <span>Không tồn tại giỏ hàng</span>
                             <?php
                             }
                             ?>

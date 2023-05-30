@@ -1,11 +1,10 @@
 <?php
-if (isset($_GET['order_status'])) {
-    $order_status = $_GET['order_status'];
-    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = $order_status ORDER BY orders.order_id DESC";
-    $query_order_list = mysqli_query($mysqli, $sql_order_list);    
+if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
+    $sql_payment_list = "SELECT * FROM momo ORDER BY momo_id DESC";
+    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);    
 } else {
-    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC";
-    $query_order_list = mysqli_query($mysqli, $sql_order_list);
+    $sql_payment_list = "SELECT * FROM vnpay ORDER BY vnp_paydate DESC";
+    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);   
 }
 ?>
 
@@ -14,7 +13,7 @@ if (isset($_GET['order_status'])) {
         <div class="card">
             <div class="card-body">
                 <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách đơn hàng</h4>
+                    <h4 class="card-title" style="margin: 0;">Lịch sử thanh toán</h4>
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=order&query=order_search" method="POST">
                             <i class="icon-search p-absolute"></i>
@@ -23,15 +22,11 @@ if (isset($_GET['order_status'])) {
                     </div>
                     <div class="dropdown dropdown__item">
                         <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuSizeButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tình trạng
+                            Cổng thanh toán
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2">
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list">Tất cả</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuyển bị hàng</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=2">Đang giao hàng</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_payment&payment_type=vnpay">VNPAY</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_payment&payment_type=momo">MoMo</a>
                         </div>
                     </div>
                 </div>
@@ -47,15 +42,15 @@ if (isset($_GET['order_status'])) {
                                 </th>
                                 <th>Mã đơn hàng</th>
                                 <th>Thời gian</th>
-                                <th>Tên người đặt</th>
-                                <th>Loại đơn hàng</th>
-                                <th class="text-center">Tình trạng đơn hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Ngân hàng</th>
+                                <th>Loại</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            while ($row = mysqli_fetch_array($query_order_list)) {
+                            while ($row = mysqli_fetch_array($query_payment_list)) {
                                 $i++;
                             ?>
                                 <tr>
@@ -67,13 +62,13 @@ if (isset($_GET['order_status'])) {
                                         </a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['order_code'] ?>">
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['vnp_id'] ?>">
                                     </td>
                                     <td><?php echo $row['order_code'] ?></td>
-                                    <td><?php echo $row['order_date'] ?></td>
-                                    <td><?php echo $row['account_name'] ?></td>
-                                    <td><?php echo format_order_type($row['order_type']); ?></td>
-                                    <td class="text-center"><span class="col-span <?php echo format_status_style($row['order_status'])?>"><?php echo format_order_status($row['order_status']); ?></span></td>
+                                    <td><?php echo format_datetime($row['vnp_paydate']) ?></td>
+                                    <td><?php echo number_format($row['vnp_amount']/100) ?>đ</td>
+                                    <td><?php echo $row['vnp_bankcode'] ?></td>
+                                    <td><?php echo $row['vnp_cardtype'] ?></td>
                                 </tr>
                             <?php
                             }

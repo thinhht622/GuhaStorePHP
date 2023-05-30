@@ -190,7 +190,7 @@
 }
 
 .product__status--pause {
-  background-color: #fff5da;
+  background-color: #ffcece;
 }
 
 .show-status {
@@ -491,3 +491,35 @@ table tfoot {
 .color-t-orange {
   color: #fab042;
 }
+
+.col-span {
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.color-bg-red {
+  color: #a52f00;
+  background-color: #ff330073;
+}
+
+.color-bg-yellow {
+  color: #a89d00;
+  background-color: #ffee002a;
+}
+
+.color-bg-orange {
+  color: #834e00;
+  background-color: #ff990027;
+}
+
+.color-bg-blue {
+  color: #1963a0;
+  background-color: #008cff3b;
+}
+
+.color-bg-green {
+  color: #126b00;
+  background-color: #2bff0046;
+}
+

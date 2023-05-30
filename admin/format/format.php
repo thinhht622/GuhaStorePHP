@@ -93,3 +93,31 @@ function format_gender($value)
   }
   echo $text;
 }
+
+//fomat date time 
+function format_datetime($value)
+{
+  $timestamp = strtotime($value);
+  $date = new DateTime();
+  $date->setTimestamp($timestamp);
+
+  $formattedDate = $date->format('Y-m-d H:i:s');
+  echo $formattedDate;
+}
+
+// format 
+function format_status_style($value) {
+  $class = '';
+  if ($value == -1) {
+    $class = 'color-bg-red';
+  } elseif ($value == 0) {
+    $class = 'color-bg-orange';
+  } elseif ($value == 1) {
+    $class = 'color-bg-yellow';
+  } elseif ($value == 2) {
+    $class = 'color-bg-blue';
+  } else {
+    $class = 'color-bg-green';
+  }
+  echo $class;
+}
