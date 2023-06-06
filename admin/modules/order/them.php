@@ -68,7 +68,7 @@ $order_code = rand(0, 9999);
                                                 <td>
                                                     <a href="modules/order/xuly.php?delete=<?php echo $order_item['product_id'] ?>">
                                                         <div class="icon-edit">
-                                                            <img class="w-100 h-100" src="images/icon-edit.png" alt="">
+                                                            <img class="w-100 h-100" src="images/icon-delete.png" alt="">
                                                         </div>
                                                     </a>
                                                 </td>
@@ -78,7 +78,7 @@ $order_code = rand(0, 9999);
                                                 <td><?php echo $order_item['product_name'] ?></td>
                                                 <td class="text-center"><?php echo $order_item['product_quantity'] ?></td>
                                                 <td class="text-center"><?php echo $order_item['product_sale'] ?>%</td>
-                                                <td class="text-right"><?php echo number_format($order_item['product_price']) . '₫' ?></td>
+                                                <td class="text-right"><?php echo number_format($order_item['product_price'] - ($order_item['product_price'] / 100 * $order_item['product_sale'])) . ' ₫' ?></td>
                                             </tr>
                                     <?php
                                         }
@@ -127,7 +127,7 @@ $order_code = rand(0, 9999);
                     </div>
                     <div class="input-item form-group">
                         <label for="productid" class="d-block">Sản phẩm</label>
-                        <select name="product_id" id="productid" class="form-control" required>
+                        <select name="product_id" id="productid" class="form-control select_product" required>
                             <?php
                             $sql_product_list = "SELECT * FROM product ORDER BY product_id DESC";
                             $query_product_list = mysqli_query($mysqli, $sql_product_list);
@@ -154,3 +154,6 @@ $order_code = rand(0, 9999);
         </div>
     </div>
 </div>
+<script>
+    $('.select_product').chosen();
+</script>

@@ -10,7 +10,7 @@
         $count = mysqli_num_rows($query_account);
         if ($count>0) {
             $_SESSION['login'] = $row['account_email'];
-            $_SESSION['account_id'] = $row['account_id'];
+            $_SESSION['account_id_admin'] = $row['account_id'];
             $_SESSION['account_name'] = $row['account_name'];
             $_SESSION['account_type'] = $row['account_type'];
             header('Location:index.php');

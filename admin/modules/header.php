@@ -1,5 +1,6 @@
 <?php
     if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+        unset($_GET['account_id_admin']);
         unset($_SESSION['login']);
         unset($_SESSION['account_name']);
         unset($_SESSION['account_type']);

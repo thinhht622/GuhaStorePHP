@@ -113,6 +113,10 @@
   object-fit: cover;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -171,11 +175,11 @@
   text-decoration: none;
 }
 
-.btn__wanning:hover{
+.btn__wanning:hover {
   color: #f32121;
 }
 
-.btn_change:hover{
+.btn_change:hover {
   color: #2196f3;
 }
 
@@ -361,7 +365,7 @@ table tfoot {
   height: 20px;
   padding: 2px;
   border-radius: 50%;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .icon-edit img {
@@ -375,7 +379,6 @@ table tfoot {
 .table-action tr:hover .icon-edit img {
   display: block;
 }
-
 
 /* === dialog input === */
 .dialog__input {
@@ -432,7 +435,6 @@ table tfoot {
   text-align: right;
   margin-top: 10px;
 }
-
 
 .receipt__info {
   margin: 20px 0;
@@ -523,3 +525,37 @@ table tfoot {
   background-color: #2bff0046;
 }
 
+/* === pagination === */
+.pagination {
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.pagination__items {
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* .pagination__anchor.active {
+  background-color: var(--color-gray-light);
+} */
+
+.pagination__item .pagination__anchor {
+  display: inline-block;
+  padding: 5px 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--color-text-black);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.pagination__anchor {
+  text-decoration: none;
+}
+
+.chosen-container {
+  max-width: 100%;
+}

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./assets/css/main.css" />
   <link rel="stylesheet" href="./assets/css/responsive.css" />
   <link rel="stylesheet" href="./assets/css/login.css">
+  <link rel="stylesheet" href="./assets/css/toast.css">
   <!-- end css -->
 
   <!-- start google font -->
@@ -23,6 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet" />
   <!-- end google font -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="./assets/js/toast_message.js"></script>
 </head>
 
 <body>
@@ -34,13 +36,17 @@
     include("./pages/main.php");
     ?>
   </div>
+  <div id="toast">
 
+  </div>
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/navigation.js"></script>
   <script src="./assets/js/select-number.js"></script>
   <script src="./assets/js/scrollsnap.js"></script>
+  <script src="./assets/js/payment.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://kit.fontawesome.com/e63ed424f0.js" crossorigin="anonymous"></script>
   <!-- Messenger Plugin chat Code -->
   <div id="fb-root"></div>
 
@@ -72,6 +78,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+
 </body>
 
 </html>

@@ -44,7 +44,7 @@
             <div class="collapse <?php if ($action === 'product' or $action === 'category' or $action === 'collection' or $action === 'brand') { echo "show"; } ?>" id="products">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item <?php if ($query === 'product_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=product&query=product_list">Danh sách sản phẩm</a></li>
-                    <li class="nav-item <?php if ($query === 'collection_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=collection&query=collection_list">Bộ sưu tập</a></li>
+                    <!-- <li class="nav-item <?php if ($query === 'collection_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=collection&query=collection_list">Bộ sưu tập</a></li> -->
                     <li class="nav-item <?php if ($query === 'category_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=category&query=category_list">Danh mục sản phẩm</a></li>
                     <li class="nav-item <?php if ($query === 'brand_list') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=brand&query=brand_list">Danh sách thương hiệu</a></li>
                     <li class="nav-item <?php if ($query === 'product_inventory') { echo "active"; } ?>"> <a class="nav-link" href="index.php?action=product&query=product_inventory">Hàng tồn kho</a></li>

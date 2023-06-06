@@ -1,11 +1,12 @@
 <?php
 if (isset($_POST['account_keyword'])) {
-    $sql_account_list = "SELECT * FROM account WHERE account_email LIKE '%".$_POST['account_keyword']."%' ORDER BY account_type DESC";
+    $sql_account_list = "SELECT * FROM account WHERE account_email LIKE '%" . $_POST['account_keyword'] . "%' ORDER BY account_type DESC";
     $query_account_list = mysqli_query($mysqli, $sql_account_list);
 } else {
     $sql_account_list = "SELECT * FROM account ORDER BY account_type DESC";
     $query_account_list = mysqli_query($mysqli, $sql_account_list);
 }
+
 ?>
 
 <div class="row">
@@ -128,3 +129,24 @@ if (isset($_POST['account_keyword'])) {
         btnDelete.href = "modules/product/xuly.php?data=" + JSON.stringify(checkedIds);
     }
 </script>
+
+<script>
+    function showErrorToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    $message = $_GET['message'];
+    echo '<script>';
+    echo '   showErrorToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=account&query=my_account");';
+    echo '</script>';
+}
+?>

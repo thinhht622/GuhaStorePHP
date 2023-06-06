@@ -74,51 +74,50 @@ if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
 }
 
 // Xoa san pham khoi don hang
-if(isset($_SESSION['order']) && isset($_GET['delete'])) {
+if (isset($_SESSION['order']) && isset($_GET['delete'])) {
     $product_id = $_GET['delete'];
     foreach ($_SESSION['order'] as $order_item) {
         if ($order_item['product_id'] != $product_id) {
-            $product[]= array('product_id'=>$order_item['product_id'], 'product_name'=>$order_item['product_name'],'product_quantity'=>$order_item['product_quantity'],'product_price'=>$order_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$order_item['product_image']);
+            $product[] = array('product_id' => $order_item['product_id'], 'product_name' => $order_item['product_name'], 'product_quantity' => $order_item['product_quantity'], 'product_price' => $order_item['product_price'], 'product_sale' => $order_item['product_sale'], 'product_image' => $order_item['product_image']);
         }
         $_SESSION['order'] = $product;
         header('Location:../../index.php?action=order&query=order_add');
     }
 }
 // xoa tat ca
-if(isset($_GET['deleteall'])&&$_GET['deleteall']==1){
+if (isset($_GET['deleteall']) && $_GET['deleteall'] == 1) {
     unset($_SESSION['order']);
     header('Location:../../index.php?action=order&query=order_add');
 }
 // them sanpham vao don hang
-if(isset($_POST['addtoorder'])){
+if (isset($_POST['addtoorder'])) {
     // session_destroy();
-    $product_id=$_POST['product_id'];
-    $product_quantity=$_POST['product_quantity'];
-    $sql ="SELECT * FROM product WHERE product_id='".$product_id."' LIMIT 1";
-    $query = mysqli_query($mysqli,$sql);
+    $product_id = $_POST['product_id'];
+    $product_quantity = $_POST['product_quantity'];
+    $sql = "SELECT * FROM product WHERE product_id='" . $product_id . "' LIMIT 1";
+    $query = mysqli_query($mysqli, $sql);
     $row = mysqli_fetch_array($query);
-    if($row){
-        $new_product=array(array('product_id'=>$product_id, 'product_name'=>$row['product_name'],'product_quantity'=>$product_quantity,'product_price'=>$row['product_price'], 'product_sale'=>$row['product_sale'],'product_image'=>$row['product_image']));
-        //kiem tra session phiếu nhập ton tai
-        if(isset($_SESSION['order'])){
+    if ($row) {
+        $new_product = array(array('product_id' => $product_id, 'product_name' => $row['product_name'], 'product_quantity' => $product_quantity, 'product_price' => $row['product_price'], 'product_sale' => $row['product_sale'], 'product_image' => $row['product_image']));
+        if (isset($_SESSION['order'])) {
             $found = false;
-            foreach($_SESSION['order'] as $order_item){
+            foreach ($_SESSION['order'] as $order_item) {
                 //neu du lieu trung
-                if($order_item['product_id']==$product_id){
-                    $product[]= array('product_id'=>$order_item['product_id'], 'product_name'=>$order_item['product_name'],'product_quantity'=>$order_item['product_quantity']+$product_quantity,'product_price'=>$order_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$order_item['product_image']);
-					$found = true;
-                }else{
+                if ($order_item['product_id'] == $product_id) {
+                    $product[] = array('product_id' => $order_item['product_id'], 'product_name' => $order_item['product_name'], 'product_quantity' => $order_item['product_quantity'] + $product_quantity, 'product_price' => $order_item['product_price'], 'product_sale' => $order_item['product_sale'], 'product_image' => $order_item['product_image']);
+                    $found = true;
+                } else {
                     //neu du lieu khong trung
-					$product[]= array('product_id'=>$order_item['product_id'], 'product_name'=>$order_item['product_name'],'product_quantity'=>$order_item['product_quantity'],'product_price'=>$order_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$order_item['product_image']);
+                    $product[] = array('product_id' => $order_item['product_id'], 'product_name' => $order_item['product_name'], 'product_quantity' => $order_item['product_quantity'], 'product_price' => $order_item['product_price'], 'product_sale' => $order_item['product_sale'], 'product_image' => $order_item['product_image']);
                 }
             }
-            if($found == false){
+            if ($found == false) {
                 //lien ket du lieu new_product voi product
-                $_SESSION['order']=array_merge($product,$new_product);
-            }else{
-                $_SESSION['order']=$product;
+                $_SESSION['order'] = array_merge($product, $new_product);
+            } else {
+                $_SESSION['order'] = $product;
             }
-        }else{
+        } else {
             $_SESSION['order'] = $new_product;
         }
     }
@@ -127,37 +126,36 @@ if(isset($_POST['addtoorder'])){
 
 // them don hang
 if (isset($_POST['order_add'])) {
-    $account_id = $_SESSION['account_id'];
+    $account_id = $_SESSION['account_id_admin'];
     $order_code = rand(0, 9999);
     $delivery_id = rand(0, 9999);
     $order_date = Carbon::now('Asia/Ho_Chi_Minh');
     $delivery_name = $_POST['customer_name'];
     $delivery_address = $_POST['customer_address'];
     $delivery_phone = $_POST['customer_phone'];
+    $order_type = 5;
+    $account_id = $_SESSION['account_id_admin'];
     $total_amount = 0;
-    $order_type = 4;
-    $account_id = $_SESSION['account_id'];
-
-    $validate = 0;
+    $validate = 1;
     foreach ($_SESSION['order'] as $cart_item) {
         $product_id = $cart_item['product_id'];
         $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
         $product = mysqli_fetch_array($query_get_product);
-        if ($product['product_quantity'] >= $cart_item['product_quantity']) {
-            $validate = 1;
+        if ($product['product_quantity'] < $cart_item['product_quantity']) {
+            $validate = 0;
         }
+        $total_amount += ($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale'])) * $cart_item['product_quantity'];
     }
 
     if ($validate == 1) {
-        $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address) VALUE ($delivery_id, $account_id, '$delivery_name', $delivery_phone, '$delivery_address')";
+        $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address) VALUE ($delivery_id, $account_id, '$delivery_name', '$delivery_phone', '$delivery_address')";
         mysqli_query($mysqli, $insert_delivery);
 
         $insert_order = "INSERT INTO orders(order_code, order_date, account_id, delivery_id, total_amount, order_type, order_status) 
         VALUE ($order_code, '" . $order_date . "', $account_id, '" . $delivery_id . "', $total_amount, $order_type, 3)";
-        
         $query_insert_order = mysqli_query($mysqli, $insert_order);
         if ($query_insert_order) {
-            foreach ($_SESSION['cart'] as $cart_item) {
+            foreach ($_SESSION['order'] as $cart_item) {
                 $product_id = $cart_item['product_id'];
                 $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
                 $product = mysqli_fetch_array($query_get_product);
@@ -166,7 +164,6 @@ if (isset($_POST['order_add'])) {
                     $quantity = $product['product_quantity'] - $product_quantity;
                     $product_price = $cart_item['product_price'];
                     $product_sale = $cart_item['product_sale'];
-                    $total_amount += ($product_price - ($product_price / 100 * $product_sale)) * $product_quantity;
                     $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
                     mysqli_query($mysqli, $insert_order_detail);
                     mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
@@ -176,11 +173,31 @@ if (isset($_POST['order_add'])) {
         $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
         $query_total_amount = mysqli_query($mysqli, $update_total_amount);
 
+        $now = $order_date->format('Y-m-d');
+
+        $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+        $query_thongke = mysqli_query($mysqli, $sql_thongke);
+
+        if (mysqli_num_rows($query_thongke) == 0) {
+            $metric_sales = $total_amount;
+            $metric_quantity = $quantity_tk;
+            $metric_order = 1;
+            $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
+                        VALUE ('$order_date', '$metric_order', '$metric_sales', '$metric_quantity')";
+            mysqli_query($mysqli, $sql_update_metrics);
+        } elseif (mysqli_num_rows($query_thongke) != 0) {
+            while ($row_tk = mysqli_fetch_array($query_thongke)) {
+                $metric_sales = $row_tk['metric_sales'] + $total_amount;
+                $metric_quantity = $row_tk['metric_quantity'] + $quantity_tk;
+                $metric_order = $row_tk['metric_order'] + 1;
+                $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
+                mysqli_query($mysqli, $sql_update_metrics);
+            }
+        }
+
         unset($_SESSION['order']);
         header('Location:../../index.php?action=order&query=order_detail&order_code='.$order_code);
     } else {
         header('Location:../../index.php?page=404');
     }
 }
-
-?>

@@ -131,7 +131,7 @@ $inventory_code = rand(0, 9999);
                     </div>
                     <div class="input-item form-group">
                         <label for="productid" class="d-block">Sản phẩm</label>
-                        <select name="product_id" id="productid" class="form-control" required>
+                        <select name="product_id" id="productid" class="form-control select_product" required>
                             <?php
                             $sql_product_list = "SELECT * FROM product ORDER BY product_id DESC";
                             $query_product_list = mysqli_query($mysqli, $sql_product_list);
@@ -162,3 +162,6 @@ $inventory_code = rand(0, 9999);
         </div>
     </div>
 </div>
+<script>
+    $('.select_product').chosen();
+</script>

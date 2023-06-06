@@ -50,7 +50,7 @@ h6,
 .h7,
 .h8,
 .h9 {
-  font-family: "Assistant";
+  font-family: "Assistant", sans-serif;
   font-weight: 400;
   line-height: 1.3;
 }
@@ -1469,7 +1469,8 @@ h6,
 }
 
 .checkout__item {
-  border-bottom: solid 1px var(--color-gray-dark);
+  padding: 15px 0;
+  border-bottom: solid 1px #dfdfdf67;
 }
 
 .checkout__image {
@@ -1502,22 +1503,6 @@ h6,
 .checkout__bottom {
   margin-top: var(--gutter);
   border-top: solid 1px var(--color-gray-dark);
-}
-
-.checkout__total {
-}
-
-.payment__title {
-  padding: 10px 0;
-  opacity: .75;
-}
-
-.payment__item {
-  height: 30px;
-}
-
-.payment__item .form-check-input {
-  margin-right: 10px;
 }
 
 
@@ -1796,6 +1781,70 @@ th {
   padding: 8px 0;
 }
 
+/* comment */
+.comment {
+  background-color: var(--color-gray-light);
+}
+
+.blog__comment {
+
+}
+
+.article__box {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.comment__container {
+  margin-bottom: 50px;
+}
+
+.comment__heading {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.comment__item {
+  padding: 20px 25px;
+  background-color: var(--color-bg);
+  margin-bottom: 15px;
+}
+
+.comment__content {
+  margin-bottom: 10px;
+}
+
+.comment__info {
+  text-align: right;
+  font-size: 10px;
+  padding-top: 10px;
+  padding-bottom: 3px;
+}
+
+/* === form comment === */
+.comment .form__input input {
+  margin-bottom: 30px;
+  height: 47px;
+  border: solid 1px #ccc;
+}
+
+.form__input textarea {
+  border: solid 1px #ccc;
+}
+
+.comment__warning {
+  margin: 20px 0 25px;
+  font-size: 10px;
+  display: inline-block;
+  background-color: var(--color-bg);
+}
+
+.comment__btn {
+  background-color: var(--color-text-black);
+  color: var(--color-bg);
+  border: solid 1px var(--color-text-black);
+}
+
 /* register */
 .register {
   margin-top: 20px;
@@ -1935,4 +1984,133 @@ th {
   .register .container .content .category {
     flex-direction: column;
   }
+}
+
+/* start thankiu */
+.thankiu {
+  padding: 100px 0;
+}
+
+.thankiu__box {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.thankiu_image {
+  padding: 20px 0;
+}
+
+.thankiu__heading {
+  color: #4caf50;
+  margin: 0;
+}
+
+.heading--wanning {
+  color: #fff700;
+}
+
+.thankiu__heading2 {
+  color: #e74c3c;
+  margin: 10px 0;
+  display: block;
+}
+
+/* payment */
+.payment__heading {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.payment__items {
+}
+
+.payment__item {
+  padding: 0px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: solid 1px var(--color-gray-light);
+}
+
+.payment__item.checked {
+  border-color: #5bb0ff; /* Màu border mới khi được chọn */
+}
+
+.payment__label {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--color-gray);
+  padding-left: 20px;
+}
+
+.payment__icon {
+  padding-left: 30px;
+}
+
+/* account order */
+.order__items a {
+  text-decoration: none;
+  color: var(--color-text-black);
+}
+
+.order__item {
+  border-radius: 10px;
+  overflow: hidden;
+  border: solid 1px var(--color-gray-light);
+  background-color: var(--color-light);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  margin-bottom: 20px;
+}
+
+
+.order__header {
+  padding: 5px 20px;
+  border-bottom: solid 1px var(--color-gray-light);
+  background-color: #fafafab9;
+}
+
+.order__info {
+
+}
+
+.order__code {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.order__status {
+
+}
+
+.order__container {
+  padding: 0 20px;
+}
+
+.order__container .cart__image {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.order__container .cart__item {
+  margin: 0;
+  padding: 10px 0;
+}
+.order__container .cart__name {
+  margin: 0;
+}
+
+.order__container .cart__item + .cart__item {
+  border-top: solid 1px var(--color-gray-light);
+}
+
+.order__footer {
+  /* background-color: #fafafab9; */
+  padding: 10px 20px;
+  border-top: solid 1px var(--color-gray-light);
 }

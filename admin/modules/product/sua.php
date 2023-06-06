@@ -24,7 +24,46 @@ $query_product_edit = mysqli_query($mysqli, $sql_product_edit);
                             <label for="title" class="d-block">Tên sản phẩm</label>
                             <input type="text" name="product_name" class="d-block form-control" value="<?php echo $row['product_name'] ?>" placeholder="product name">
                         </div>
-
+                        <div class="input-item form-group">
+                            <label for="title" class="d-block">Thương hiệu sản phẩm</label>
+                            <select name="product_brand" id="product_brand" class="form-control select_brand">
+                                <?php
+                                $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id DESC";
+                                $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
+                                while ($row_brand = mysqli_fetch_array($query_brand_list)) {
+                                    if ($row['product_brand'] == $row_brand['brand_id']) {
+                                ?>
+                                    <option value="<?php echo $row_brand['brand_id'] ?>" selected><?php echo $row_brand['brand_name'] ?></option>
+                                <?php        
+                                    } else {
+                                ?>
+                                    <option value="<?php echo $row_brand['brand_id'] ?>"><?php echo $row_brand['brand_name'] ?></option>
+                                <?php
+                                }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="input-item form-group">
+                            <label for="title" class="d-block">Dung tích sản phẩm</label>
+                            <select name="product_capacity" id="product_capacity" class="form-control select_capacity">
+                                <?php
+                                $sql_capacity_list = "SELECT * FROM capacity ORDER BY capacity_id ASC";
+                                $query_capacity_list = mysqli_query($mysqli, $sql_capacity_list);
+                                while ($row_capacity = mysqli_fetch_array($query_capacity_list)) {
+                                    if ($row['capacity_id'] == $row_capacity['capacity_id']) {
+                                ?>
+                                <option value="<?php echo $row_capacity['capacity_id'] ?>" selected><?php echo $row_capacity['capacity_name'] ?></option>
+                                <?php
+                                    } else {
+                                ?>
+                                    <option value="<?php echo $row_capacity['capacity_id'] ?>"><?php echo $row_capacity['capacity_name'] ?></option>
+                                <?php
+                                }
+                            }
+                                ?>
+                            </select>
+                        </div>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Giá nhập vào sản phẩm</label>
                             <input class="d-block form-control" name="product_price_import" type="text" value="<?php echo $row['product_price_import'] ?>" placeholder="product price inport">
@@ -65,7 +104,7 @@ $query_product_edit = mysqli_query($mysqli, $sql_product_edit);
                         </div>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Danh mục sản phẩm</label>
-                            <select name="product_category" id="product_category" class="form-control">
+                            <select name="product_category" id="product_category" class="form-control select_category">
                                 <?php
                                 $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
                                 $query_category_list = mysqli_query($mysqli, $sql_category_list);
@@ -98,3 +137,9 @@ $query_product_edit = mysqli_query($mysqli, $sql_product_edit);
 <?php
 }
 ?>
+
+<script>
+    $('.select_brand').chosen();
+    $('.select_capacity').chosen();
+    $('.select_category').chosen();
+</script>

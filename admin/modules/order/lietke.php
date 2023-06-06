@@ -1,10 +1,23 @@
 <?php
+if (isset($_GET['pagenumber'])) {
+    $page = $_GET['pagenumber'];
+} else {
+    $page = '';
+}
+
+
+if ($page == '' || $page == 1) {
+    $begin = 0;
+} else {
+    $begin = ($page * 10) - 10;
+}
+
 if (isset($_GET['order_status'])) {
     $order_status = $_GET['order_status'];
-    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = $order_status ORDER BY orders.order_id DESC";
-    $query_order_list = mysqli_query($mysqli, $sql_order_list);    
+    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = $order_status ORDER BY orders.order_id DESC LIMIT $begin,10";
+    $query_order_list = mysqli_query($mysqli, $sql_order_list);
 } else {
-    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC";
+    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC LIMIT $begin,10";
     $query_order_list = mysqli_query($mysqli, $sql_order_list);
 }
 ?>
@@ -73,13 +86,51 @@ if (isset($_GET['order_status'])) {
                                     <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
                                     <td><?php echo format_order_type($row['order_type']); ?></td>
-                                    <td class="text-center"><span class="col-span <?php echo format_status_style($row['order_status'])?>"><?php echo format_order_status($row['order_status']); ?></span></td>
+                                    <td class="text-center"><span class="col-span <?php echo format_status_style($row['order_status']) ?>"><?php echo format_order_status($row['order_status']); ?></span></td>
                                 </tr>
                             <?php
                             }
                             ?>
                         </tbody>
                     </table>
+                </div>
+                <div class="pagination d-flex justify-center">
+                    <?php
+                    if (isset($_GET['order_status'])) {
+                        $order_status = $_GET['order_status'];
+                        $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = $order_status ORDER BY orders.order_id DESC";
+                        $query_pages = mysqli_query($mysqli, $sql_order_list);
+                    } else {
+                        $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC";
+                        $query_pages = mysqli_query($mysqli, $sql_order_list);
+                    }
+                    $row_count = mysqli_num_rows($query_pages);
+                    $totalpage = ceil($row_count / 10);
+                    ?>
+                    <ul class="pagination__items d-flex align-center justify-center">
+                        <li class="pagination__item">
+                            <a class="d-flex align-center" href="#">
+                                <img src="images/arrow-left.svg" alt="">
+                            </a>
+                        </li>
+                        <?php
+                        $currentLink = $_SERVER['REQUEST_URI'];
+                        for ($i = 1; $i <= $totalpage; $i++) {
+                        ?>
+                            <li class="pagination__item">
+                                <a class="pagination__anchor <?php if ($page = $i) {
+                                                                    echo "active";
+                                                                } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
+                            </li>
+                        <?php
+                        }
+                        ?>
+                        <li class="pagination__item">
+                            <a class="d-flex align-center" href="#">
+                                <img src="images/icon-nextlink.svg" alt="">
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -137,8 +188,7 @@ if (isset($_GET['order_status'])) {
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnConfirm.href = "modules/order/xuly.php?confirm=1&data="+ JSON.stringify(checkedIds);
-        btnCancel.href = "modules/order/xuly.php?cancel=1&data="+ JSON.stringify(checkedIds);
+        btnConfirm.href = "modules/order/xuly.php?confirm=1&data=" + JSON.stringify(checkedIds);
+        btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
     }
-    
 </script>

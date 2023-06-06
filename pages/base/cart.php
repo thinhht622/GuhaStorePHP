@@ -28,6 +28,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                 </div>
                 <div class="cart__content">
                     <?php
+                    $validate = true;
                     foreach ($_SESSION['cart'] as $cart_item) {
                         $query_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = '" . $cart_item['product_id'] . "' LIMIT 1");
                         $product = mysqli_fetch_array($query_product);
@@ -65,8 +66,9 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                         <?php
 
                         } else {
+                            $validate = false;
                         ?>
-                        <div class="cart__item d-grid">
+                            <div class="cart__item d-grid">
                                 <div class="cart__image opacity-50">
                                     <img class="w-100" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="product" />
                                 </div>
@@ -108,11 +110,18 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                     Thuế và phí vận chuyển được tính khi thanh toán
                 </p>
                 <?php
+
                 if (isset($_SESSION['account_email'])) {
+                    if ($validate == true) {
                 ?>
-                    <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Tiến hành đặt hàng</a>
-                <?php } else {
-                ?>
+                        <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Tiến hành đặt hàng</a>
+                    <?php } else {
+                    ?>
+                        <a href="" class="btn cart__btn btn__solid text-center opacity-50">Tiến hành đặt hàng</a>
+                    <?php
+                    }
+                } else {
+                    ?>
                     <a href="index.php?page=login"><button class="btn cart__btn btn__outline">Đăng nhập đặt hàng</button></a>
                 <?php
                 }

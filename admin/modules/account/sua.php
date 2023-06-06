@@ -23,7 +23,7 @@ $query_account_edit = mysqli_query($mysqli, $sql_account_edit);
                     ?>
                         <div class="input-item form-group">
                             <label for="title" class="d-block">Tên tài khoản</label>
-                            <input type="text" name="account_name" class="form-control" value="<?php echo $item['account_name'] ?>">
+                            <input type="text" name="account_name" class="form-control" value="<?php echo $item['account_name'] ?>" disabled>
                         </div>
                         <div class="input-item form-group">
                             <label for="email" class="d-block">Email</label>
@@ -31,7 +31,7 @@ $query_account_edit = mysqli_query($mysqli, $sql_account_edit);
                         </div>
                         <div class="input-item form-group">
                             <label for="phone" class="d-block">Số điện thoại</label>
-                            <input type="text" name="account_phone" id="phone" class="form-control" value="<?php echo $item['account_phone'] ?>">
+                            <input type="text" name="account_phone" id="phone" class="form-control" value="<?php echo $item['account_phone'] ?>" disabled>
                         </div>
                         <div class="input-item form-group">
                             <label for="account_type" class="d-block">Quyền hạn</label>
@@ -58,7 +58,7 @@ $query_account_edit = mysqli_query($mysqli, $sql_account_edit);
                                                     } ?>>Tạm khóa</option>
                             </select>
                         </div>
-                        <button type="submit" name="account_edit" class="btn btn-primary btn-icon-text">
+                        <button type="submit" name="account_change" class="btn btn-primary btn-icon-text">
                             <i class="ti-file btn-icon-prepend"></i>
                             Sửa
                         </button>

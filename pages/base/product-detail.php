@@ -58,7 +58,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                                 <img src="./assets/images/icon/plus.svg" alt="sum" />
                                             </button>
                                         </div>
-                                        <span class="h6" style="margin-left: 10px;"><?php if ($row_product_detail['product_quantity'] > 0) { ?> còn <?php echo $row_product_detail['product_quantity'] ?> sản phẩm <?php } else { ?>Hiện sản phẩm đã hết hàng<?php } ?></span>
+                                        <span class="h6" style="margin-left: 10px;"><?php if ($row_product_detail['product_quantity'] > 0) { ?> còn <span class="quantity-total"> <?php echo $row_product_detail['product_quantity'] ?> </span> sản phẩm <?php } else { ?>Hiện sản phẩm đã hết hàng<?php } ?></span>
                                     </div>
                                 </div>
                                 <?php if ($row_product_detail['product_quantity'] > 0) { ?>

@@ -13,7 +13,7 @@ if (!isset($_SESSION['login'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin</title>
 
-  <link rel="shortcut icon" href="../assets/images/icon/favicon.ico"/>
+  <link rel="shortcut icon" href="../assets/images/icon/favicon.ico" />
 
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
@@ -23,6 +23,7 @@ if (!isset($_SESSION['login'])) {
   <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="css/customize.css">
+  <link rel="stylesheet" href="css/toast.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
@@ -33,14 +34,22 @@ if (!isset($_SESSION['login'])) {
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <!-- auto compelete -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+
+  <script src="js/toast_message.js"></script>
 
   <script src="https://kit.fontawesome.com/a2e1cc550d.js" crossorigin="anonymous"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
 </head>
 
 <body>
+  <div id="toast">
+
+  </div>
   <div class="container-scroller">
     <?php
     include('config/config.php');
@@ -107,23 +116,6 @@ if (!isset($_SESSION['login'])) {
 
         labels: ['Ngày', 'Đơn hàng', 'Doanh thu', 'Số lượng']
       });
-
-      // var donut = new Morris.Donut({
-      //   element: 'donutchart',
-      //   data: [{
-      //       label: "Đơn hàng tại quầy",
-      //       value: 10
-      //     },
-      //     {
-      //       label: "Đơn hàng online",
-      //       value: 30
-      //     },
-      //     {
-      //       label: "Đơn hàng hủy",
-      //       value: 2
-      //     }
-      //   ]
-      // });
 
       $('#select-date').change(function() {
         var thoigian = $(this).val();

@@ -2,15 +2,15 @@
 function format_order_type($value)
 {
   $text = '';
-  if ($value == 0) {
-    echo "Thanh toán tiền mặt";
-  } elseif ($value == 1) {
-    echo "Chuyển khoản";
+  if ($value == 1) {
+    echo "Thanh toán khi nhận hàng (COD)";
   } elseif ($value == 2) {
-    echo "MoMo";
+    echo "Thanh toán MOMO QR CODE";
   } elseif ($value == 3) {
-    echo "VNPAY";
+    echo "Thanh toán chuyển khoản MoMo";
   } elseif ($value == 4) {
+    echo "Thanh toán chuyển khoản VNPAY";
+  } elseif ($value == 5) {
     echo "Mua hàng trực tiếp";
   }
   echo $text;
@@ -118,6 +118,14 @@ function format_status_style($value) {
     $class = 'color-bg-blue';
   } else {
     $class = 'color-bg-green';
+  }
+  echo $class;
+}
+
+function format_quantity_style($value) {
+  $class = '';
+  if ($value < 5) {
+    $class = 'color-t-red';
   }
   echo $class;
 }

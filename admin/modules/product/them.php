@@ -20,7 +20,7 @@
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Thương hiệu sản phẩm</label>
-                        <select name="product_brand" id="product_brand" class="form-control">
+                        <select name="product_brand" id="product_brand" class="form-control select_brand">
                             <?php
                             $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id DESC";
                             $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
@@ -34,7 +34,7 @@
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Dung tích sản phẩm</label>
-                        <select name="product_capacity" id="product_capacity" class="form-control">
+                        <select name="product_capacity" id="product_capacity" class="form-control select_capacity">
                             <?php
                             $sql_capacity_list = "SELECT * FROM capacity ORDER BY capacity_id ASC";
                             $query_capacity_list = mysqli_query($mysqli, $sql_capacity_list);
@@ -84,7 +84,7 @@
                     </div>
                     <div class="input-item form-group">
                         <label for="title" class="d-block">Danh mục sản phẩm</label>
-                        <select name="product_category" id="product_category" class="form-control">
+                        <select name="product_category" id="product_category" class="form-control select_category">
                             <?php
                             $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
                             $query_category_list = mysqli_query($mysqli, $sql_category_list);
@@ -107,3 +107,9 @@
         </button>
     </div>
 </form>
+
+<script>
+    $('.select_brand').chosen();
+    $('.select_capacity').chosen();
+    $('.select_category').chosen();
+</script>

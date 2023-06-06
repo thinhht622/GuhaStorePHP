@@ -7,41 +7,59 @@ require_once('config_vnpay.php');
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
-$order_code = rand(0, 9999);
-$delivery_id = rand(0, 9999);
+
 
 
 if (isset($_POST['redirect'])) {
-    $account_id = $_SESSION['account_id'];
+    // Sinh ma don hang va ma giao hang
+    $order_code = rand(0, 9999);
+    $delivery_id = rand(0, 9999);
     $order_date = Carbon::now('Asia/Ho_Chi_Minh');
+
+    $_SESSION['order_code'] = $order_code;
+
+    // Lay id tai khoan thong qua session
+    $account_id = $_SESSION['account_id'];
+
+    // Lay thong tin thong qua phuong thuc POST
     $delivery_name = $_POST['delivery_name'];
     $delivery_address = $_POST['delivery_address'];
     $delivery_phone = $_POST['delivery_phone'];
     $delivery_note = $_POST['delivery_note'];
-    $total_amount = 0;
     $order_type = $_POST['order_type'];
-    $validate = 0;
+
+    // Gan gia thong tin giao hang vao session delivery
+    $_SESSION['delivery_id'] = $delivery_id;
+    $_SESSION['delivery_name'] = $delivery_name;
+    $_SESSION['delivery_address'] = $delivery_address;
+    $_SESSION['delivery_phone'] = $delivery_phone;
+    $_SESSION['delivery_note'] = $delivery_note;
+
+    $total_amount = 0;
+    $validate = 1;
     foreach ($_SESSION['cart'] as $cart_item) {
         $product_id = $cart_item['product_id'];
         $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
         $product = mysqli_fetch_array($query_get_product);
-        if ($product['product_quantity'] >= $cart_item['product_quantity']) {
-            $validate = 1;
-        } else {
+        if ($product['product_quantity'] < $cart_item['product_quantity']) {
             $validate = 0;
         }
         $total_amount += ($cart_item['product_price'] - ($cart_item['product_price'] / 100 * $cart_item['product_sale'])) * $cart_item['product_quantity'];
     }
     if ($validate == 1) {
-        // them dia chi giao hang
-        $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address, delivery_note) VALUE ($delivery_id, $account_id, '$delivery_name', $delivery_phone, '$delivery_address', '$delivery_note')";
-        mysqli_query($mysqli, $insert_delivery);
+
+        // Gia tri tong tien
+        $_SESSION['total_amount'] = $total_amount;
 
         // neu thanh toan bang tien mat
-        if ($order_type == 0 || $order_type == 1) {
+        if ($order_type == 1) {
+            // them dia chi giao hang
+            $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address, delivery_note) VALUE ($delivery_id, $account_id, '$delivery_name', '$delivery_phone', '$delivery_address', '$delivery_note')";
+            mysqli_query($mysqli, $insert_delivery);
+
             // insert don hang
             $insert_order = "INSERT INTO orders(order_code, order_date, account_id, delivery_id, total_amount, order_type, order_status) 
-        VALUE ($order_code, '" . $order_date . "', $account_id, '" . $delivery_id . "', $total_amount, $order_type, 0)";
+            VALUE ($order_code, '" . $order_date . "', $account_id, '" . $delivery_id . "', $total_amount, 1, 0)";
 
             $query_insert_order = mysqli_query($mysqli, $insert_order);
             if ($query_insert_order) {
@@ -63,21 +81,36 @@ if (isset($_POST['redirect'])) {
                 $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
                 $query_total_amount = mysqli_query($mysqli, $update_total_amount);
 
+                $now = $order_date->format('Y-m-d');
+
+                $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+                $query_thongke = mysqli_query($mysqli, $sql_thongke);
+
+                if (mysqli_num_rows($query_thongke) == 0) {
+                    $metric_sales = $total_amount;
+                    $metric_quantity = $quantity_tk;
+                    $metric_order = 1;
+                    $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
+                        VALUE ('$order_date', '$metric_order', '$metric_sales', '$metric_quantity')";
+                    mysqli_query($mysqli, $sql_update_metrics);
+                } elseif (mysqli_num_rows($query_thongke) != 0) {
+                    while ($row_tk = mysqli_fetch_array($query_thongke)) {
+                        $metric_sales = $row_tk['metric_sales'] + $total_amount;
+                        $metric_quantity = $row_tk['metric_quantity'] + $quantity_tk;
+                        $metric_order = $row_tk['metric_order'] + 1;
+                        $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
+                        mysqli_query($mysqli, $sql_update_metrics);
+                    }
+                }
+
                 unset($_SESSION['cart']);
-                header('Location:../../index.php?page=thankiu');
+                header('Location:../../index.php?page=thankiu&order_type=1');
             }
         } elseif ($order_type == 2) {
-            $_SESSION['order_code'] = $order_code;
-            $_SESSION['delivery_id'] = $delivery_id;
-            $_SESSION['order_date'] = $order_date;
-            $_SESSION['delivery_name'] = $delivery_name;
-            $_SESSION['delivery_address'] = $delivery_address;
-            $_SESSION['delivery_phone'] = $delivery_phone;
-            $_SESSION['delivery_note'] = $delivery_note;
-            $_SESSION['total_amount'] = $total_amount;
-            $_SESSION['order_type'] = $order_type;
             header('Location:checkout_momo.php');
         } elseif ($order_type == 3) {
+            header('Location:checkout_momo_atm.php');
+        } elseif ($order_type == 4) {
             // xu ly toan bang vnpay
             $vnp_TxnRef = $order_code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
             $vnp_OrderInfo = 'Thanh toán đơn hàng Guha Perfume';
@@ -132,65 +165,11 @@ if (isset($_POST['redirect'])) {
                 'code' => '00', 'message' => 'success', 'data' => $vnp_Url
             );
             if (isset($_POST['redirect'])) {
-                $_SESSION['order_code'] = $order_code;
-                // insert don hang
-                $insert_order = "INSERT INTO orders(order_code, order_date, account_id, delivery_id, total_amount, order_type, order_status) 
-                VALUE ($order_code, '" . $order_date . "', $account_id, '" . $delivery_id . "', $total_amount, $order_type, 1)";
-
-                $query_insert_order = mysqli_query($mysqli, $insert_order);
-                if ($query_insert_order) {
-                    $quantity_tk = 0;
-                    //them chi tiet don hang
-                    foreach ($_SESSION['cart'] as $cart_item) {
-                        $product_id = $cart_item['product_id'];
-                        $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
-                        $product = mysqli_fetch_array($query_get_product);
-                        if ($product['product_quantity'] >= $cart_item['product_quantity']) {
-                            $product_quantity = $cart_item['product_quantity'];
-                            $quantity_tk += $product_quantity;
-                            $quantity = $product['product_quantity'] - $product_quantity;
-                            $product_price = $cart_item['product_price'];
-                            $product_sale = $cart_item['product_sale'];
-                            $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
-                            mysqli_query($mysqli, $insert_order_detail);
-                            mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
-                        }
-                    }
-                    $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
-                    $query_total_amount = mysqli_query($mysqli, $update_total_amount);
-
-                    $now = $order_date->format('Y-m-d');
-
-                    $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
-                    $query_thongke = mysqli_query($mysqli, $sql_thongke);
-
-                    if (mysqli_num_rows($query_thongke) == 0) {
-                        $metric_sales = $total_amount;
-                        $metric_quantity = $quantity_tk;
-                        $metric_order = 1;
-                        $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
-                        VALUE ('$order_date', '$metric_order', '$metric_sales', '$metric_quantity')";
-                        mysqli_query($mysqli, $sql_update_metrics);
-                    } elseif (mysqli_num_rows($query_thongke) != 0) {
-                        while ($row_tk = mysqli_fetch_array($query_thongke)) {
-                            $metric_sales = $row_tk['metric_sales'] + $total_amount;
-                            $metric_quantity = $row_tk['metric_quantity'] + $quantity_tk;
-                            $metric_order = $row_tk['metric_order'] + 1;
-                            $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
-                            mysqli_query($mysqli, $sql_update_metrics);
-                        }
-                    }
-
-                    unset($_SESSION['cart']);
-                }
                 header('Location: ' . $vnp_Url);
                 die();
             } else {
                 echo json_encode($returnData);
             }
-            // vui lòng tham khảo thêm tại code demo
-        } elseif ($order_type == 4) {
-            echo "thanh toán bằng momo";
         }
     } else {
         header('Location:../../index.php?page=404');

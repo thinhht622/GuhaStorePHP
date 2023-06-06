@@ -70,7 +70,7 @@ if (isset($_POST['order_search'])) {
                                     <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
                                     <td><?php echo format_order_type($row['order_type']); ?></td>
-                                    <td><?php echo format_order_status($row['order_status']); ?></td>
+                                    <td><span class="col-span <?php echo format_status_style($row['order_status'])?>"><?php echo format_order_status($row['order_status']); ?></span></td>
                                 </tr>
                             <?php
                             }

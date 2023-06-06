@@ -63,7 +63,7 @@ $customer_count = mysqli_num_rows($query_customer);
                 <h3 class="box-title">Doanh thu hôm nay</h3>
                 <span class="box-number text-success"><?php echo number_format($sales) ?>đ</span>
                 <div class="box-number-new">
-                    <p>Thống kê ngày hôm qua</p>
+                    <p>Thống kê ngày hôm nay</p>
                 </div>
             </div>
         </div>
@@ -89,9 +89,6 @@ $customer_count = mysqli_num_rows($query_customer);
 </div>
 
 <?php
-$now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
-$subdays = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
-
 $sql_order_metric = "SELECT * FROM orders WHERE order_date BETWEEN '$subdays' AND '$now'";
 $query_metric = mysqli_query($mysqli, $sql_order_metric);
 

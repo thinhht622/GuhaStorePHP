@@ -1,5 +1,17 @@
 <?php
-$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_type = 4 ORDER BY orders.order_id DESC";
+if (isset($_GET['pagenumber'])) {
+    $page = $_GET['pagenumber'];
+} else {
+    $page = '';
+}
+
+
+if ($page == '' || $page == 1) {
+    $begin = 0;
+} else {
+    $begin = ($page * 10) - 10;
+}
+$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_type = 5 ORDER BY orders.order_id DESC LIMIT $begin,10";
 $query_order_list = mysqli_query($mysqli, $sql_order_list);
 ?>
 
@@ -31,7 +43,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                                 <th>Thời gian</th>
                                 <th>Nhân viên lên đơn</th>
                                 <th>Loại đơn hàng</th>
-                                <th>Tình trạng đơn hàng</th>
+                                <th class="text-right">Tổng tiền</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,13 +67,45 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                                     <td><?php echo $row['order_date'] ?></td>
                                     <td><?php echo $row['account_name'] ?></td>
                                     <td><?php echo format_order_type($row['order_type']); ?></td>
-                                    <td><?php echo format_order_status($row['order_status']); ?></td>
+                                    <td class="text-right"><?php echo number_format($row['total_amount']); ?>đ</td>
                                 </tr>
                             <?php
                             }
                             ?>
                         </tbody>
                     </table>
+                </div>
+                <div class="pagination d-flex justify-center">
+                    <?php
+                    $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_type = 4 ORDER BY orders.order_id DESC LIMIT $begin,10";
+                    $query_pages = mysqli_query($mysqli, $sql_order_list);
+                    $row_count = mysqli_num_rows($query_pages);
+                    $totalpage = ceil($row_count / 10);
+                    ?>
+                    <ul class="pagination__items d-flex align-center justify-center">
+                        <li class="pagination__item">
+                            <a class="d-flex align-center" href="#">
+                                <img src="images/arrow-left.svg" alt="">
+                            </a>
+                        </li>
+                        <?php
+                        $currentLink = $_SERVER['REQUEST_URI'];
+                        for ($i = 1; $i <= $totalpage; $i++) {
+                        ?>
+                            <li class="pagination__item">
+                                <a class="pagination__anchor <?php if ($page = $i) {
+                                                                    echo "active";
+                                                                } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
+                            </li>
+                        <?php
+                        }
+                        ?>
+                        <li class="pagination__item">
+                            <a class="d-flex align-center" href="#">
+                                <img src="images/icon-nextlink.svg" alt="">
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -119,8 +163,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnConfirm.href = "modules/order/xuly.php?confirm=1&data="+ JSON.stringify(checkedIds);
-        btnCancel.href = "modules/order/xuly.php?cancel=1&data="+ JSON.stringify(checkedIds);
+        btnConfirm.href = "modules/order/xuly.php?confirm=1&data=" + JSON.stringify(checkedIds);
+        btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
     }
-    
 </script>
