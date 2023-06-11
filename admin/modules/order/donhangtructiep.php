@@ -167,3 +167,23 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
         btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
     }
 </script>
+
+<script>
+    function showSuccessToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=order&query=order_live");';
+    echo '</script>';
+}
+?>

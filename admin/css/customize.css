@@ -261,6 +261,10 @@ table tfoot {
   outline: none;
 }
 
+.mg-t-20 {
+  margin-top: 20px;
+}
+
 .anchor {
   text-decoration: none;
   color: #000;
@@ -271,12 +275,53 @@ table tfoot {
   padding: 10px;
 }
 
+.checkout__cart table {
+  margin-bottom: 10px;
+}
+
+.table-col {
+  padding: 10px 0;
+  opacity: .7;
+}
+
 .checkout__items {
 }
 
 .checkout__item {
-  border-bottom: solid 1px #d0d0d0;
   padding: 15px 0;
+  border-bottom: solid 1px #dfdfdf67;
+}
+
+.checkout__image {
+  width: 60px;
+  height: 60px;
+}
+
+.checkout__image img {
+  border-radius: 4px;
+}
+
+.product-quantity {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: -8px;
+  right: -8px;
+  color: white;
+  background-color: var(--color-bg-1);
+}
+
+.checkout__name {
+  margin: 0;
+  padding: 0 var(--gutter);
+}
+
+.checkout__price {
+}
+
+.checkout__bottom {
+  margin-top: var(--gutter);
+  border-top: solid 1px var(--color-gray-dark);
 }
 
 .checkout__image {
@@ -526,27 +571,27 @@ table tfoot {
 }
 
 /* === pagination === */
+/* === pagination === */
 .pagination {
   margin-top: 20px;
   padding: 10px 0;
 }
 
 .pagination__items {
-  gap: 10px;
+  gap: var(--gutter);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* .pagination__anchor.active {
-  background-color: var(--color-gray-light);
-} */
+.pagination__item .pagination__anchor.active {
+  color: var(--color-text-white);
+  background-color: var(--color-blue);
+}
 
 .pagination__item .pagination__anchor {
   display: inline-block;
   padding: 5px 12px;
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
   color: var(--color-text-black);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -558,4 +603,23 @@ table tfoot {
 
 .chosen-container {
   max-width: 100%;
+}
+
+/* doash board */
+.metric__item {
+  padding: 20px 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.metric__sales {
+  color: #fa4242;
+}
+
+.metric__order {
+  color: #6dfa42;
+}
+
+.metric__quantity {
+  color: #faee42;
 }

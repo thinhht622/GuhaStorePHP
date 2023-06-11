@@ -1,6 +1,6 @@
 function toast({ title = "", message = "", type = "info", duration = 3000 }) {
     console.log('chạy toast rồi !!!');
-  const main = document.getElementById("toast");
+  const main = document.getElementById("toast_message");
   if (main) {
     const toast = document.createElement("div");
     const autoRemoveId = setTimeout(function () {

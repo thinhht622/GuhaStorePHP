@@ -3,6 +3,7 @@ include('../../config/config.php');
 $data = $_GET['data'];
 $article_ids = json_decode($data);
 $article_id = $_GET['article_id'];
+$article_author = $_POST['article_author'];
 $article_title = $_POST['article_title'];
 $article_summary = $_POST['article_summary'];
 $article_content = $_POST['article_content'];

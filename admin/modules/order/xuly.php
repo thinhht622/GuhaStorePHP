@@ -61,16 +61,15 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
         }
     }
 
-    header('Location: ../../index.php?action=order&query=order_list');
+    header('Location: ../../index.php?action=order&query=order_list&message=success');
 }
 
 if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
     foreach ($order_codes as $code) {
-        //Chuyen trang thai don hoan
         $sql_order_cancel = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
         mysqli_query($mysqli, $sql_order_cancel);
     }
-    header('Location: ../../index.php?action=order&query=order_list');
+    header('Location: ../../index.php?action=order&query=order_list&message=success');
 }
 
 // Xoa san pham khoi don hang
@@ -81,13 +80,13 @@ if (isset($_SESSION['order']) && isset($_GET['delete'])) {
             $product[] = array('product_id' => $order_item['product_id'], 'product_name' => $order_item['product_name'], 'product_quantity' => $order_item['product_quantity'], 'product_price' => $order_item['product_price'], 'product_sale' => $order_item['product_sale'], 'product_image' => $order_item['product_image']);
         }
         $_SESSION['order'] = $product;
-        header('Location:../../index.php?action=order&query=order_add');
+        header('Location:../../index.php?action=order&query=order_add&message=success');
     }
 }
 // xoa tat ca
 if (isset($_GET['deleteall']) && $_GET['deleteall'] == 1) {
     unset($_SESSION['order']);
-    header('Location:../../index.php?action=order&query=order_add');
+    header('Location:../../index.php?action=order&query=order_add&message=success');
 }
 // them sanpham vao don hang
 if (isset($_POST['addtoorder'])) {
@@ -121,7 +120,7 @@ if (isset($_POST['addtoorder'])) {
             $_SESSION['order'] = $new_product;
         }
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ' . $_SERVER['HTTP_REFERER'].'&message=success');
 }
 
 // them don hang
@@ -154,6 +153,7 @@ if (isset($_POST['order_add'])) {
         $insert_order = "INSERT INTO orders(order_code, order_date, account_id, delivery_id, total_amount, order_type, order_status) 
         VALUE ($order_code, '" . $order_date . "', $account_id, '" . $delivery_id . "', $total_amount, $order_type, 3)";
         $query_insert_order = mysqli_query($mysqli, $insert_order);
+        $quantity_tk = 0;
         if ($query_insert_order) {
             foreach ($_SESSION['order'] as $cart_item) {
                 $product_id = $cart_item['product_id'];
@@ -162,6 +162,7 @@ if (isset($_POST['order_add'])) {
                 if ($product['product_quantity'] >= $cart_item['product_quantity']) {
                     $product_quantity = $cart_item['product_quantity'];
                     $quantity = $product['product_quantity'] - $product_quantity;
+                    $quantity_tk += $product_quantity;
                     $product_price = $cart_item['product_price'];
                     $product_sale = $cart_item['product_sale'];
                     $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
@@ -196,7 +197,7 @@ if (isset($_POST['order_add'])) {
         }
 
         unset($_SESSION['order']);
-        header('Location:../../index.php?action=order&query=order_detail&order_code='.$order_code);
+        header('Location:../../index.php?action=order&query=order_detail&order_code='.$order_code.'&message=success');
     } else {
         header('Location:../../index.php?page=404');
     }

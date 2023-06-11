@@ -3,6 +3,7 @@ $account_id = $_SESSION['account_id'];
 $sql_account = "SELECT * FROM customer WHERE account_id = '" . $account_id . "'";
 $query_account = mysqli_query($mysqli, $sql_account);
 ?>
+<div id="toast_message"></div>
 <div class="my-account__content">
     <h2 class="my-account__title d-flex space-between h3">
         Thông tin tài khoản<a href="index.php?page=my_account&tab=account_settings" class="btn">Thay đổi thông tin</a>
@@ -38,3 +39,21 @@ $query_account = mysqli_query($mysqli, $sql_account);
         ?>
     </div>
 </div>
+<script>
+    function loginAcceptMessage() {
+        toast({
+            title: "Success",
+            message: "Đăng nhập thành công",
+            type: "success",
+            duration: 3000,
+        });
+    }
+</script>
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'loginAcceptMessage();';
+    echo 'window.history.pushState(null, "", "index.php?page=my_account&tab=account_info");';
+    echo '</script>';
+}
+?>

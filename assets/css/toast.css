@@ -1,4 +1,11 @@
 /*=== Toast Message ===*/
+#toast_message {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 99999;
+}
+
 #toast {
     position: fixed;
     top: 32px;

@@ -11,8 +11,7 @@
         if ($count>0) {
             $_SESSION['account_id'] = $row['account_id'];
             $_SESSION['account_email'] = $row['account_email'];
-            header('Location:../../index.php?page=my_account&tab=account_info');
-            echo '<script>alert("Đăng nhập thành công");</script>';
+            header('Location:../../index.php?page=my_account&tab=account_info&message=success');
         }else {
             header('Location:../../index.php?page=login');
             echo '<script>alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại");</script>';

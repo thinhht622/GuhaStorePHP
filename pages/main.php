@@ -26,11 +26,8 @@ include("./pages/base/header.php");
     elseif ($action == 'cart') {
         include("./pages/main/cart.php");
     }
-    elseif ($action == 'product_category') {
-        include("./pages/main/product_category.php");
-    }
-    elseif ($action == 'product_brand') {
-        include("./pages/main/product_brand.php");
+    elseif ($action == 'products') {
+        include("./pages/main/products.php");
     }
     elseif ($action == 'search'){
         include("./pages/main/search.php");

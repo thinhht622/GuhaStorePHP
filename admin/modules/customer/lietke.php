@@ -42,7 +42,7 @@ $query_customer_list = mysqli_query($mysqli, $sql_customer_list);
                             ?>
                                 <tr>
                                     <td>
-                                        <a href="?action=customer&query=customer_edit&customer_id=<?php echo $row['customer_id'] ?>">
+                                        <a href="#">
                                             <div class="icon-edit">
                                                 <img class="w-100 h-100" src="images/icon-edit.png" alt="">
                                             </div>

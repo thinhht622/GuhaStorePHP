@@ -81,28 +81,6 @@ if (isset($_POST['redirect'])) {
                 $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
                 $query_total_amount = mysqli_query($mysqli, $update_total_amount);
 
-                $now = $order_date->format('Y-m-d');
-
-                $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
-                $query_thongke = mysqli_query($mysqli, $sql_thongke);
-
-                if (mysqli_num_rows($query_thongke) == 0) {
-                    $metric_sales = $total_amount;
-                    $metric_quantity = $quantity_tk;
-                    $metric_order = 1;
-                    $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
-                        VALUE ('$order_date', '$metric_order', '$metric_sales', '$metric_quantity')";
-                    mysqli_query($mysqli, $sql_update_metrics);
-                } elseif (mysqli_num_rows($query_thongke) != 0) {
-                    while ($row_tk = mysqli_fetch_array($query_thongke)) {
-                        $metric_sales = $row_tk['metric_sales'] + $total_amount;
-                        $metric_quantity = $row_tk['metric_quantity'] + $quantity_tk;
-                        $metric_order = $row_tk['metric_order'] + 1;
-                        $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
-                        mysqli_query($mysqli, $sql_update_metrics);
-                    }
-                }
-
                 unset($_SESSION['cart']);
                 header('Location:../../index.php?page=thankiu&order_type=1');
             }

@@ -154,3 +154,23 @@ $query_inventory_list = mysqli_query($mysqli, $sql_inventory_list);
         saleBtn.href = linklist + "&inventory_sale=" + inputSale.value;
     })
 </script>
+
+<script>
+    function showSuccessToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=account&query=account_list");';
+    echo '</script>';
+}
+?>

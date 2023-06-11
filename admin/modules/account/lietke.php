@@ -131,7 +131,7 @@ if (isset($_POST['account_keyword'])) {
 </script>
 
 <script>
-    function showErrorToast() {
+    function showSuccessToast() {
         toast({
             title: "Success",
             message: "Cập nhật thành công",
@@ -143,10 +143,9 @@ if (isset($_POST['account_keyword'])) {
 
 <?php
 if (isset($_GET['message']) && $_GET['message'] == 'success') {
-    $message = $_GET['message'];
     echo '<script>';
-    echo '   showErrorToast();';
-    echo 'window.history.pushState(null, "", "index.php?action=account&query=my_account");';
+    echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=account&query=account_list");';
     echo '</script>';
 }
 ?>

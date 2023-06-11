@@ -28,7 +28,7 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                             <?php
                             if ($row['product_sale'] > 0) {
                             ?>
-                                <span class="product__sale h6 p-absolute"> Sale <?php echo $row['product_sale'] ?>%</span>
+                                <span class="product__sale h6 p-absolute"> - <?php echo $row['product_sale'] ?>%</span>
                             <?php
                             }
                             ?>

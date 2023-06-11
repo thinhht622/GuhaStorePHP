@@ -16,7 +16,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
 <header class="header">
     <div class="header__topbar">
         <div class="container p-relative d-flex space-between align-center">
-            <p class="h5">Miễn ship cho tất cả các đơn hàng khu vực hà nội</p>
+            <p class="h5">Miễn phí ship toàn quốc</p>
             <?php if (isset($_SESSION['account_email'])) {
             ?>
                 <a class="h5 login-btn p-absolute" href="index.php?logout=1">ĐĂNG XUẤT</a>
@@ -62,7 +62,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                                     </span>
                                 </li>
                                 <li class="nav__item">
-                                    <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=product_category">
+                                    <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=products">
                                         Tất cả sản phẩm
                                     </a>
                                 </li>
@@ -72,7 +72,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                                 while ($row_category = mysqli_fetch_array($query_category_list)) {
                                 ?>
                                     <li class="nav__item">
-                                        <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=product_category&category_id=<?php echo $row_category['category_id'] ?>">
+                                        <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=products&category_id=<?php echo $row_category['category_id'] ?>">
                                             <?php echo $row_category['category_name'] ?>
                                         </a>
                                     </li>
@@ -101,7 +101,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                                 while ($row_brand = mysqli_fetch_array($query_brand_list)) {
                                 ?>
                                     <li class="nav__item">
-                                        <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=product_brand&brand_id=<?php echo $row_brand['brand_id'] ?>">
+                                        <a class="nav__anchor h7 d-flex align-center space-between" href="index.php?page=products&brand_id=<?php echo $row_brand['brand_id'] ?>">
                                             <?php echo $row_brand['brand_name'] ?>
                                         </a>
                                     </li>

@@ -105,3 +105,22 @@ $query_inventory_detail = mysqli_query($mysqli, $sql_inventory_detail);
     </div>
 </div>
 <a href="modules/inventory/inphieunk.php?inventory_code=<?php echo $inventory_code ?>" target="_blank" class="btn btn-outline-dark btn-fw"> <i class="icon-printer"></i> In Hóa Đơn</a>
+
+<script>
+    function showSuccessToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessToast();';
+    echo '</script>';
+}
+?>

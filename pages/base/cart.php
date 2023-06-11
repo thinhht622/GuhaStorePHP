@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+// unset($_SESSION['cart']);
 ?>
+<div id="toast_message"></div>
 <section class="cart pd-section">
     <div class="container">
         <div class="cart__header d-flex space-between align-center">
@@ -37,11 +39,11 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                     ?>
                             <div class="cart__item d-grid">
                                 <div class="cart__image">
-                                    <img class="w-100" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="product" />
+                                    <a href="index.php?page=product_detail&product_id=<?php echo $cart_item['product_id'] ?>"><img class="w-100" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="product" /></a>
                                 </div>
                                 <div class="cart__title">
                                     <h3 class="cart__name h4"><?php echo $cart_item['product_name'] ?></h3>
-                                    <span class="cart__color">Còn lại: <?php echo $product['product_quantity'] ?> sản phẩm</span>
+                                    <span class="cart__color">Còn lại: <span class="product__quantity"><?php echo $product['product_quantity'] ?></span> sản phẩm</span>
                                 </div>
                                 <div class="cart__quantity">
                                     <div class="cart__quantity--container d-flex align-center">
@@ -70,11 +72,11 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                         ?>
                             <div class="cart__item d-grid">
                                 <div class="cart__image opacity-50">
-                                    <img class="w-100" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="product" />
+                                    <a href="index.php?page=product_detail&product_id=<?php echo $cart_item['product_id'] ?>"><img class="w-100" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="product" /></a>
                                 </div>
                                 <div class="cart__title">
                                     <h3 class="cart__name h4 opacity-50"><?php echo $cart_item['product_name'] ?></h3>
-                                    <span class="cart__color color-wanning">Còn lại: <?php echo $product['product_quantity'] ?> sản phẩm</span>
+                                    <span class="cart__color color-wanning">Còn lại: <span class="product__quantity"><?php echo $product['product_quantity'] ?></span> sản phẩm</span>
                                 </div>
                                 <div class="cart__quantity">
                                     <div class="cart__quantity--container d-flex align-center">
@@ -117,7 +119,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                         <a href="index.php?page=checkout" class="btn cart__btn btn__solid text-center">Tiến hành đặt hàng</a>
                     <?php } else {
                     ?>
-                        <a href="" class="btn cart__btn btn__solid text-center opacity-50">Tiến hành đặt hàng</a>
+                        <button class="btn cart__btn btn__solid text-center opacity-50" onclick="showErrorMessage();">Tiến hành đặt hàng</button>
                     <?php
                     }
                 } else {
@@ -138,3 +140,34 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
     </div>
 </section>
 <!-- end cart -->
+<script>
+    function showSuccessMessage() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 3000,
+        });
+    }
+    function showErrorMessage() {
+        toast({
+            title: "Error",
+            message: "Số sản phẩm không hợp lệ",
+            type: "error",
+            duration: 3000,
+        });
+    }
+</script>
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessMessage();';
+    echo 'window.history.pushState(null, "", "index.php?page=cart");';
+    echo '</script>';
+} elseif (isset($_GET['message']) && $_GET['message'] == 'error') {
+    echo '<script>';
+    echo 'showErrorMessage();';
+    echo 'window.history.pushState(null, "", "index.php?page=cart");';
+    echo '</script>';
+}
+?>

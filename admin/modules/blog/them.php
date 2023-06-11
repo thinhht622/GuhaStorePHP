@@ -15,6 +15,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="input-item form-group">
+                        <label for="author" class="d-block">Tên tác giả</label>
+                        <input id=author type="text" name="article_author" class="d-block form-control" value="" placeholder="">
+                    </div>
+                    <div class="input-item form-group">
                         <label for="title" class="d-block">Tiêu đề bài viết</label>
                         <input type="text" name="article_title" class="d-block form-control" value="" placeholder="">
                     </div>
@@ -35,7 +39,7 @@
             </div>
         </div>
         <div class="col-lg-4 grid-margin stretch-card">
-            <div class="card">  
+            <div class="card">
                 <div class="card-body">
                     <div class="main-pane-top">
                         <h4 class="card-title">Sản phẩm theo danh mục</h4>

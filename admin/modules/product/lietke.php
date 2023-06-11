@@ -224,3 +224,24 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         saleBtn.href = linklist + "&product_sale=" + inputSale.value;
     })
 </script>
+
+<script>
+    function showErrorToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    $message = $_GET['message'];
+    echo '<script>';
+    echo '   showErrorToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=product&query=product_list");';
+    echo '</script>';
+}
+?>

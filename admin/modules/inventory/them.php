@@ -165,3 +165,24 @@ $inventory_code = rand(0, 9999);
 <script>
     $('.select_product').chosen();
 </script>
+
+<script>
+    function showSuccesToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    $message = $_GET['message'];
+    echo '<script>';
+    echo '   showSuccesToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=inventory&query=inventory_add");';
+    echo '</script>';
+}
+?>

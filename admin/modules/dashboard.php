@@ -14,15 +14,89 @@
                         <option value="90ngay">90 ngày qua</option>
                         <option value="365ngay">365 ngày qua</option>
                     </select>
-                    <div class="date-filter">
-                        <label for="date-from">Từ</label>
-                        <input type="date" name="date-from" id="date-from">
-                        <label for="date-to">Đến</label>
-                        <input type="date" name="date-to" id="date-to">
-                    </div>
+                </div>
+                <div class="metrics d-flex space-between">
+                    <div class="metric__item">Doanh thu: <span class="metric__sales"></span> </div>
+                    <div class="metric__item">Số đơn hàng: <span class="metric__order"></span> </div>
+                    <div class="metric__item">Số lượng bán: <span class="metric__quantity"></span> </div>
                 </div>
                 <div id="linechart" style="height: 350px;" class="w-100"></div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+        thongke();
+        var char = new Morris.Line({
+
+            element: 'linechart',
+
+            xkey: 'date',
+
+            ykeys: ['date', 'order', 'sales', 'quantity'],
+
+            labels: ['Ngày', 'Đơn hàng', 'Doanh thu', 'Số lượng']
+        });
+
+        $('#select-date').change(function() {
+            var thoigian = $(this).val();
+            if (thoigian == '7ngay') {
+                var text = '7 ngày qua';
+            } else if (thoigian == '28ngay') {
+                var text = '28 ngày qua';
+            } else if (thoigian == '90ngay') {
+                var text = '90 ngày qua';
+            } else {
+                var text = '365 ngày qua';
+            }
+            $('#text-date').text(text);
+            $.ajax({
+                url: "modules/thongke.php",
+                method: "POST",
+                dataType: "JSON",
+                data: {
+                    thoigian: thoigian
+                },
+                success: function(data) {
+                    char.setData(data);
+                    $('#text-date').text(text);
+
+
+                    console.log(data);
+                    // Lấy tổng số lượng đơn, số lượng bán và doanh thu
+                    var totalOrder = 0;
+                    var totalSales = 0;
+                    var totalQuantity = 0;
+                    for (var i = 0; i < data.length; i++) {
+                        totalOrder += parseInt(data[i].order);
+                        totalSales += parseInt(data[i].sales);
+                        totalQuantity += parseInt(data[i].quantity);
+                    }
+
+                    var formattedAmount = parseInt(totalSales).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+                    // Đổ dữ liệu vào các thẻ div tương ứng
+                    $('.metric__order').text(totalOrder);
+                    $('.metric__quantity').text(totalQuantity);
+                    $('.metric__sales').text(formattedAmount);
+                }
+            })
+        });
+
+        function thongke() {
+            var text = '365 ngày qua';
+            $.ajax({
+                url: "modules/thongke.php",
+                method: "POST",
+                dataType: "JSON",
+
+                success: function(data) {
+                    char.setData(data);
+                    $('#text-date').text(text);
+                }
+            })
+        }
+    });
+</script>

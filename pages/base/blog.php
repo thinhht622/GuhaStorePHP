@@ -22,7 +22,7 @@ $query_article_list = mysqli_query($mysqli, $sql_article_list);
                   <h3 class="blog__title h3">
                     <?php echo $row['article_title'] ?>
                   </h3>
-                  <span class="blog__date h6 d-block"><?php echo $row['article_date'] ?></span>
+                  <span class="blog__date h6 d-block"><?php echo $row['article_date'] ?> - <?php echo $row['article_author'] ?></span>
                   <div class="blog__context h4">
                       <?php echo $row['article_summary'] ?>
                   </div>
@@ -43,9 +43,9 @@ $query_article_list = mysqli_query($mysqli, $sql_article_list);
                   <h3 class="blog__title h3">
                     <?php echo $row['article_title'] ?>
                   </h3>
-                  <span class="blog__date h6 d-block"><?php echo $row['article_date'] ?></span>
+                  <span class="blog__date h6 d-block"><?php echo $row['article_date'] ?> - <?php echo $row['article_author'] ?></span>
                   <div class="blog__context h4">
-                      <?php echo $row['article_summary'] ?>
+                      <?php echo mb_strimwidth($row['article_summary'], 0, 200, "...") ?>
                   </div>
                 </div>
               </a>

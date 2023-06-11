@@ -14,13 +14,13 @@ if(isset($_SESSION['inventory']) && isset($_GET['delete'])) {
             $product[]= array('product_id'=>$inventory_item['product_id'], 'product_name'=>$inventory_item['product_name'],'product_quantity'=>$inventory_item['product_quantity'],'product_price_import'=>$inventory_item['product_price_import']);
         }
         $_SESSION['inventory'] = $product;
-        header('Location:../../index.php?action=inventory&query=inventory_add');
+        header('Location:../../index.php?action=inventory&query=inventory_add&message=success');
     }
 }
 // xoa tat ca
 if(isset($_GET['deleteall'])&&$_GET['deleteall']==1){
     unset($_SESSION['inventory']);
-    header('Location:../../index.php?action=inventory&query=inventory_add');
+    header('Location:../../index.php?action=inventory&query=inventory_add&message=success');
 }
 // them sanpham vao phiếu nhập
 if(isset($_POST['addtoinventory'])){
@@ -57,7 +57,7 @@ if(isset($_POST['addtoinventory'])){
             $_SESSION['inventory'] = $new_product;
         }
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ' . $_SERVER['HTTP_REFERER'].'&message=success');
 }
 
 // them phieu nhap kho
@@ -93,7 +93,7 @@ if (isset($_POST['inventory_add'])) {
         $query_total_amount = mysqli_query($mysqli, $update_total_amount);
 
         unset($_SESSION['inventory']);
-        header('Location:../../index.php?action=inventory&query=inventory_detail&inventory_code='.$inventory_code);
+        header('Location:../../index.php?action=inventory&query=inventory_detail&inventory_code='.$inventory_code.'&message=success');
     }
 }
 ?>

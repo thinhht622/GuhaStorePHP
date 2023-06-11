@@ -157,3 +157,22 @@ $order_code = rand(0, 9999);
 <script>
     $('.select_product').chosen();
 </script>
+<script>
+    function showSuccessToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=order&query=order_add");';
+    echo '</script>';
+}
+?>

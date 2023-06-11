@@ -15,7 +15,7 @@
                     <span class="banner__description">
                         Cửa hàng nước hoa uy tín hàng đầu Hà Nội
                     </span>
-                    <a href="#" class="btn banner__btn">Xem ngay</a>
+                    <a href="index.php?page=product_category" class="btn banner__btn">Xem ngay</a>
                 </div>
             </div>
         </div>

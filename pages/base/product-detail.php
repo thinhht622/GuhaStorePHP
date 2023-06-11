@@ -1,9 +1,11 @@
 <?php
-$sql_product_detail = "SELECT * FROM product WHERE product_id = '" . $_GET['product_id'] . "' LIMIT 1";
+$product_id = $_GET['product_id'];
+$sql_product_detail = "SELECT * FROM product JOIN capacity ON product.capacity_id = capacity.capacity_id WHERE product.product_id = '" . $_GET['product_id'] . "' LIMIT 1";
 $query_product_detail = mysqli_query($mysqli, $sql_product_detail);
 while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
 ?>
 
+<div id="toast_message"></div>
     <!-- start product detail -->
     <div class="product-detail">
         <div class="product-detail__container background-default pd-section">
@@ -23,7 +25,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 <button class="slide-control__slide--prev cursor-pointer p-absolute">
                                     <img src="./assets/images/icon/chevron-left.svg" alt="sub" />
                                 </button>
-                                <input type="text" value="1/2" class="slide-control__slide--value heading-6 w-100 h-100" />
+                                <input type="text" value="1/1" class="slide-control__slide--value heading-6 w-100 h-100" />
                                 <button class="slide-control__slide--next cursor-pointer p-absolute">
                                     <img src="./assets/images/icon/chevron-right.svg" alt="sum" />
                                 </button>
@@ -36,15 +38,35 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 <span class="h6">Mã sản phẩm: <?php echo $row_product_detail['product_id'] ?></span>
                                 <h1 class="product-detail__name"><?php echo $row_product_detail['product_name'] ?></h1>
                                 <div class="product-detail__price d-flex align-center">
-                                    <del class="product__price--old h5"><?php echo number_format($row_product_detail['product_price']) . ' ₫' ?></del>
+                                    <?php
+                                    if ($row_product_detail['product_sale'] > 0) {
+                                    ?>
+                                        <del class="product__price--old h5"><?php echo number_format($row_product_detail['product_price']) . ' ₫' ?></del>
+                                    <?php
+                                    }
+                                    ?>
+
                                     <span class="product__price--new h4"><?php echo (number_format($row_product_detail['product_price'] - ($row_product_detail['product_price'] / 100 * $row_product_detail['product_sale']))) . ' ₫' ?></span>
                                     <?php
                                     if ($row_product_detail['product_sale'] > 0) {
                                     ?>
-                                        <span class="product__sale h6"> Sale <?php echo $row_product_detail['product_sale'] ?>%</span>
+                                        <span class="product__sale h6"> - <?php echo $row_product_detail['product_sale'] ?>%</span>
                                     <?php
                                     }
                                     ?>
+                                </div>
+                                <div class="product-detail__variants">
+                                    <div class="product-detail__variant">
+                                        <h3 class="product-detail__variant--title h6">
+                                            Dung tích
+                                        </h3>
+                                        <div class="product-detail__variant--items d-flex">
+                                            <input class="custom-radio" type="radio" name="size" id="1" checked="checked" />
+                                            <label class="custom-label product-detail__variant--item" for="1">
+                                                <?php echo $row_product_detail['capacity_name'] ?>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="product-detail__quantity">
                                     <h3 class="quantity__heading h6">Số lượng</h3>
@@ -88,5 +110,36 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
     </div>
     <!-- end product detail -->
 <?php
+}
+?>
+<script>
+    function showSuccessMessage() {
+        toast({
+            title: "Success",
+            message: "Thêm sản phẩm vào giỏ hàng thành công",
+            type: "success",
+            duration: 3000,
+        });
+    }
+    function showErrorMessage() {
+        toast({
+            title: "Error",
+            message: "Không thể thêm sản phẩm vào trong giỏ hàng",
+            type: "error",
+            duration: 3000,
+        });
+    }
+</script>
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessMessage();';
+    echo 'window.history.pushState(null, "", "index.php?page=product_detail&product_id='.$product_id.'");';
+    echo '</script>';
+} elseif (isset($_GET['message']) && $_GET['message'] == 'error') {
+    echo '<script>';
+    echo 'showErrorMessage();';
+    echo 'window.history.pushState(null, "", "index.php?page=product_detail&product_id='.$product_id.'");';
+    echo '</script>';
 }
 ?>

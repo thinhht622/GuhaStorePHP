@@ -4,6 +4,8 @@
     if (isset($_POST['login'])) {
         $account_email = $_POST['account_email'];
         $account_password = md5($_POST['account_password']);
+        $account_email = mysqli_real_escape_string($mysqli, $account_email);
+        $account_password = mysqli_real_escape_string($mysqli, $account_password);
         $sql_account = "SELECT * FROM account WHERE account_email='".$account_email."' AND account_password='".$account_password."' AND (account_type=1 OR account_type=2) ";
         $query_account = mysqli_query($mysqli, $sql_account);
         $row = mysqli_fetch_array($query_account);

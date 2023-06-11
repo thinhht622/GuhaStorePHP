@@ -80,7 +80,16 @@ $query_order = mysqli_query($mysqli, $sql_order);
                                     }
                                     ?>
                                 </div>
-
+                                <table class="w-100 mg-t-20">
+                                    <tr class="table-row">
+                                        <td class="h6 table-col">Giảm giá</td>
+                                        <td class="h6 table-col text-right"> 0₫</td>
+                                    </tr>
+                                    <tr class="table-row">
+                                        <td class="h6 table-col">Phí vận chuyển</td>
+                                        <td class="h6 table-col text-right">Miễn phí</td>
+                                    </tr>
+                                </table>
                                 <div class="checkout__bottom d-flex align-center space-between">
                                     <h4 class="checkout__total">Tổng tiền:</h4>
                                     <span class="checkout__total"><?php echo number_format((float) $total) . '₫' ?></span>
@@ -94,3 +103,20 @@ $query_order = mysqli_query($mysqli, $sql_order);
         </div>
     </div>
 </div>
+<script>
+    function showSuccessToast() {
+        toast({
+            title: "Success",
+            message: "Cập nhật thành công",
+            type: "success",
+            duration: 0,
+        });
+    }
+</script>
+
+<?php
+if (isset($_GET['message']) && $_GET['message'] == 'success') {
+    echo '<script>';
+    echo 'showSuccessToast();';
+    echo '</script>';
+}

@@ -30,7 +30,7 @@
                     $row = mysqli_fetch_array($query);
                     $count = mysqli_num_rows($query);
                     if ($count > 0) {
-                        $sql_update = mysqli_query($mysqli, "UPDATE account SET account_password = '" . $password_new . "'");
+                        $sql_update = mysqli_query($mysqli, "UPDATE account SET account_password = '$password_new' WHERE account_email = '$account_email'");
                         echo '<p style="color:green; text-align: center;">Mật khẩu đã được thay đổi</p>';
                     } else {
                         echo '<p style="color:red; text-align: center;">Mật khẩu cũ không đúng vui lòng nhập lại</p>';

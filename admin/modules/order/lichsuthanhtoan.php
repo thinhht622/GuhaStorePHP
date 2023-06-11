@@ -1,10 +1,10 @@
 <?php
 if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
     $sql_payment_list = "SELECT * FROM momo ORDER BY momo_id DESC";
-    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);    
+    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);
 } else {
     $sql_payment_list = "SELECT * FROM vnpay ORDER BY vnp_paydate DESC";
-    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);   
+    $query_payment_list = mysqli_query($mysqli, $sql_payment_list);
 }
 ?>
 
@@ -33,48 +33,97 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
 
 
                 <div class="table-responsive">
-                    <table class="table table-hover table-action">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    <input type="checkbox" id="checkAll">
-                                </th>
-                                <th>Mã đơn hàng</th>
-                                <th>Thời gian</th>
-                                <th>Tổng tiền</th>
-                                <th>Ngân hàng</th>
-                                <th>Loại</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $i = 0;
-                            while ($row = mysqli_fetch_array($query_payment_list)) {
-                                $i++;
-                            ?>
+                    <?php
+                    if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
+                    ?>
+                        <table class="table table-hover table-action">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <a href="?action=order&query=order_detail&order_code=<?php echo $row['order_code'] ?>">
-                                            <div class="icon-edit">
-                                                <img class="w-100 h-100" src="images/icon-view.png" alt="">
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['vnp_id'] ?>">
-                                    </td>
-                                    <td><?php echo $row['order_code'] ?></td>
-                                    <td><?php echo format_datetime($row['vnp_paydate']) ?></td>
-                                    <td><?php echo number_format($row['vnp_amount']/100) ?>đ</td>
-                                    <td><?php echo $row['vnp_bankcode'] ?></td>
-                                    <td><?php echo $row['vnp_cardtype'] ?></td>
+                                    <th></th>
+                                    <th>
+                                        <input type="checkbox" id="checkAll">
+                                    </th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Thời gian</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Thẻ</th>
                                 </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                while ($row = mysqli_fetch_array($query_payment_list)) {
+                                    $i++;
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <a href="index.php?action=order&query=order_detail&order_code=<?php echo $row['order_code'] ?>">
+                                                <div class="icon-edit">
+                                                    <img class="w-100 h-100" src="images/icon-view.png" alt="">
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['momo_id'] ?>">
+                                        </td>
+                                        <td><?php echo $row['order_code'] ?></td>
+                                        <td><?php echo format_datetime($row['payment_date']) ?></td>
+                                        <td><?php echo number_format($row['momo_amount']) ?>đ</td>
+                                        <td><?php echo $row['pay_type'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    <?php
+                    } else {
+                    ?>
+                        <table class="table table-hover table-action">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <input type="checkbox" id="checkAll">
+                                    </th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Thời gian</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngân hàng</th>
+                                    <th>Loại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                while ($row = mysqli_fetch_array($query_payment_list)) {
+                                    $i++;
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <a href="index.php?action=order&query=order_detail&order_code=<?php echo $row['order_code'] ?>">
+                                                <div class="icon-edit">
+                                                    <img class="w-100 h-100" src="images/icon-view.png" alt="">
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['vnp_id'] ?>">
+                                        </td>
+                                        <td><?php echo $row['order_code'] ?></td>
+                                        <td><?php echo format_datetime($row['vnp_paydate']) ?></td>
+                                        <td><?php echo number_format($row['vnp_amount'] / 100) ?>đ</td>
+                                        <td><?php echo $row['vnp_bankcode'] ?></td>
+                                        <td><?php echo $row['vnp_cardtype'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -132,8 +181,7 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
         for (var i = 0; i < checkeds.length; i++) {
             checkedIds.push(checkeds[i].id);
         }
-        btnConfirm.href = "modules/order/xuly.php?confirm=1&data="+ JSON.stringify(checkedIds);
-        btnCancel.href = "modules/order/xuly.php?cancel=1&data="+ JSON.stringify(checkedIds);
+        btnConfirm.href = "modules/order/xuly.php?confirm=1&data=" + JSON.stringify(checkedIds);
+        btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
     }
-    
 </script>

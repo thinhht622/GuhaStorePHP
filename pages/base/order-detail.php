@@ -13,50 +13,51 @@ $order = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM orders WHERE  o
         <div class="row">
             <div class="col" style="--w-md:8;">
                 <h2 class="checkout__title h4 d-flex align-center space-between">Thông tin khách hàng</h2>
-                    <div class="checkout__infomation">
-                        <?php
-                        while ($account = mysqli_fetch_array($query_order)) {
-                        ?>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="delivery_name">Tên khách hàng:</label>
-                                <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['delivery_name'] ?>" readonly></input>
-                            </div>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="">Số điện thoại:</label>
-                                <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['delivery_phone'] ?>" readonly></input>
-                            </div>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="">Địa chỉ:</label>
-                                <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['delivery_address'] ?>" readonly></input>
-                            </div>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="">Ghi chú</label>
-                                <input type="text" class="info__input flex-1" name="delivery_note" value="<?php echo $account['delivery_note'] ?>" readonly></input>
-                            </div>
-                            <div class="info__item d-flex">
-                                <label class="info__title" for="order_type">Phương thức:</label>
-                                <input type="text" class="info__input flex-1" name="order_type" value="<?php echo format_order_type($account['order_type'])?>" readonly></input>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                <div class="checkout__infomation">
                     <?php
-                    if ($order['order_status'] == 0) {
+                    while ($account = mysqli_fetch_array($query_order)) {
                     ?>
+                        <div class="info__item d-flex">
+                            <label class="info__title" for="delivery_name">Tên khách hàng:</label>
+                            <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['delivery_name'] ?>" readonly></input>
+                        </div>
+                        <div class="info__item d-flex">
+                            <label class="info__title" for="">Số điện thoại:</label>
+                            <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['delivery_phone'] ?>" readonly></input>
+                        </div>
+                        <div class="info__item d-flex">
+                            <label class="info__title" for="">Địa chỉ:</label>
+                            <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['delivery_address'] ?>" readonly></input>
+                        </div>
+                        <div class="info__item d-flex">
+                            <label class="info__title" for="">Ghi chú</label>
+                            <input type="text" class="info__input flex-1" name="delivery_note" value="<?php echo $account['delivery_note'] ?>" readonly></input>
+                        </div>
+                        <div class="info__item d-flex">
+                            <label class="info__title" for="order_type">Phương thức:</label>
+                            <input type="text" class="info__input flex-1" name="order_type" value="<?php echo format_order_type($account['order_type']) ?>" readonly></input>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <?php
+                if ($order['order_status'] == 0) {
+                ?>
                     <a href="pages/handle/order.php?order_code=<?php echo $order_code ?>" class="btn btn__solid" onClick="return confirm('Bạn có muốn hủy đơn hàng này không?')">Hủy đơn hàng</a>
-                    <?php
-                    } else {
-                    ?>
+                <?php
+                } else {
+                ?>
                     <a href="tel:+84878398141" class="btn btn__solid">Liên hệ</a>
-                    <?php
-                    } 
-                    ?>
-                    
-                    <a href="index.php?page=my_account&tab=account_order" class="btn anchor">Trở về danh sách đơn hàng</a>
+                <?php
+                }
+                ?>
+
+                <a href="index.php?page=my_account&tab=account_order" class="btn anchor">Trở về danh sách đơn hàng</a>
             </div>
             <div class="col" style="--w-md:4;">
-                <div class="checkout__cart">
+                <div class="checkout__cart" style="padding-block: 0;">
+                    <h2 class="h4" style="margin-bottom: 0;">Danh sách sản phẩm:</h2>
                     <div class="checkout__items">
                         <?php
                         $total = 0;
@@ -77,6 +78,21 @@ $order = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM orders WHERE  o
                         }
                         ?>
                     </div>
+
+                    <table class="w-100 mg-t-20">
+                        <tr>
+                            <td class="h6">Tạm tính:</td>
+                            <td class="h6 text-right"><?php echo number_format((float) $total) . '₫' ?></td>
+                        </tr>
+                        <tr>
+                            <td class="h6">Giảm giá</td>
+                            <td class="h6 text-right"> 0₫</td>
+                        </tr>
+                        <tr>
+                            <td class="h6">Phí vận chuyển</td>
+                            <td class="h6 text-right">Miễn phí</td>
+                        </tr>
+                    </table>
 
                     <div class="checkout__bottom d-flex align-center space-between">
                         <h4 class="h4">Tổng tiền:</h4>

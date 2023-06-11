@@ -57,7 +57,7 @@ if (isset($_SESSION['account_id'])) {
                                     <div class="checkout__item d-flex align-center">
                                         <div class="checkout__image p-relative">
                                             <div class="product-quantity align-center d-flex justify-center p-absolute"><span class="h6"><?php echo $cart_item['product_quantity'] ?></span></div>
-                                            <img class="w-100 d-block object-fit-cover ratio-1" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt="">
+                                            <a href="index.php?page=product_detail&product_id=<?php echo $cart_item['product_id'] ?>"><img class="w-100 d-block object-fit-cover ratio-1" src="admin/modules/product/uploads/<?php echo $cart_item['product_image'] ?>" alt=""></a>
                                         </div>
                                         <div class="checkout__name flex-1">
                                             <h3 class="h6"><?php echo $cart_item['product_name'] ?></h3>

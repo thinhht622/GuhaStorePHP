@@ -21,6 +21,10 @@ $query_article_edit = mysqli_query($mysqli, $sql_article_edit);
                 <div class="card">
                     <div class="card-body">
                         <div class="input-item form-group">
+                            <label for="author" class="d-block">Tên tác giả</label>
+                            <input id=author type="text" name="article_author" class="d-block form-control" value="<?php echo $row['article_author'] ?>" placeholder="">
+                        </div>
+                        <div class="input-item form-group">
                             <label for="title" class="d-block">Tiêu đề bài viết</label>
                             <input type="text" name="article_title" class="d-block form-control" value="<?php echo $row['article_title'] ?>" placeholder="">
                         </div>
