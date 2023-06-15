@@ -2,20 +2,27 @@
 $sql_article_list = "SELECT * FROM article ORDER BY article_id DESC";
 $query_article_list = mysqli_query($mysqli, $sql_article_list);
 ?>
-
+<div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h3 class="card-title" style="margin: 0;">Danh sách bài viết</h3>
+            <div class="action_group">
+                <a href="?action=article&query=article_add" class="button button-dark">Thêm bài viết</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách bài viết</h4>
+                <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=article&query=article_add" class="btn btn-outline-dark btn-fw">Thêm bài viết</a>
                 </div>
 
 

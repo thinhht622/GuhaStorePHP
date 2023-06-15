@@ -23,7 +23,7 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
         $order = mysqli_fetch_array($query_order_get);
         $order_status = $order['order_status'];
         $order_status++;
-        //Chuyen trang thai don hoan
+        //Chuyen trang thai don hang
         $sql_order_confirm = "UPDATE orders SET order_status = $order_status WHERE order_code = $code";
         mysqli_query($mysqli, $sql_order_confirm);
 
@@ -66,6 +66,22 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
 
 if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
     foreach ($order_codes as $code) {
+        $sql_get_order = "SELECT * FROM orders WHERE order_code = $code LIMIT 1";
+        $query_get_order = mysqli_query($mysqli, $sql_get_order);
+
+        $sql_get_order_detail = "SELECT * FROM order_detail WHERE order_code = $code";
+        $query_order_detail = mysqli_query($mysqli, $sql_get_order_detail);
+
+        while ($item = mysqli_fetch_array($query_order_detail)) {
+            $product_id = $item['product_id'];
+            $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
+            $product = mysqli_fetch_array($query_get_product);
+            $quantity = $product['product_quantity'] + $item['product_quantity'];
+            $quantity_sales = $product['quantity_sales'] - $item['product_quantity'];
+
+            mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
+        }
+        
         $sql_order_cancel = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
         mysqli_query($mysqli, $sql_order_cancel);
     }
@@ -120,7 +136,7 @@ if (isset($_POST['addtoorder'])) {
             $_SESSION['order'] = $new_product;
         }
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER'].'&message=success');
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '&message=success');
 }
 
 // them don hang
@@ -132,6 +148,7 @@ if (isset($_POST['order_add'])) {
     $delivery_name = $_POST['customer_name'];
     $delivery_address = $_POST['customer_address'];
     $delivery_phone = $_POST['customer_phone'];
+    $delivery_note = 'Đơn hàng mua trực tiếp';
     $order_type = 5;
     $account_id = $_SESSION['account_id_admin'];
     $total_amount = 0;
@@ -147,7 +164,7 @@ if (isset($_POST['order_add'])) {
     }
 
     if ($validate == 1) {
-        $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_address) VALUE ($delivery_id, $account_id, '$delivery_name', '$delivery_phone', '$delivery_address')";
+        $insert_delivery = "INSERT INTO delivery(delivery_id, account_id, delivery_name, delivery_phone, delivery_note, delivery_address) VALUE ($delivery_id, $account_id, '$delivery_name', '$delivery_phone', '$delivery_note', '$delivery_address')";
         mysqli_query($mysqli, $insert_delivery);
 
         $insert_order = "INSERT INTO orders(order_code, order_date, account_id, delivery_id, total_amount, order_type, order_status) 
@@ -164,10 +181,12 @@ if (isset($_POST['order_add'])) {
                     $quantity = $product['product_quantity'] - $product_quantity;
                     $quantity_tk += $product_quantity;
                     $product_price = $cart_item['product_price'];
+                    $quantity = $product['product_quantity'] - $product_quantity;
+                    $quantity_sales = $product['quantity_sales'] + $product_quantity;
                     $product_sale = $cart_item['product_sale'];
                     $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
                     mysqli_query($mysqli, $insert_order_detail);
-                    mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
+                    mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
                 }
             }
         }
@@ -197,7 +216,7 @@ if (isset($_POST['order_add'])) {
         }
 
         unset($_SESSION['order']);
-        header('Location:../../index.php?action=order&query=order_detail&order_code='.$order_code.'&message=success');
+        header('Location:../../index.php?action=order&query=order_detail&order_code=' . $order_code . '&message=success');
     } else {
         header('Location:../../index.php?page=404');
     }

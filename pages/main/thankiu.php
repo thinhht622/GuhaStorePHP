@@ -51,11 +51,12 @@ if (isset($_GET['order_type']) && $_GET['order_type'] == 1) {
                 $product_quantity = $cart_item['product_quantity'];
                 $quantity_tk += $product_quantity;
                 $quantity = $product['product_quantity'] - $product_quantity;
+                $quantity_sales = $product['quantity_sales'] + $product_quantity;
                 $product_price = $cart_item['product_price'];
                 $product_sale = $cart_item['product_sale'];
                 $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
                 mysqli_query($mysqli, $insert_order_detail);
-                mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
+                mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
             }
         }
         $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";
@@ -142,11 +143,12 @@ if (isset($_GET['order_type']) && $_GET['order_type'] == 1) {
                 $product_quantity = $cart_item['product_quantity'];
                 $quantity_tk += $product_quantity;
                 $quantity = $product['product_quantity'] - $product_quantity;
+                $quantity_sales = $product['quantity_sales'] + $product_quantity;
                 $product_price = $cart_item['product_price'];
                 $product_sale = $cart_item['product_sale'];
                 $insert_order_detail = "INSERT INTO order_detail(order_code, product_id, product_quantity, product_price, product_sale) VALUE ('" . $order_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price . "', '" . $product_sale . "')";
                 mysqli_query($mysqli, $insert_order_detail);
-                mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
+                mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
             }
         }
         $update_total_amount = "UPDATE orders SET total_amount = $total_amount WHERE order_code = $order_code";

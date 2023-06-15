@@ -1,19 +1,28 @@
 <div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h4 class="card-title" style="margin: 0;">Thống kê đơn hàng</h4>
+            <div class="action_group">
+                <a href="#" class="button button-dark">Export</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
+                <div class="main-pane-top d-flex space-between align-center" style="padding-inline: 10px;">
+                    <div class="option-date d-flex space-between">
+                        <select id="select-date">
+                            <option value="">Chọn thời gian</option>
+                            <option value="7ngay">7 ngày qua</option>
+                            <option value="28ngay">28 ngày qua</option>
+                            <option value="90ngay">90 ngày qua</option>
+                            <option value="365ngay">365 ngày qua</option>
+                        </select>
+                    </div>
                     <h4 class="card-title" style="margin: 0;">Thống kê đơn hàng theo <span id="text-date"></span></h4>
-                    <a href="#" class="btn btn-outline-dark btn-fw">Export</a>
-                </div>
-                <div class="option-date d-flex space-between" style="margin-bottom: 20px;">
-                    <select id="select-date">
-                        <option value="">Chọn thời gian</option>
-                        <option value="7ngay">7 ngày qua</option>
-                        <option value="28ngay">28 ngày qua</option>
-                        <option value="90ngay">90 ngày qua</option>
-                        <option value="365ngay">365 ngày qua</option>
-                    </select>
                 </div>
                 <div class="metrics d-flex space-between">
                     <div class="metric__item">Doanh thu: <span class="metric__sales"></span> </div>
@@ -75,7 +84,10 @@
                         totalQuantity += parseInt(data[i].quantity);
                     }
 
-                    var formattedAmount = parseInt(totalSales).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                    var formattedAmount = parseInt(totalSales).toLocaleString('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    });
 
                     // Đổ dữ liệu vào các thẻ div tương ứng
                     $('.metric__order').text(totalOrder);

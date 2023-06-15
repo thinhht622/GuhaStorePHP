@@ -2,20 +2,30 @@
 $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id ORDER BY product.product_quantity ASC;";
 $query_product_list = mysqli_query($mysqli, $sql_product_list);
 ?>
-
+<div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm tồn kho</h4>
+            <div class="action_group">
+                <a href="#" class="button button-light">Export</a>
+                <button class="button button-light">Import</button>
+                
+                <a href="?action=inventory&query=inventory_list" class="button button-dark">Nhập thêm</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm tồn kho</h4>
+                <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=product&query=product_search" method="POST">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" name="product_search" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=inventory&query=inventory_list" class="btn btn-outline-dark btn-fw">Nhập thêm sản phẩm</a>
                 </div>
 
 

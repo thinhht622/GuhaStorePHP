@@ -6,6 +6,6 @@ include("./pages/base/product-detail.php");
 
 <!-- start product list -->
 <?php
-include("./pages/base/product-list.php");
+include("./pages/base/product-relate.php");
 ?>
 <!-- end product list -->

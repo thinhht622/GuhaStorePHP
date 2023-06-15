@@ -66,6 +66,42 @@
   transform: rotate(45deg);
 }
 
+.button {
+  display: inline-block;
+  background-color: none;
+  border: none;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.button-light {
+  background-color: #f4f5f7;
+  color: #121212;
+} 
+
+.button-light:hover {
+  color: #121212;
+  background-color: #d9dcdd;
+}
+
+.button-dark {
+  background-color: #1F3BB3;;
+  color: #f0f0f0;
+} 
+
+.button-dark:hover {
+  color: #f0f0f0;
+  background-color: #1a2e8b;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .d-flex {
   display: flex;
 }
@@ -114,6 +150,10 @@
 }
 
 .cursor-pointer {
+  cursor: pointer;
+}
+
+input[type=checkbox] {
   cursor: pointer;
 }
 
@@ -210,6 +250,14 @@
 
 .product__image {
   padding: 0 30px 30px 30px;
+}
+
+thead {
+  color: #1F3BB3;
+}
+
+.card .card-body {
+  padding: 20px 1px !important;
 }
 
 table tfoot {
@@ -313,14 +361,14 @@ table tfoot {
 
 .checkout__name {
   margin: 0;
-  padding: 0 var(--gutter);
+  padding: 0 10px;
 }
 
 .checkout__price {
 }
 
 .checkout__bottom {
-  margin-top: var(--gutter);
+  margin-top: 10px;
   border-top: solid 1px var(--color-gray-dark);
 }
 
@@ -404,6 +452,7 @@ table tfoot {
   padding-left: 10px;
   background-color: #fefefe;
 }
+
 
 .icon-edit {
   width: 20px;
@@ -571,29 +620,30 @@ table tfoot {
 }
 
 /* === pagination === */
-/* === pagination === */
 .pagination {
   margin-top: 20px;
   padding: 10px 0;
 }
 
 .pagination__items {
-  gap: var(--gutter);
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .pagination__item .pagination__anchor.active {
-  color: var(--color-text-white);
-  background-color: var(--color-blue);
+  color: #f0f0f0;
+  background-color: #3752b2;
 }
 
 .pagination__item .pagination__anchor {
   display: inline-block;
   padding: 5px 12px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  color: var(--color-text-black);
+  color: #121212;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -622,4 +672,93 @@ table tfoot {
 
 .metric__quantity {
   color: #faee42;
+}
+
+/* .btn-submit-form {
+  bottom: 20px;
+} */
+
+.rating-star {
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  display: block;
+  margin-right: 3px;
+  background-color: #ffbc59;
+  -webkit-mask-image: url(https://asset.vuahanghieu.com/assets/images/rating-star.svg);
+  mask-image: url(https://asset.vuahanghieu.com/assets/images/rating-star.svg);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.rating-star.rating-off {
+  background-color: #d6dadf;
+}
+
+.header__list {
+  margin-bottom: 10px;
+}
+
+.card-content {
+  padding-inline: 20px;
+}
+
+/* === dialog import === */
+.dialog__import {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #12121270;
+  z-index: 999999;
+  display: none;
+}
+
+.dialog__import.open {
+  display: block;
+}
+
+.import-container {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f0f0f0;
+  min-width: 300px;
+  min-height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.import__header {
+  padding: 10px;
+  background-color: #3752b2;
+  color: #f0f0f0;
+}
+
+.import__header h3 {
+  margin: 0;
+}
+
+.import__content {
+  padding: 10px;
+}
+
+.import__input {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.form-group.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+  color: #f33a58;
+}
+
+.form-message {
+  font-size: 12px;
+  line-height: 16px;
+  padding: 4px 0 0;
 }

@@ -35,6 +35,20 @@ if (isset($_POST['article_add'])) {
 
     mysqli_query($mysqli, $sql_update);
     header('Location: ../../index.php?action=article&query=article_list');
+} elseif (isset($_GET['deletecomment']) && $_GET['deletecomment'] == 1) {
+    $comment_ids = json_decode($data);
+    foreach ($comment_ids as $id) {
+        $sql_delete_comment = "DELETE FROM comment WHERE comment_id = '" . $id . "'";
+        mysqli_query($mysqli, $sql_delete_comment);
+    }
+    header('Location: ../../index.php?action=article&query=article_edit&article_id='.$article_id.'#article_comment');
+} elseif (isset($_GET['acceptcomment']) && $_GET['acceptcomment'] == 1) {
+    $comment_ids = json_decode($data);
+    foreach ($comment_ids as $id) {
+        $sql_update_comment = "UPDATE comment SET comment_status = 1 WHERE comment_id = '" . $id . "'";
+        mysqli_query($mysqli, $sql_update_comment);
+    }
+    header('Location: ../../index.php?action=article&query=article_edit&article_id='.$article_id.'#article_comment');
 } else {
     foreach ($article_ids as $id) {
         $sql = "SELECT * FROM article WHERE article_id = '$id' LIMIT 1";
@@ -44,6 +58,6 @@ if (isset($_POST['article_add'])) {
         }
         $sql_delete = "DELETE FROM article WHERE article_id = '" . $id . "'";
         mysqli_query($mysqli, $sql_delete);
-        header('Location: ../../index.php?action=article&query=article_list');
     }
+    header('Location: ../../index.php?action=article&query=article_list');
 }

@@ -6,6 +6,23 @@ require '../../../carbon/autoload.php';
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
+if (isset($_GET['data'])) {
+    $data = $_GET['data'];
+    $inventory_ids = json_decode($data);
+}
+
+if (isset($_GET['delete']) && $_GET['delete'] == 1) {
+    foreach ($inventory_ids as $id) {
+        $sql_delete = "DELETE FROM inventory WHERE inventory_id = $id";
+        mysqli_query($mysqli, $sql_delete);
+    }
+    header('Location:../../index.php?action=inventory&query=inventory_list&message=success');
+}
+else {
+    header('Location:../../index.php?action=inventory&query=inventory_list&message=error');
+}
+
+
 // Xoa san pham khoi phieu nhap kho
 if(isset($_SESSION['inventory']) && isset($_GET['delete'])) {
     $product_id = $_GET['delete'];

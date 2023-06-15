@@ -17,22 +17,24 @@ $query_brand_edit = mysqli_query($mysqli, $sql_brand_edit);
     <div class="col-lg-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="modules/brand/xuly.php?brand_id=<?php echo $_GET['brand_id'] ?>" enctype="multipart/form-data">
-                    <?php
-                    while ($item = mysqli_fetch_array($query_brand_edit)) {
-                    ?>
-                        <div class="input-item form-group">
-                            <label for="title" class="d-block">Tên thương hiệu</label>
-                            <input type="text" name="brand_name" class="form-control" value="<?php echo $item['brand_name'] ?>" placeholder="collection name">
-                        </div>
-                        <button type="submit" name="brand_edit" class="btn btn-primary btn-icon-text">
-                            <i class="ti-file btn-icon-prepend"></i>
-                            Sửa
-                        </button>
-                    <?php
-                    }
-                    ?>
-                </form>
+                <div class="card-content">
+                    <form method="POST" action="modules/brand/xuly.php?brand_id=<?php echo $_GET['brand_id'] ?>" enctype="multipart/form-data">
+                        <?php
+                        while ($item = mysqli_fetch_array($query_brand_edit)) {
+                        ?>
+                            <div class="input-item form-group">
+                                <label for="title" class="d-block">Tên thương hiệu</label>
+                                <input type="text" name="brand_name" class="form-control" value="<?php echo $item['brand_name'] ?>" placeholder="collection name">
+                            </div>
+                            <button type="submit" name="brand_edit" class="btn btn-primary btn-icon-text">
+                                <i class="ti-file btn-icon-prepend"></i>
+                                Sửa
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

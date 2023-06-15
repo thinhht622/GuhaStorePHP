@@ -2,7 +2,7 @@
 if (isset($_GET['pagenumber'])) {
     $page = $_GET['pagenumber'];
 } else {
-    $page = '';
+    $page = '1';
 }
 
 
@@ -14,20 +14,27 @@ if ($page == '' || $page == 1) {
 $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_type = 5 ORDER BY orders.order_id DESC LIMIT $begin,10";
 $query_order_list = mysqli_query($mysqli, $sql_order_list);
 ?>
-
+<div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h3 class="card-title" style="margin: 0;">Danh sách đơn hàng mua tại quầy</h3>
+            <div class="action_group">
+                <a href="?action=order&query=order_add" class="button button-dark">Tạo đơn hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Đơn hàng mua tại quầy</h4>
+                <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=order&query=order_add" class="btn btn-outline-dark btn-fw">Thêm đơn hàng</a>
                 </div>
 
 
@@ -81,31 +88,54 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                     $query_pages = mysqli_query($mysqli, $sql_order_list);
                     $row_count = mysqli_num_rows($query_pages);
                     $totalpage = ceil($row_count / 10);
+                    $currentLink = $_SERVER['REQUEST_URI'];
+                    if ($totalpage > 1) {
                     ?>
-                    <ul class="pagination__items d-flex align-center justify-center">
-                        <li class="pagination__item">
-                            <a class="d-flex align-center" href="#">
-                                <img src="images/arrow-left.svg" alt="">
-                            </a>
-                        </li>
-                        <?php
-                        $currentLink = $_SERVER['REQUEST_URI'];
-                        for ($i = 1; $i <= $totalpage; $i++) {
-                        ?>
-                            <li class="pagination__item">
-                                <a class="pagination__anchor <?php if ($page = $i) {
-                                                                    echo "active";
-                                                                } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
-                            </li>
-                        <?php
-                        }
-                        ?>
-                        <li class="pagination__item">
-                            <a class="d-flex align-center" href="#">
-                                <img src="images/icon-nextlink.svg" alt="">
-                            </a>
-                        </li>
-                    </ul>
+                        <ul class="pagination__items d-flex align-center justify-center">
+                            <?php
+                            if ($page != 1) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="d-flex align-center" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i + 1 ?>">
+                                        <img src="images/arrow-left.svg" alt="">
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            for ($i = 1; $i <= $totalpage; $i++) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="pagination__anchor <?php if ($page == $i) {
+                                                                        echo "active";
+                                                                    } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if ($page != $totalpage) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="d-flex align-center" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>">
+                                        <img src="images/icon-nextlink.svg" alt="">
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    <?php
+                    } elseif ($totalpage == 0) {
+                    ?>
+                        <div class="w-100 text-center">
+                            <p class="color-t-red">Không có đơn hàng nào cần xử lý !</p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -187,3 +217,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'success') {
     echo '</script>';
 }
 ?>
+
+<script>
+    window.history.pushState(null, "", "index.php?action=order&query=order_live");
+</script>

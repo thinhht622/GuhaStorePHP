@@ -10,14 +10,14 @@ $query_order_detail = mysqli_query($mysqli, $sql_get_order_detail);
 
 $order = mysqli_fetch_array($query_get_order);
 if ($order['order_status'] == 0) {
-    print_r($order_detail);
     while ($item = mysqli_fetch_array($query_order_detail)) {
         $product_id = $item['product_id'];
         $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
         $product = mysqli_fetch_array($query_get_product);
         $quantity = $product['product_quantity'] + $item['product_quantity'];
+        $quantity_sales = $product['quantity_sales'] - $item['product_quantity'];
         
-        mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity WHERE product_id = $product_id");
+        mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
     }
     $sql_cancel_order = "UPDATE orders SET order_status = -1 WHERE order_code = $order_code";
     mysqli_query($mysqli, $sql_cancel_order);

@@ -2,20 +2,27 @@
 $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id ASC";
 $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
 ?>
-
+<div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h3 class="card-title" style="margin: 0;">Danh thương hiệu</h3>
+            <div class="action_group">
+                <a href="?action=brand&query=brand_add" class="button button-dark">Thêm thương hiệu</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Danh sách thương hiệu</h4>
+                <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=brand&query=brand_add" class="btn btn-outline-dark btn-fw">Thêm thương hiệu</a>
                 </div>
 
 

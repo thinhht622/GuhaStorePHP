@@ -23,6 +23,10 @@
     width: calc(100% / 3);
 }
 
+.mg-t-10 {
+    margin-top: 10px;
+}
+
 .mg-t-20 {
     margin-top: 20px;
 }

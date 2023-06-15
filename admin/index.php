@@ -42,6 +42,7 @@ if (!isset($_SESSION['login'])) {
   <script src="https://kit.fontawesome.com/a2e1cc550d.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+  <script src="js/validator.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
 
 </head>

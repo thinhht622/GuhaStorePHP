@@ -24,3 +24,5 @@
         header('Location: ../../index.php?action=brand&query=brand_list');
         }
     }
+?>
+

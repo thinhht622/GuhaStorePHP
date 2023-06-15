@@ -81,6 +81,17 @@ function format_article_status($value)
   echo $text;
 }
 
+function format_comment_status($value)
+{
+  $text = '';
+  if ($value == 0) {
+    $text = 'Cần phê duyệt';
+  } else {
+    $text = 'Đã phê duệt';
+  }
+  echo $text;
+}
+
 function format_gender($value)
 {
   $text = '';
@@ -126,6 +137,28 @@ function format_quantity_style($value) {
   $class = '';
   if ($value < 5) {
     $class = 'color-t-red';
+  }
+  echo $class;
+}
+
+function format_evaluate_status($value)
+{
+  $text = '';
+  if ($value == -1) {
+    $text = 'Tiêu cực';
+  } else {
+    $text = 'Tích cực';
+  }
+  echo $text;
+}
+
+function format_evaluate_style($value)
+{
+  $class = '';
+  if ($value == -1) {
+    $class = 'color-bg-red';
+  } else {
+    $class = 'color-bg-green';
   }
   echo $class;
 }

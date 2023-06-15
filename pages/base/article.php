@@ -3,7 +3,7 @@ $article_id = $_GET['article_id'];
 $sql_article = "SELECT * FROM article WHERE article_id = $article_id LIMIT 1";
 $query_article = mysqli_query($mysqli, $sql_article);
 
-$sql_comment = "SELECT * FROM comment WHERE article_id = '".$article_id."'";
+$sql_comment = "SELECT * FROM comment WHERE article_id = '" . $article_id . "' AND comment_status = 1";
 $query_comment = mysqli_query($mysqli, $sql_comment);
 $comment_total = mysqli_num_rows($query_comment);
 ?>
@@ -31,15 +31,37 @@ $comment_total = mysqli_num_rows($query_comment);
                             <h1 class="article__heading h2"><?php echo $row['article_title'] ?></h1>
                             <span class="article__date d-block"><?php echo $row['article_date'] ?></span>
                             <div class="article__share d-flex align-center">
-                                <img src="./assets/images/icon/share.svg" alt="share" style="margin-right: 8px;">
-                                <span class="h5">Share</span>
+                                <span class="h5">
+                                    <ul class="social__items d-flex align-center">
+                                        <li class="social__item">
+                                            <h3 class="h5">
+                                                Share:
+                                            </h3>
+                                        </li>
+                                        <li class="social__item opacity-50">
+                                            <a class="" href="#info-product">
+                                                <img class="svg__icon d-block" src="./assets/images/icon/facebook.svg" alt="" />
+                                            </a>
+                                        </li>
+                                        <li class="social__item opacity-50">
+                                            <a class="" href="#">
+                                                <img class="svg__icon d-block" src="./assets/images/icon/twitter.svg" alt="" />
+                                            </a>
+                                        </li>
+                                        <li class="social__item opacity-50">
+                                            <a class="" href="#">
+                                                <img class="svg__icon d-block" src="./assets/images/icon/instagram.svg" alt="" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </span>
                             </div>
                             <div class="article__context h4">
                                 <?php echo $row['article_content'] ?>
                             </div>
                             <div class="article__footer text-center d-flex align-center justify-center">
                                 <img src="./assets/images/icon/arrow-left.svg" alt="back" style="margin-right: 8px;">
-                                <a class="h5" href="index.php?page=blog">Back to blog</a>
+                                <a class="h5" href="index.php?page=blog">Trở về danh sách bài viết</a>
                             </div>
                         </div>
                     </div>
@@ -58,10 +80,10 @@ $comment_total = mysqli_num_rows($query_comment);
                         <div class="comment__items">
                             <?php while ($comment_item = mysqli_fetch_array($query_comment)) {
                             ?>
-                            <div class="comment__item">
-                                <span class="comment__content d-block h4"><?php echo $comment_item['comment_content'] ?></span>
-                                <span class="comment__info d-block"><?php echo $comment_item['comment_date'] ?> - <?php echo $comment_item['comment_date'] ?></span>
-                            </div>
+                                <div class="comment__item">
+                                    <span class="comment__content d-block h4"><?php echo $comment_item['comment_content'] ?></span>
+                                    <span class="comment__info d-block"><?php echo $comment_item['comment_name'] ?> - <?php echo $comment_item['comment_date'] ?></span>
+                                </div>
                             <?php
                             }
                             ?>

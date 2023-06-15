@@ -1,19 +1,37 @@
 <?php
+if (isset($_GET['pagenumber'])) {
+    $page = $_GET['pagenumber'];
+} else {
+    $page = '1';
+}
+
+
+if ($page == '' || $page == 1) {
+    $begin = 0;
+} else {
+    $begin = ($page * 10) - 10;
+}
+
 if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
-    $sql_payment_list = "SELECT * FROM momo ORDER BY momo_id DESC";
+    $sql_payment_list = "SELECT * FROM momo ORDER BY momo_id DESC LIMIT $begin,10";
     $query_payment_list = mysqli_query($mysqli, $sql_payment_list);
 } else {
-    $sql_payment_list = "SELECT * FROM vnpay ORDER BY vnp_paydate DESC";
+    $sql_payment_list = "SELECT * FROM vnpay ORDER BY vnp_paydate DESC LIMIT $begin,10";
     $query_payment_list = mysqli_query($mysqli, $sql_payment_list);
 }
 ?>
-
+<div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h3 class="card-title" style="margin: 0;">Lịch sử thanh toán</h3>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Lịch sử thanh toán</h4>
+                <div class="main-pane-top d-flex space-between align-center" style="padding-inline: 20px;">
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=order&query=order_search" method="POST">
                             <i class="icon-search p-absolute"></i>
@@ -125,6 +143,66 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
                     }
                     ?>
                 </div>
+                <div class="pagination d-flex justify-center">
+                    <?php
+                    if (isset($_GET['payment_type']) && $_GET['payment_type']=='momo') {
+                        $sql_pay_list = "SELECT * FROM momo ORDER BY momo_id DESC";
+                    } else {
+                        $sql_pay_list = "SELECT * FROM vnpay ORDER BY vnp_id DESC";
+                    }
+                    
+                    $query_pages = mysqli_query($mysqli, $sql_pay_list);
+                    $row_count = mysqli_num_rows($query_pages);
+                    $totalpage = ceil($row_count / 10);
+                    $currentLink = $_SERVER['REQUEST_URI'];
+                    if ($totalpage > 1) {
+                    ?>
+                        <ul class="pagination__items d-flex align-center justify-center">
+                            <?php
+                            if ($page != 1) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="d-flex align-center" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i + 1 ?>">
+                                        <img src="images/arrow-left.svg" alt="">
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            for ($i = 1; $i <= $totalpage; $i++) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="pagination__anchor <?php if ($page == $i) {
+                                                                        echo "active";
+                                                                    } ?>" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>"><?php echo $i ?></a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if ($page != $totalpage) {
+                            ?>
+                                <li class="pagination__item">
+                                    <a class="d-flex align-center" href="<?php echo $currentLink ?>&pagenumber=<?php echo $i ?>">
+                                        <img src="images/icon-nextlink.svg" alt="">
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    <?php
+                    } elseif ($totalpage == 0) {
+                    ?>
+                        <div class="w-100 text-center">
+                            <p class="color-t-red">Không có đơn hàng nào cần xử lý !</p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
             </div>
         </div>
     </div>
@@ -184,4 +262,8 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
         btnConfirm.href = "modules/order/xuly.php?confirm=1&data=" + JSON.stringify(checkedIds);
         btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
     }
+</script>
+
+<script>
+    window.history.pushState(null, "", "index.php?action=order&query=order_payment");
 </script>

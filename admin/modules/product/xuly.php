@@ -43,6 +43,20 @@ if (isset($_POST['product_add'])) {
         mysqli_query($mysqli, $sql_sale);
     }
     header('Location: ../../index.php?action=product&query=product_list&message=success');
+} elseif (isset($_GET['deleteevaluate']) && $_GET['deleteevaluate'] == 1) {
+    $evaluate_ids = json_decode($data);
+    foreach ($evaluate_ids as $id) {
+        $sql_delete_evaluate = "DELETE FROM evaluate WHERE evaluate_id = '" . $id . "'";
+        mysqli_query($mysqli, $sql_delete_evaluate);
+    }
+    header('Location: ../../index.php?action=product&query=product_edit&product_id='.$product_id.'&message=success#product_evaluate');
+} elseif (isset($_GET['spamevaluate']) && $_GET['spamevaluate'] == 1) {
+    $evaluate_ids = json_decode($data);
+    foreach ($evaluate_ids as $id) {
+        $sql_update_evaluate = "UPDATE evaluate SET evaluate_status = -1 WHERE evaluate_id = '" . $id . "'";
+        mysqli_query($mysqli, $sql_update_evaluate);
+    }
+    header('Location: ../../index.php?action=product&query=product_edit&product_id='.$product_id.'&message=success#product_evaluate');
 } else {
     foreach ($product_ids as $id) {
         $sql = "SELECT * FROM product WHERE product_id = '$id' LIMIT 1";
@@ -55,3 +69,4 @@ if (isset($_POST['product_add'])) {
     }
     header('Location: ../../index.php?action=product&query=product_list&message=success');
 }
+?>

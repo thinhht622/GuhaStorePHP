@@ -1,6 +1,10 @@
 <?php
 $sql_article_edit = "SELECT * FROM article WHERE article_id = '$_GET[article_id]' LIMIT 1";
 $query_article_edit = mysqli_query($mysqli, $sql_article_edit);
+
+$sql_comment = "SELECT * FROM comment WHERE article_id = '$_GET[article_id]' ORDER BY comment_id DESC";
+$query_comment = mysqli_query($mysqli, $sql_comment);
+
 ?>
 <div class="row" style="margin-bottom: 10px;">
     <div class="col d-flex" style="justify-content: space-between; align-items: flex-end;">
@@ -72,11 +76,120 @@ $query_article_edit = mysqli_query($mysqli, $sql_article_edit);
             </div>
         </div>
     </form>
-    
 <?php
 }
 ?>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="main-pane-top d-flex space-between align-center">
+                    <h4 class="card-title" style="margin: 0;">Danh sách bình luận</h4>
+                    <div class="input__search p-relative">
+                        <form class="search-form" action="#">
+                            <i class="icon-search p-absolute"></i>
+                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive" id="article_comment">
+                    <table class="table table-hover table-action">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="checkAll">
+                                </th>
+                                <th>Ngày đăng</th>
+                                <th>Người bình luận</th>
+                                <th>Nội dung bình luận</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 0;
+                            while ($comment = mysqli_fetch_array($query_comment)) {
+                                $i++;
+                            ?>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $comment['comment_id'] ?>">
+                                    </td>
+                                    <td><?php echo $comment['comment_date'] ?></td>
+                                    <td><?php echo $comment['comment_name'] ?></td>
+                                    <td><?php echo $comment['comment_content'] ?></td>
+                                    <td><?php echo format_comment_status($comment['comment_status']) ?></td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dialog__control">
+    <div class="control__box">
+        <a href="#" class="button__control" id="btnAccept">Duyệt</a>
+        <a href="#" class="button__control btn__wanning" id="btnDelete">Xóa</a>
+    </div>
+</div>
 <script>
     CKEDITOR.replace('article_summary');
     CKEDITOR.replace('article_content');
+    
+    var btnAccept = document.getElementById("btnAccept");
+    var btnDelete = document.getElementById("btnDelete");
+    var checkAll = document.getElementById("checkAll");
+    var checkboxes = document.getElementsByClassName("checkbox");
+    var dialogControl = document.querySelector('.dialog__control');
+    // Thêm sự kiện click cho checkbox checkAll
+    checkAll.addEventListener("click", function() {
+        // Nếu checkbox checkAll được chọn
+        if (checkAll.checked) {
+            // Đặt thuộc tính "checked" cho tất cả các checkbox còn lại
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = true;
+            }
+        } else {
+            // Bỏ thuộc tính "checked" cho tất cả các checkbox còn lại
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+            }
+        }
+        testChecked();
+        getCheckedCheckboxes();
+    });
+
+    console.log(checkboxes[0]);
+
+    function testChecked() {
+        var count = 0;
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                count++;
+                console.log(count);
+            }
+        }
+        if (count > 0) {
+            dialogControl.classList.add('active');
+        } else {
+            dialogControl.classList.remove('active');
+            checkAll.checked = false;
+        }
+    }
+
+    function getCheckedCheckboxes() {
+        var checkeds = document.querySelectorAll('.checkbox:checked');
+        var checkedComment = [];
+        for (var i = 0; i < checkeds.length; i++) {
+            checkedComment.push(checkeds[i].id);
+        }
+        btnAccept.href = "modules/blog/xuly.php?&article_id=<?php echo $_GET['article_id'] ?>&acceptcomment=1&data="+ JSON.stringify(checkedComment);
+        btnDelete.href = "modules/blog/xuly.php?&article_id=<?php echo $_GET['article_id'] ?>&deletecomment=1&data="+ JSON.stringify(checkedComment);
+    }
 </script>

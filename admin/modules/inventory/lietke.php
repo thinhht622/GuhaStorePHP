@@ -4,18 +4,26 @@ $query_inventory_list = mysqli_query($mysqli, $sql_inventory_list);
 ?>
 
 <div class="row">
+    <div class="col">
+        <div class="header__list d-flex space-between align-center">
+            <h3 class="card-title" style="margin: 0;">Lịch sử phiếu nhập kho</h3>
+            <div class="action_group">
+                <a href="?action=inventory&query=inventory_add" class="button button-dark">Tạo phiếu nhập</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div class="main-pane-top d-flex space-between align-center">
-                    <h4 class="card-title" style="margin: 0;">Lịch sử phiếu nhập kho</h4>
+                <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=inventory&query=inventory_search" method="POST">
                             <i class="icon-search p-absolute"></i>
                             <input type="search" class="form-control" name="inventory_search" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
-                    <a href="?action=inventory&query=inventory_add" class="btn btn-outline-dark btn-fw">Tạo phiếu nhập</a>
                 </div>
 
 
@@ -68,22 +76,6 @@ $query_inventory_list = mysqli_query($mysqli, $sql_inventory_list);
 <div class="dialog__control">
     <div class="control__box">
         <a href="#" class="button__control btn__wanning" onclick="return confirm('Bạn có thực sự muốn xóa sản phẩm này không?')" id="btnDelete">Xóa</a>
-        <button class="button__control btn_change" id="btnSale">Giảm giá</button>
-    </div>
-</div>
-<div class="dialog__input">
-    <div class="dialog__container">
-        <div class="dialog__header d-flex align-center space-between">
-            <h6>Thiết lập giảm giá cho sản phẩm</h6>
-            <div class="close__btn d-flex align-center justify-center">
-                <i class="icon-close"></i>
-            </div>
-        </div>
-        <div class="input__box form-group">
-            <label class="d-block" for="input_sale">Giảm giá (%)</label>
-            <input class="form-control" type="number" id="input_sale" placeholder="Giảm giá theo phần trăm">
-            <div class="w-100 btn__sale"><a href="#" id="sale_btn" class="btn btn-outline-dark btn-fw" onclick="return confirm('Xác nhận giảm giá cho các sản phẩm?')">Giảm giá</a></div>
-        </div>
     </div>
 </div>
 <script>
@@ -146,13 +138,8 @@ $query_inventory_list = mysqli_query($mysqli, $sql_inventory_list);
             checkedIds.push(checkeds[i].id);
         }
         linklist = "modules/inventory/xuly.php?data=" + JSON.stringify(checkedIds);
-        btnDelete.href = "modules/inventory/xuly.php?data=" + JSON.stringify(checkedIds);
+        btnDelete.href = "modules/inventory/xuly.php?delete=1&data=" + JSON.stringify(checkedIds);
     }
-    // truyền giá trị sale vào thẻ a
-    var inputSale = document.querySelector('#input_sale');
-    inputSale.addEventListener("input", function() {
-        saleBtn.href = linklist + "&inventory_sale=" + inputSale.value;
-    })
 </script>
 
 <script>
@@ -174,3 +161,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'success') {
     echo '</script>';
 }
 ?>
+
+<script>
+    window.history.pushState(null, "", "index.php?action=inventory&query=inventory_list");
+</script>
