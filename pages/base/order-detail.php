@@ -41,19 +41,6 @@ $order = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM orders WHERE  o
                     }
                     ?>
                 </div>
-                <?php
-                if ($order['order_status'] == 0) {
-                ?>
-                    <a href="pages/handle/order.php?order_code=<?php echo $order_code ?>" class="btn btn__solid" onClick="return confirm('Bạn có muốn hủy đơn hàng này không?')">Hủy đơn hàng</a>
-                <?php
-                } else {
-                ?>
-                    <a href="tel:+84878398141" class="btn btn__solid">Liên hệ</a>
-                <?php
-                }
-                ?>
-
-                <a href="index.php?page=my_account&tab=account_order" class="btn anchor">Trở về danh sách đơn hàng</a>
             </div>
             <div class="col" style="--w-md:4;">
                 <div class="checkout__cart" style="padding-block: 0;">
@@ -98,6 +85,30 @@ $order = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM orders WHERE  o
                         <h4 class="h4">Tổng tiền:</h4>
                         <span class="h4 checkout__total"><?php echo number_format((float) $total) . '₫' ?></span>
                     </div>
+                </div>
+            </div>
+            <div class="w-100 d-flex align-center space-between">
+                <div class="order__detail--action">
+                    <?php
+                    if ($order['order_status'] == 0) {
+                    ?>
+                        <a href="pages/handle/order.php?order_cancel=1&order_code=<?php echo $order_code ?>" class="btn btn__solid" onClick="return confirm('Bạn có muốn hủy đơn hàng này không?')">Hủy đơn hàng</a>
+                    <?php
+                    } elseif ($order['order_status'] == 3) {
+                    ?>
+                        <a href="pages/handle/order.php?order_confirm=1&order_code=<?php echo $order_code ?>" class="btn btn__solid" onClick="return confirm('Xác nhận đã nhận được hàng?')">Xác nhận đã nhận hàng</a>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="tel:+84878398141" class="btn btn__solid">Liên hệ</a>
+                    <?php
+                    }
+                    ?>
+
+                    <a href="index.php?page=my_account&tab=account_order" class="btn anchor">Trở về danh sách đơn hàng</a>
+                </div>
+                <div class="order__detail--status">
+                    Tình trạng đơn: <?php echo format_order_status($order['order_status']) ?>
                 </div>
             </div>
         </div>

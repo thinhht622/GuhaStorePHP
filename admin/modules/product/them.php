@@ -17,7 +17,7 @@
                     <div class="card-content">
                         <div class="input-item form-group">
                             <label for="product_name" class="d-block">Tên sản phẩm</label>
-                            <input type="text" id="product_name" name="product_name" class="d-block form-control" value="" placeholder="product name" require>
+                            <input type="text" id="product_name" name="product_name" class="d-block form-control" value="" placeholder="product name" required>
                             <span class="form-message"></span>
                         </div>
                         <div class="input-item form-group">
@@ -52,12 +52,12 @@
                         </div>
                         <div class="input-item form-group">
                             <label for="product_price_import" class="d-block">Giá nhập vào sản phẩm</label>
-                            <input class="d-block form-control" name="product_price_import" type="text" value="" placeholder="product price">
+                            <input class="d-block form-control" id="product_price_import" name="product_price_import" type="text" value="" placeholder="Nhập vào giá nhập hàng">
                             <span class="form-message"></span>
                         </div>
                         <div class="input-item form-group">
                             <label for="product_price" class="d-block">Giá bán ra sản phẩm</label>
-                            <input class="d-block form-control" name="product_price" type="text" value="" placeholder="product price">
+                            <input class="d-block form-control" id="product_price" name="product_price" type="text" value="" placeholder="Nhập vào giá bán đề xuất" required>
                             <span class="form-message"></span>
                         </div>
                         <div class="input-item form-group">
@@ -78,7 +78,16 @@
                         </div>
                         <div class="input-item form-group">
                             <label class="d-block" for="product_image">Image</label>
-                            <input type="file" id="product_image" class="" name="product_image">
+                            <div class="image-box w-100">
+                                <figure class="image-container p-relative">
+                                    <img id="chosen-image">
+                                    <figcaption id="file-name"></figcaption>
+                                </figure>
+                                <input type="file" class="d-none" id="product_image" name="product_image" accept="image/*">
+                                <label class="label-for-image" for="product_image">
+                                    <i class="fas fa-upload"></i> &nbsp; Tải lên hình ảnh
+                                </label>
+                            </div>
                         </div>
                         <div class="input-item form-group">
                             <label for="product_sale" class="d-block">Sale (%)</label>
@@ -132,10 +141,26 @@
         form: '#form-product',
         errorSelector: '.form-message',
         rules: [
-            Validator.isRequired('#product_name', 'vui lòng nhập tên sản phẩm')
+            Validator.isRequired('#product_name', 'vui lòng nhập tên sản phẩm'),
+            Validator.isRequired('#product_price', 'vui lòng nhập vào giá bán')
         ],
         onSubmit: function(data) {
             console.log(data);
         }
     })
+</script>
+
+<script>
+    let uploadButton = document.getElementById("product_image");
+    let chosenImage = document.getElementById("chosen-image");
+    let fileName = document.getElementById("file-name");
+
+    uploadButton.onchange = () => {
+        let reader = new FileReader();
+        reader.readAsDataURL(uploadButton.files[0]);
+        reader.onload = () => {
+            chosenImage.setAttribute("src", reader.result);
+        }
+        fileName.textContent = uploadButton.files[0].name;
+    }
 </script>

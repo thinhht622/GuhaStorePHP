@@ -3,18 +3,19 @@
         <div class="header__list d-flex space-between align-center">
             <h4 class="card-title" style="margin: 0;">Thống kê đơn hàng</h4>
             <div class="action_group">
-                <a href="#" class="button button-dark">Export</a>
+                <a href="" id="btnExport" class="button button-dark">Export</a>
             </div>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="main-pane-top d-flex space-between align-center" style="padding-inline: 10px;">
                     <div class="option-date d-flex space-between">
-                        <select id="select-date">
+                        <select id="select-date" class="select-date-tk">
                             <option value="">Chọn thời gian</option>
                             <option value="7ngay">7 ngày qua</option>
                             <option value="28ngay">28 ngày qua</option>
@@ -110,5 +111,13 @@
                 }
             })
         }
+    });
+</script>
+
+<script>
+    var selectDate = document.querySelector(".select-date-tk");
+    var btnExport = document.getElementById("btnExport");
+    selectDate.addEventListener("change", function() {
+        btnExport.href="modules/export.php"
     });
 </script>

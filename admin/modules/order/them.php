@@ -145,6 +145,10 @@ $order_code = rand(0, 9999);
                             </select>
                         </div>
                         <div class="input-item form-group">
+                            <label for="">Còn lại <span id="quantityproduct">số lượng</span> sản phẩm</label>
+                        </div>
+                        <span class="tanhinh" id="quantity_value">1</span>
+                        <div class="input-item form-group">
                             <label for="title" class="d-block">Số lượng</label>
                             <input class="d-block form-control" name="product_quantity" type="number" value="1" placeholder="Nhập vào số lượng" required>
                         </div>
@@ -161,8 +165,52 @@ $order_code = rand(0, 9999);
     </div>
 </div>
 <script>
+    var maxQuantity = parseInt($('#quantity_value').text());
+
+    $('#productid').on('change', function() {
+        var selectedValue = $(this).val();
+        $('#quantity_value').text(selectedValue);
+    });
     $('.select_product').chosen();
+    $(document).ready(function() {
+        $('.chosen-drop').click(function() {
+            var btnValue = $('#quantity_value').text();
+            // Gửi giá trị của button qua Ajax
+            $.ajax({
+                url: 'modules/order/truyvansoluong.php',
+                method: 'POST',
+                data: {
+                    product_id: btnValue
+                },
+                success: function(response) {
+                    console.log(response);
+                    var str = response;
+                    var parts = str.split(/"|"|:|}/);
+                    var quantity = parseInt(parts[4]);
+                    maxQuantity = quantity;
+                    $('#quantityproduct').text(quantity);
+                    // Xử lý kết quả trả về từ Ajax
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    // Xử lý lỗi nếu có
+                }
+            });
+        });
+        // Lấy giá trị số lượng ban đầu từ span
+        $('input[name="product_quantity"]').on('input', function() {
+            var selectedQuantity = parseInt($(this).val());
+
+            if (selectedQuantity > maxQuantity) {
+                $(this).val(maxQuantity);
+                showErrorQuantityToast();
+            } else if (selectedQuantity <= 0) {
+                $(this).val(1);
+            }
+        });
+    });
 </script>
+
 <script>
     function showSuccessToast() {
         toast({
@@ -172,12 +220,35 @@ $order_code = rand(0, 9999);
             duration: 0,
         });
     }
+
+    function showErrorQuantityToast() {
+        toast({
+            title: "Error",
+            message: "Số lượng sản phẩm không hợp lệ",
+            type: "error",
+            duration: 0,
+        });
+    }
+
+    function showErrorToast() {
+        toast({
+            title: "Error",
+            message: "Thêm sản phẩm không thành công",
+            type: "error",
+            duration: 0,
+        });
+    }
 </script>
 
 <?php
 if (isset($_GET['message']) && $_GET['message'] == 'success') {
     echo '<script>';
     echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=order&query=order_add");';
+    echo '</script>';
+} elseif (isset($_GET['message']) && $_GET['message'] == 'error') {
+    echo '<script>';
+    echo 'showErrorToast();';
     echo 'window.history.pushState(null, "", "index.php?action=order&query=order_add");';
     echo '</script>';
 }

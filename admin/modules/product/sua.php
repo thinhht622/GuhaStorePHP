@@ -1,5 +1,5 @@
 <?php
-$sql_product_edit = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product_id = '$_GET[product_id]' LIMIT 1";
+$sql_product_edit = "SELECT * FROM product WHERE product_id = '$_GET[product_id]' LIMIT 1";
 $query_product_edit = mysqli_query($mysqli, $sql_product_edit);
 ?>
 <div class="row" style="margin-bottom: 10px;">
@@ -97,44 +97,52 @@ $query_product_edit = mysqli_query($mysqli, $sql_product_edit);
                 <div class="card">
                     <div class="card-body">
                         <div class="card-content">
-                        <div class="input-item form-group">
-                            <label for="image" class="">Image</label>
-                            <img src="modules/product/uploads/<?php echo $row['product_image'] ?>" class="product__image w-100 h-100" style="width: 100px; height: 100px;" alt="image">
-                            <input type="file" name="product_image" value="<?php echo $row['product_image'] ?>">
-                        </div>
-                        <div class="input-item form-group">
-                            <label for="title" class="d-block">Trạng thái</label>
-                            <select name="product_status" id="product_status" class="form-control">
-                                <option value="1" <?php if ($row['product_status'] == 1) {
-                                                        echo "selected";
-                                                    } ?>>Bán ra sản phẩm</option>
-                                <option value="0" <?php if ($row['product_status'] == 0) {
-                                                        echo "selected";
-                                                    } ?>>Tạm dừng bán</option>
-                            </select>
-                        </div>
-                        <div class="input-item form-group">
-                            <label for="title" class="d-block">Danh mục sản phẩm</label>
-                            <select name="product_category" id="product_category" class="form-control select_category">
-                                <option value="0">Chưa phân loại</option>
-                                <?php
-                                $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
-                                $query_category_list = mysqli_query($mysqli, $sql_category_list);
-                                while ($row_category = mysqli_fetch_array($query_category_list)) {
-                                    if ($row['category_id'] == $row_category['category_id']) {
-                                ?>
-                                        <option value="<?php echo $row_category['category_id'] ?>" selected><?php echo $row_category['category_name'] ?></option>
+                            <div class="input-item form-group">
+                                <label for="image" class="">Image</label>
+                                <div class="image-box w-100">
+                                    <figure class="image-container p-relative">
+                                        <img src="modules/product/uploads/<?php echo $row['product_image'] ?>" id="chosen-image">
+                                        <figcaption id="file-name"></figcaption>
+                                    </figure>
+                                    <input type="file" class="d-none" id="product_image" name="product_image" accept="image/*">
+                                    <label class="label-for-image" for="product_image">
+                                        <i class="fas fa-upload"></i> &nbsp; Chọn hình ảnh
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="input-item form-group">
+                                <label for="title" class="d-block">Trạng thái</label>
+                                <select name="product_status" id="product_status" class="form-control">
+                                    <option value="1" <?php if ($row['product_status'] == 1) {
+                                                            echo "selected";
+                                                        } ?>>Bán ra sản phẩm</option>
+                                    <option value="0" <?php if ($row['product_status'] == 0) {
+                                                            echo "selected";
+                                                        } ?>>Tạm dừng bán</option>
+                                </select>
+                            </div>
+                            <div class="input-item form-group">
+                                <label for="title" class="d-block">Danh mục sản phẩm</label>
+                                <select name="product_category" id="product_category" class="form-control select_category">
+                                    <option value="0">Chưa phân loại</option>
                                     <?php
-                                    } else {
+                                    $sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
+                                    $query_category_list = mysqli_query($mysqli, $sql_category_list);
+                                    while ($row_category = mysqli_fetch_array($query_category_list)) {
+                                        if ($row['category_id'] == $row_category['category_id']) {
                                     ?>
-                                        <option value="<?php echo $row_category['category_id'] ?>"><?php echo $row_category['category_name'] ?></option>
+                                            <option value="<?php echo $row_category['category_id'] ?>" selected><?php echo $row_category['category_name'] ?></option>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <option value="<?php echo $row_category['category_id'] ?>"><?php echo $row_category['category_name'] ?></option>
 
-                                <?php
+                                    <?php
+                                        }
                                     }
-                                }
-                                ?>
-                            </select>
-                        </div>
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -310,3 +318,18 @@ if (isset($_GET['message']) && $_GET['message'] == 'success') {
     $('.select_category').chosen();
     CKEDITOR.replace('product_description');
 </script>
+
+<script>
+    let uploadButton = document.getElementById("product_image");
+    let chosenImage = document.getElementById("chosen-image");
+    let fileName = document.getElementById("file-name");
+
+    uploadButton.onchange = () => {
+        let reader = new FileReader();
+        reader.readAsDataURL(uploadButton.files[0]);
+        reader.onload = () => {
+            chosenImage.setAttribute("src", reader.result);
+        }
+        fileName.textContent = uploadButton.files[0].name;
+    }
+</script>  

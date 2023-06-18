@@ -45,8 +45,8 @@
 	$pdf->Cell($width_cell[1],10,'Mã SP',1,0,'C',true);
 	$pdf->Cell($width_cell[2],10,'Tên sản phẩm',1,0,'C',true);
 	$pdf->Cell($width_cell[3],10,'Số lượng',1,0,'C',true); 
-	$pdf->Cell($width_cell[4],10,'Giá',1,0,'C',true);
-	$pdf->Cell($width_cell[5],10,'Tổng tiền',1,1,'C',true); 
+	$pdf->Cell($width_cell[4],10,'Đơn giá',1,0,'C',true);
+	$pdf->Cell($width_cell[5],10,'Thành tiền',1,1,'C',true); 
 	$pdf->SetFillColor(235,236,236); 
 	$fill=false;
 	$i = 0;
@@ -57,8 +57,8 @@
 	$pdf->Cell($width_cell[1],10,$row['product_id'],1,0,'C',$fill);
 	$pdf->Cell($width_cell[2],10,$row['product_name'],1,0,'C',$fill);
 	$pdf->Cell($width_cell[3],10,$row['product_quantity'],1,0,'C',$fill);
-	$pdf->Cell($width_cell[4],10,number_format($row['product_price']).'đ',1,0,'C',$fill);
-	$pdf->Cell($width_cell[5],10,number_format($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale']))."đ",1,1,'C',$fill);
+	$pdf->Cell($width_cell[4],10,number_format($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale'])).'đ',1,0,'C',$fill);
+	$pdf->Cell($width_cell[5],10,number_format(($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale']))*$row['product_quantity'])."đ",1,1,'C',$fill);
 	$fill = !$fill;
 
 	}

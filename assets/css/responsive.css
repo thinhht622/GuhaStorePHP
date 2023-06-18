@@ -7,35 +7,35 @@
   }
   h1,
   .h1 {
-    font-size: 5.2rem;
+    font-size: 5rem;
   }
 
   h2,
   .h2 {
-    font-size: 4rem;
+    font-size: 3.8rem;
   }
 
   h3,
   .h3 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
 
   h4,
   .h4 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     letter-spacing: 0.04em;
     line-height: 1.72;
   }
 
   .h7 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     letter-spacing: 0.02em;
     line-height: 1.5;
     font-weight: 400;
   }
 
   .h8 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
 
   .header__container.middle-left {

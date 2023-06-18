@@ -36,7 +36,6 @@ if (isset($_POST['product_add'])) {
     header('Location: ../../index.php?action=product&query=product_list&message=success');
 } elseif (isset($_GET['product_sale'])) {
     $sale = $_GET['product_sale'];
-    echo $sale;
     foreach ($product_ids as $id) {
         $sql_sale = "UPDATE product SET product_sale = $sale WHERE product_id = '" . $id . "'";
         echo $sql_sale;

@@ -147,12 +147,25 @@ if (isset($_POST['account_keyword'])) {
             duration: 0,
         });
     }
+    function showErrorToast() {
+        toast({
+            title: "Error",
+            message: "Không thể cập nhật tài khoản",
+            type: "error",
+            duration: 0,
+        });
+    }
 </script>
 
 <?php
 if (isset($_GET['message']) && $_GET['message'] == 'success') {
     echo '<script>';
     echo 'showSuccessToast();';
+    echo 'window.history.pushState(null, "", "index.php?action=account&query=account_list");';
+    echo '</script>';
+} elseif (isset($_GET['message']) && $_GET['message'] == 'error') {
+    echo '<script>';
+    echo 'showErrorToast();';
     echo 'window.history.pushState(null, "", "index.php?action=account&query=account_list");';
     echo '</script>';
 }

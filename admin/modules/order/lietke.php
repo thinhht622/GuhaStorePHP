@@ -100,7 +100,7 @@ if (isset($_GET['order_status'])) {
                             ?>
                                 <tr>
                                     <td>
-                                        <a href="?action=order&query=order_detail&order_code=<?php echo $row['order_code'] ?>">
+                                        <a href="?action=order&query=order_detail_online&order_code=<?php echo $row['order_code'] ?>">
                                             <div class="icon-edit">
                                                 <img class="w-100 h-100" src="images/icon-view.png" alt="">
                                             </div>

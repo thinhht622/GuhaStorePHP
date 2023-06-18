@@ -27,6 +27,10 @@ function format_order_status($value)
     $text = 'Đang chuyển bị';
   } elseif ($value == 2) {
     $text = 'Đang giao hàng';
+  } elseif ($value == 3) {
+    $text = 'Đã giao hàng';
+  } elseif ($value == 4) {
+    $text = 'Đơn hàng hoàn trả';
   } else {
     $text = 'Đã hoàn thành';
   }

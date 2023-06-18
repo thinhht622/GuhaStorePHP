@@ -16,13 +16,64 @@ if (isset($_GET['data'])) {
 
 
 if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
-    foreach ($order_codes as $code) {
+    if ($order_codes) {
+        foreach ($order_codes as $code) {
+            // Lay thong tin don hang
+            $sql_order_get = "SELECT * FROM orders WHERE order_code = $code LIMIT 1";
+            $query_order_get = mysqli_query($mysqli, $sql_order_get);
+            $order = mysqli_fetch_array($query_order_get);
+            $order_status = $order['order_status'];
+            if ($order_status<3) {
+                $order_status++;
+            } 
+            //Chuyen trang thai don hang
+            $sql_order_confirm = "UPDATE orders SET order_status = $order_status WHERE order_code = $code";
+            mysqli_query($mysqli, $sql_order_confirm);
+
+            if ($order['order_status'] == 0) {
+                $sql_order_detail = "SELECT * FROM order_detail WHERE order_code = $code";
+                $query_order_detail = mysqli_query($mysqli, $sql_order_detail);
+
+                $total = 0;
+                $quantity = 0;
+
+                while ($row = mysqli_fetch_array($query_order_detail)) {
+                    $total += ($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale'])) * $row['product_quantity'];
+                    $quantity += $row['product_quantity'];
+                }
+
+                $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+                $query_thongke = mysqli_query($mysqli, $sql_thongke);
+
+                if (mysqli_num_rows($query_thongke) == 0) {
+                    $metric_sales = $total;
+                    $metric_quantity = $quantity;
+                    $metric_order = 1;
+                    $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
+                    VALUE ('$now', '$metric_order', '$metric_sales', '$metric_quantity')";
+                    mysqli_query($mysqli, $sql_update_metrics);
+                } elseif (mysqli_num_rows($query_thongke) != 0) {
+                    while ($row_tk = mysqli_fetch_array($query_thongke)) {
+                        $metric_sales = $row_tk['metric_sales'] + $total;
+                        $metric_quantity = $row_tk['metric_quantity'] + $quantity;
+                        $metric_order = $row_tk['metric_order'] + 1;
+                        $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
+                        mysqli_query($mysqli, $sql_update_metrics);
+                    }
+                }
+            }
+        }
+        header('Location: ../../index.php?action=order&query=order_list&message=success');
+    } elseif ($_GET['order_code']) {
+        $code = $_GET['order_code'];
         // Lay thong tin don hang
         $sql_order_get = "SELECT * FROM orders WHERE order_code = $code LIMIT 1";
         $query_order_get = mysqli_query($mysqli, $sql_order_get);
         $order = mysqli_fetch_array($query_order_get);
         $order_status = $order['order_status'];
-        $order_status++;
+        if ($order_status<3) {
+            $order_status++;
+        }
         //Chuyen trang thai don hang
         $sql_order_confirm = "UPDATE orders SET order_status = $order_status WHERE order_code = $code";
         mysqli_query($mysqli, $sql_order_confirm);
@@ -59,9 +110,12 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
                 }
             }
         }
+        header('Location: ../../index.php?action=order&query=order_detail_online&order_code='.$_GET['order_code'].'&message=success');
     }
+}
 
-    header('Location: ../../index.php?action=order&query=order_list&message=success');
+if (isset($_GET['rollback']) && $_GET['rollback']==1) {
+    header('Location: ../../index.php?action=order&query=order_detail_online&order_code='.$_GET['order_code'].'&message=info');
 }
 
 if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
@@ -81,7 +135,7 @@ if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
 
             mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
         }
-        
+
         $sql_order_cancel = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
         mysqli_query($mysqli, $sql_order_cancel);
     }
@@ -112,7 +166,7 @@ if (isset($_POST['addtoorder'])) {
     $sql = "SELECT * FROM product WHERE product_id='" . $product_id . "' LIMIT 1";
     $query = mysqli_query($mysqli, $sql);
     $row = mysqli_fetch_array($query);
-    if ($row) {
+    if ($row && $row['product_quantity'] >= $product_quantity) {
         $new_product = array(array('product_id' => $product_id, 'product_name' => $row['product_name'], 'product_quantity' => $product_quantity, 'product_price' => $row['product_price'], 'product_sale' => $row['product_sale'], 'product_image' => $row['product_image']));
         if (isset($_SESSION['order'])) {
             $found = false;
@@ -135,8 +189,11 @@ if (isset($_POST['addtoorder'])) {
         } else {
             $_SESSION['order'] = $new_product;
         }
+
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . '&message=success');
+    } else {
+        header('Location: ' . $_SERVER['HTTP_REFERER'] . '&message=error');
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER'] . '&message=success');
 }
 
 // them don hang

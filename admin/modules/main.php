@@ -33,6 +33,9 @@
         elseif($action =='order' && $query == 'order_detail') {
             include("./modules/order/chitiet.php");
         }
+        elseif($action =='order' && $query == 'order_detail_online') {
+            include("./modules/order/chitiet_online.php");
+        }
         elseif($action =='category' && $query == 'category_add') {
             include("./modules/category/them.php");
         }
@@ -110,6 +113,9 @@
         }
         elseif($action =='dashboard' && $query == 'dashboard') {
             include("./modules/dashboard.php");
+        } 
+        elseif($action =='settings' && $query == 'settings') {
+            include("./modules/settings/main.php");
         }
         else {
             include("./modules/home.php");

@@ -3,9 +3,11 @@ require '../../carbon/autoload.php';
 include('../config/config.php');
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+session_start();
 
 if(isset($_POST['thoigian'])) {
     $thoigian = $_POST['thoigian'];
+    $_SESSION['metric_date'] = $thoigian;
 } else {
     $thoigian = '';
     $subdays = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
