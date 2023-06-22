@@ -1513,7 +1513,7 @@ h6,
 
 .info__title {
   width: 120px;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: var(--color-text-black);
   opacity: 0.75;
   display: inline-block;
@@ -1806,6 +1806,10 @@ th {
 }
 .customer-feedback ol li.selected a {
   background-color: var(--color-bd);
+}
+
+.image-news {
+  aspect-ratio: 4/3;
 }
 
 /* === start article === */
@@ -2678,4 +2682,22 @@ abbr {
     top: 50%;
     left: 0;
     z-index: 1;
+}
+
+/* zoom image */
+.product-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.zoom-window {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 300px; /* Độ rộng cửa sổ phóng to */
+  height: 300px; /* Chiều cao cửa sổ phóng to */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  display: none; /* Ẩn cửa sổ phóng to ban đầu */
+  border-radius: 50%;
 }

@@ -23,9 +23,9 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
             $query_order_get = mysqli_query($mysqli, $sql_order_get);
             $order = mysqli_fetch_array($query_order_get);
             $order_status = $order['order_status'];
-            if ($order_status<3) {
+            if ($order_status < 3) {
                 $order_status++;
-            } 
+            }
             //Chuyen trang thai don hang
             $sql_order_confirm = "UPDATE orders SET order_status = $order_status WHERE order_code = $code";
             mysqli_query($mysqli, $sql_order_confirm);
@@ -71,7 +71,7 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
         $query_order_get = mysqli_query($mysqli, $sql_order_get);
         $order = mysqli_fetch_array($query_order_get);
         $order_status = $order['order_status'];
-        if ($order_status<3) {
+        if ($order_status < 3) {
             $order_status++;
         }
         //Chuyen trang thai don hang
@@ -110,12 +110,12 @@ if (isset($_GET['confirm']) && $_GET['confirm'] == 1) {
                 }
             }
         }
-        header('Location: ../../index.php?action=order&query=order_detail_online&order_code='.$_GET['order_code'].'&message=success');
+        header('Location: ../../index.php?action=order&query=order_detail_online&order_code=' . $_GET['order_code'] . '&message=success');
     }
 }
 
-if (isset($_GET['rollback']) && $_GET['rollback']==1) {
-    header('Location: ../../index.php?action=order&query=order_detail_online&order_code='.$_GET['order_code'].'&message=info');
+if (isset($_GET['rollback']) && $_GET['rollback'] == 1) {
+    header('Location: ../../index.php?action=order&query=order_detail_online&order_code=' . $_GET['order_code'] . '&message=info');
 }
 
 if (isset($_GET['cancel']) && $_GET['cancel'] == 1) {
@@ -277,4 +277,18 @@ if (isset($_POST['order_add'])) {
     } else {
         header('Location:../../index.php?page=404');
     }
+}
+
+// hoàn tiền
+if (isset($_GET['reverse']) && $_GET['reverse'] == 1) {
+    foreach ($order_codes as $code) {
+        if (isset($_GET['payment']) && $_GET['payment'] = 'momo') {
+            $sql_reverse_payment = "UPDATE momo SET payment_status = -1 WHERE order_code = $code LIMIT 1";
+            mysqli_query($mysqli, $sql_get_order);
+        } elseif (isset($_GET['payment']) && $_GET['payment'] = 'vnpay') {
+            $sql_reverse_payment = "UPDATE vnpay SET payment_status = -1 WHERE order_code = $code LIMIT 1";
+            mysqli_query($mysqli, $sql_get_order);
+        }
+    }
+    header('Location: ../../index.php?action=order&query=order_payment&message=success');
 }

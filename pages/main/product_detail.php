@@ -3,9 +3,22 @@
 include("./pages/base/product-detail.php");
 ?>
 <!-- end product detail -->
-
-<!-- start product list -->
 <?php
-include("./pages/base/product-relate.php");
+if (isset($_SESSION['account_id'])) {
 ?>
-<!-- end product list -->
+    <!-- start product filtering -->
+    <?php
+    include("./pages/base/product_filtering.php");
+    ?>
+    <!-- end product filtering -->
+<?php
+} else {
+?>
+    <!-- start product list -->
+    <?php
+    include("./pages/base/product-relate.php");
+    ?>
+    <!-- end product list -->
+<?php
+}
+?>

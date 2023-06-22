@@ -24,7 +24,7 @@ function format_order_status($value)
   } elseif ($value == 0) {
     $text = 'Đang xử lý';
   } elseif ($value == 1) {
-    $text = 'Đang chuyển bị';
+    $text = 'Đang chuẩn bị';
   } elseif ($value == 2) {
     $text = 'Đang giao hàng';
   } elseif ($value == 3) {

@@ -60,8 +60,9 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                     <div class="col p-relative" style="--w-md: 6">
                         <div class="product-detail__media">
                             <div class="media__items d-flex">
-                                <div class="media__item w-100">
+                                <div class="media__item product-image-container w-100">
                                     <img class="w-100" src="admin/modules/product/uploads/<?php echo $row_product_detail['product_image'] ?>" alt="image product" />
+                                    <div class="zoom-window"></div>
                                 </div>
                             </div>
                         </div>
@@ -467,4 +468,36 @@ if (isset($_GET['message']) && $_GET['message'] == 'success') {
             pane.classList.add('active');
         }
     })
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const container = document.querySelector(".product-image-container");
+        const zoomWindow = document.querySelector(".zoom-window");
+        const image = container.querySelector("img");
+
+        container.addEventListener("mouseover", function() {
+            zoomWindow.style.display = "block";
+        });
+
+        container.addEventListener("mouseout", function() {
+            zoomWindow.style.display = "none";
+        });
+
+        container.addEventListener("mousemove", function(event) {
+            // Tính toán vị trí của cửa sổ phóng to dựa trên vị trí chuột trong khung chứa ảnh
+            const containerRect = container.getBoundingClientRect();
+            const x = event.clientX - containerRect.left;
+            const y = event.clientY - containerRect.top;
+
+            // Cập nhật vị trí của cửa sổ phóng to
+            zoomWindow.style.left = (x - zoomWindow.offsetWidth / 2) + "px";
+            zoomWindow.style.top = (y - zoomWindow.offsetHeight / 2) + "px";
+
+            // Hiển thị phần phóng to của ảnh
+            zoomWindow.style.backgroundImage = `url('${image.src}')`;
+            zoomWindow.style.backgroundSize = `${image.width * 2}px ${image.height * 2}px`;
+            zoomWindow.style.backgroundPosition = `-${x * 2}px -${y * 2}px`;
+        });
+    });
 </script>

@@ -3,6 +3,7 @@ if (isset($_SESSION['account_id'])) {
     $account_id = $_SESSION['account_id'];
     $sql_customer = "SELECT * FROM customer WHERE account_id = '" . $account_id . "'";
     $query_account = mysqli_query($mysqli, $sql_customer);
+    $number_customer = mysqli_num_rows($query_account);
 }
 ?>
 <!-- start checkout -->
@@ -14,33 +15,70 @@ if (isset($_SESSION['account_id'])) {
                     <h2 class="checkout__title h4 d-flex align-center space-between">Thông tin người nhận hàng:</h2>
                     <div class="checkout__infomation">
                         <?php
-                        if (isset($query_account)) {
-                            while ($account = mysqli_fetch_array($query_account)) {
+                        if ($number_customer > 0) {
                         ?>
+                            <?php
+                            if (isset($query_account)) {
+                                while ($account = mysqli_fetch_array($query_account)) {
+                            ?>
+                                    <div class="info__item d-flex">
+                                        <label class="info__title" for="">Tên khách hàng:</label>
+                                        <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['customer_name'] ?>" required></input>
+                                    </div>
+                                    <div class="info__item d-flex">
+                                        <label class="info__title" for="">Địa chỉ:</label>
+                                        <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['customer_address'] ?>" placeholder="Nhập vào địa chỉ nhận hàng" required></input>
+                                    </div>
+                                    <div class="info__item d-flex">
+                                        <label class="info__title" for="">Số điện thoại:</label>
+                                        <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['customer_phone'] ?>" required></input>
+                                    </div>
+                                    <div class="info__item d-flex">
+                                        <label class="info__title" for="delivery_note">Ghi chú:</label>
+                                        <input id="delivery_note" type="text" class="info__input flex-1" placeholder="Nhập vào ghi chú với người bán ..." name="delivery_note" value=""></input>
+                                    </div>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <a href="index.php?page=login">Vui lòng đăng nhập tài khoản</a>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        } else {
+                        ?>
+                            <?php
+                            if (isset($query_account)) {
+                            ?>
                                 <div class="info__item d-flex">
                                     <label class="info__title" for="">Tên khách hàng:</label>
-                                    <input type="text" class="info__input flex-1" name="delivery_name" value="<?php echo $account['customer_name'] ?>" required></input>
+                                    <input type="text" class="info__input flex-1" name="delivery_name" value="" placeholder="Nhập vào tên người nhận hàng ..." required></input>
                                 </div>
                                 <div class="info__item d-flex">
                                     <label class="info__title" for="">Địa chỉ:</label>
-                                    <input type="text" class="info__input flex-1" name="delivery_address" value="<?php echo $account['customer_address'] ?>" placeholder="Nhập vào địa chỉ nhận hàng" required></input>
+                                    <input type="text" class="info__input flex-1" name="delivery_address" value="" placeholder="Nhập vào địa chỉ nhận hàng ..." required></input>
                                 </div>
                                 <div class="info__item d-flex">
                                     <label class="info__title" for="">Số điện thoại:</label>
-                                    <input type="text" class="info__input flex-1" name="delivery_phone" value="<?php echo $account['customer_phone'] ?>" required></input>
+                                    <input type="text" class="info__input flex-1" name="delivery_phone" value="" placeholder="Nhập vào số điện thoại nhận hàng ..." required></input>
                                 </div>
                                 <div class="info__item d-flex">
                                     <label class="info__title" for="delivery_note">Ghi chú:</label>
                                     <input id="delivery_note" type="text" class="info__input flex-1" placeholder="Nhập vào ghi chú với người bán ..." name="delivery_note" value=""></input>
                                 </div>
                             <?php
-                            }
-                        } else {
+
+                            } else {
                             ?>
-                            <a href="index.php?page=login">Vui lòng đăng nhập tài khoản</a>
+                                <a href="index.php?page=login">Vui lòng đăng nhập tài khoản</a>
+                            <?php
+                            }
+                            ?>
                         <?php
                         }
                         ?>
+
                     </div>
 
 

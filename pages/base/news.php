@@ -20,7 +20,7 @@ $query_article_ol = mysqli_query($mysqli, $sql_article_list);
                 ?>
                     <li class="customer-feedback__item d-flex justify-center align-center" id="new-<?php echo $row['article_id'] ?>">
                         <div class="customer-feedback__image w-100">
-                            <a href="index.php?page=article&article_id=<?php echo $row['article_id'] ?>"><img class="w-100 h-100 d-block object-fit-cover" src="admin/modules/blog/uploads/<?php echo $row['article_image'] ?>" alt="customer1"></a>
+                            <a href="index.php?page=article&article_id=<?php echo $row['article_id'] ?>"><img class="image-news w-100 h-100 d-block object-fit-cover" src="admin/modules/blog/uploads/<?php echo $row['article_image'] ?>" alt="customer1"></a>
                         </div>
                         <div class="customer-feedback__content w-100 h-100 d-flex">
                             <span class="customer-feedback__date d-flex align-center">

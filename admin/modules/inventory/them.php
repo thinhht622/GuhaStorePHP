@@ -18,7 +18,7 @@ $inventory_code = rand(0, 9999);
         <div class="card">
             <div class="card-body">
                 <div class="card-content">
-                    <form action="modules/inventory/xuly.php" method="POST">
+                    <form action="modules/inventory/thempnk.php" method="POST">
                         <div class="receipt">
                             <div class="receipt__header text-center">
                                 <h3 class="receipt__title">Phiếu Nhập Kho</h3>
@@ -40,7 +40,7 @@ $inventory_code = rand(0, 9999);
                                             <p class="receipt__info--note">Ghi chú: <input class="receipt__info--input" name="inventory_note" type="text" placeholder="Lý do nhập kho" required></p>
                                         </td>
                                         <td>
-                                            <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="supplier_phone" type="text" placeholder="nhập vào số điện thoại" required></p>
+                                            <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="inventory_phone" type="text" placeholder="nhập vào số điện thoại" required></p>
                                         </td>
                                     </tr>
                                 </table>

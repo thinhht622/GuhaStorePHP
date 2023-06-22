@@ -47,7 +47,7 @@ $query_inventory_detail = mysqli_query($mysqli, $sql_inventory_detail);
                                             <p class="receipt__info--note">Ghi chú: <input class="receipt__info--input" name="inventory_note" value="<?php echo $inventory['inventory_note'] ?>" type="text" placeholder="Lý do nhập kho" required></p>
                                         </td>
                                         <td>
-                                            <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="supplier_phone" value="<?php echo $inventory['supplier_phone'] ?>" type="text"></p>
+                                            <p class="receipt__info--company">Số điện thoại: <input class="receipt__info--input" name="inventory_phone" value="<?php echo $inventory['supplier_phone'] ?>" type="text"></p>
                                         </td>
                                     </tr>
                                 </table>

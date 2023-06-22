@@ -87,7 +87,7 @@ if (isset($_POST['inventory_add'])) {
     $inventory_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
     $sql_insert_inventory = "INSERT INTO inventory(account_id, staf_name, supplier_name, supplier_phone, inventory_note, inventory_code, inventory_date, total_amount, inventory_status) 
-    VALUE ('".$_SESSION['account_id']."', '$staf_name', '$supplier_name', '$supplier_phone', '$inventory_note', '$inventory_code', '$inventory_date', '$total_amount', '0')";
+    VALUE ('".$_SESSION['account_id']."', '$staf_name', '$supplier_name', '$inventory_phone', '$inventory_note', '$inventory_code', '$inventory_date', '$total_amount', '0')";
     $query_insert_inventory = mysqli_query($mysqli, $sql_insert_inventory);
     
     if ($query_insert_inventory) {
@@ -102,8 +102,9 @@ if (isset($_POST['inventory_add'])) {
                     $product_price_import = $inventory_item['product_price_import'];
                     $total_amount += $product_price_import * $product_quantity;
                     $insert_inventory_detail = "INSERT INTO inventory_detail(inventory_code, product_id, product_quantity, product_price_import) VALUE ('" . $inventory_code . "', '" . $product_id . "', '" . $product_quantity . "', '" . $product_price_import . "')";
+                    echo $insert_inventory_detail;
                     mysqli_query($mysqli, $insert_inventory_detail);
-                    mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, product_price_import = $product_price_import WHERE product_id = $product_id");
+                    mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, product_price_import = $product_price_import WHERE product_id = '".$product_id."'");
         }
         
         $update_total_amount = "UPDATE inventory SET total_amount = $total_amount WHERE inventory_code = $inventory_code";

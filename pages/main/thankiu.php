@@ -188,7 +188,7 @@ if (isset($_GET['order_type']) && $_GET['order_type'] == 1) {
     //insert momo
     $insert_momo = "INSERT INTO momo(
         partner_code, order_code, momo_amount, order_info, order_type, trans_id, payment_date, pay_type)
-        VALUE('" . $partnerCode . "','" . $orderId . "','" . $amount . "','" . $orderInfo . "','" . $orderType . "','" . $transId . "','" . $payType . "','" . $order_date . "')";
+        VALUE('" . $partnerCode . "','" . $orderId . "','" . $amount . "','" . $orderInfo . "','" . $orderType . "','" . $transId . "','" . $order_date . "','" . $payType . "')";
     $query_momo = mysqli_query($mysqli, $insert_momo);
 } else {
     $status = 0;

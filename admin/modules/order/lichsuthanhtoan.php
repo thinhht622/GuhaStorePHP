@@ -82,10 +82,10 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
                                             </a>
                                         </td>
                                         <td>
-                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['momo_id'] ?>">
+                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['order_code'] ?>">
                                         </td>
                                         <td><?php echo $row['order_code'] ?></td>
-                                        <td><?php echo format_datetime($row['payment_date']) ?></td>
+                                        <td><?php echo $row['payment_date'] ?></td>
                                         <td><?php echo number_format($row['momo_amount']) ?>đ</td>
                                         <td><?php echo $row['pay_type'] ?></td>
                                     </tr>
@@ -126,7 +126,7 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
                                             </a>
                                         </td>
                                         <td>
-                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['vnp_id'] ?>">
+                                            <input type="checkbox" class="checkbox" onclick="testChecked(); getCheckedCheckboxes();" id="<?php echo $row['order_code'] ?>">
                                         </td>
                                         <td><?php echo $row['order_code'] ?></td>
                                         <td><?php echo format_datetime($row['vnp_paydate']) ?></td>
@@ -209,8 +209,7 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
 </div>
 <div class="dialog__control">
     <div class="control__box">
-        <a href="modules/order/xuly.php?confirm=1" class="button__control" id="btnConfirm">Duyệt đơn hàng</a>
-        <a href="modules/order/xuly.php?cancel=1" class="button__control" id="btnCancel">Hủy đơn hàng</a>
+        <a href="modules/order/xuly.php?reverse=1" class="button__control" id="btnCancel">Hoàn tiền</a>
     </div>
 </div>
 <script>
@@ -260,7 +259,7 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
             checkedIds.push(checkeds[i].id);
         }
         btnConfirm.href = "modules/order/xuly.php?confirm=1&data=" + JSON.stringify(checkedIds);
-        btnCancel.href = "modules/order/xuly.php?cancel=1&data=" + JSON.stringify(checkedIds);
+        btnCancel.href = "modules/order/xuly.php?payment='vnpay'reverse=1&data=" + JSON.stringify(checkedIds);
     }
 </script>
 
