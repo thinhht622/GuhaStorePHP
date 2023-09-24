@@ -7,8 +7,7 @@
     $category_description = $_POST['category_description'];
     $category_image = $_FILES['category_image']['name'];
     $category_image_tmp = $_FILES['category_image']['tmp_name'];
-    $category_image = $_FILES['category_image']['name'];
-    $category_image = time().'_'.$category_image;
+    $category_image = time() . '_' . $category_image;
 
     if (isset($_POST['category_add'])) {
         $sql_add = "INSERT INTO category(category_name, category_description, category_image) VALUE('".$category_name."', '".$category_description."', '".$category_image."')";
