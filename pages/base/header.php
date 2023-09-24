@@ -132,9 +132,10 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     <div class="header__footer md-none">
                         <div class="person-login d-flex align-center">
                             <img class="svg__icon" src="./assets/images/icon/icon-person.svg" alt="person" />
+                            
                             <?php if (isset($_SESSION['account_email'])) {
                             ?>
-                                <a class="h5 login-btn" href="index.php?logout=1">ĐĂNG XUẤT</a>
+                                <a class="h5 login-btn" href="index.php?page=my_account&tab=account_info">TÀI KHOẢN</a>
                             <?php
                             } else {
                             ?>
