@@ -13,7 +13,7 @@
                 <div class="banner__content text-center hidden__content">
                     <h2 class="banner__heading h1">Guha Perfume</h2>
                     <span class="banner__description">
-                        Cửa hàng nước hoa uy tín hàng đầu Hà Nội
+                        Cửa hàng nước hoa uy tín hàng đầu Sài Gòn
                     </span>
                     <a href="index.php?page=products" class="btn banner__btn">Xem ngay</a>
                 </div>

@@ -35,7 +35,7 @@ if (isset($_GET['payment_type']) && $_GET['payment_type'] == 'momo') {
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=order&query=order_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" name="order_search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" name="order_search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                     <div class="dropdown dropdown__item">

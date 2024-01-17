@@ -39,8 +39,8 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="header__list d-flex space-between align-center">
             <h3 class="card-title" style="margin: 0;">Danh sách sản phẩm</h3>
             <div class="action_group">
-                <a href="modules/product/export.php" class="button button-light">Export</a>
-                <button class="button button-light" id="btnImport">Import</button>
+                <a href="modules/product/export.php" class="button button-light">Xuất</a>
+                <button class="button button-light" id="btnImport">Nhập</button>
 
                 <a href="?action=product&query=product_add" class="button button-dark">Thêm sản phẩm</a>
             </div>

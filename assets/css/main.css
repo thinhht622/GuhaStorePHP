@@ -224,6 +224,12 @@ h6,
   right: 22.5px;
 }
 
+.header__footer .login-btn {
+  text-decoration: none;
+  color: var(--color-text-black);
+  margin-left: 10px;
+}
+
 .header__topbar p {
   margin: 0;
   padding: 8px;

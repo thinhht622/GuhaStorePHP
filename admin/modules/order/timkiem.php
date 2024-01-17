@@ -26,7 +26,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2">
                                 <a class="dropdown-item" href="index.php?action=order&query=order_list">Tất cả</a>
                                 <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a>
-                                <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuyển bị hàng</a>
+                                <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuẩn bị hàng</a>
                                 <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=2">Đang giao hàng</a>
                                 <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a>
                                 <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a>

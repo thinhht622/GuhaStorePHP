@@ -50,7 +50,7 @@
                 <div class="col pd-top" style="--w-md: 4;">
                     <div class="footer__subscribe">
                         <h3 class="block__heading text-center">
-                            Nhập vào email của bạn để theo dõi chúng tôi
+                            Nhập email của bạn để theo dõi chúng tôi
                         </h3>
                         <div class="email-signup__form justify-center d-flex">
                             <div class="w-100 form__container p-relative">

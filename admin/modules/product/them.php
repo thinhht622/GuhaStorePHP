@@ -77,7 +77,7 @@
                             <h4 class="card-title"></h4>
                         </div>
                         <div class="input-item form-group">
-                            <label class="d-block" for="product_image">Image</label>
+                            <label class="d-block" for="product_image">Hình ảnh</label>
                             <div class="image-box w-100">
                                 <figure class="image-container p-relative">
                                     <img id="chosen-image">

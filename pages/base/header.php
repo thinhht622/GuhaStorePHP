@@ -9,6 +9,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     .voice-btn.recognizing .action__icon-on {
         display: block;
     }
+
     .voice-btn.recognizing .action__icon-off {
         display: none;
     }
@@ -131,7 +132,17 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     <div class="header__footer md-none">
                         <div class="person-login d-flex align-center">
                             <img class="svg__icon" src="./assets/images/icon/icon-person.svg" alt="person" />
-                            <span>Đăng nhập</span>
+                            
+                            <?php if (isset($_SESSION['account_email'])) {
+                            ?>
+                                <a class="h5 login-btn" href="index.php?page=my_account&tab=account_info">TÀI KHOẢN</a>
+                            <?php
+                            } else {
+                            ?>
+                                <a class="h5 login-btn" href="index.php?page=login">ĐĂNG NHẬP</a>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <ul class="social__items d-flex align-center">
                             <li class="social__item">

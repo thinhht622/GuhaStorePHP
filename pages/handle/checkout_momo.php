@@ -33,10 +33,9 @@ $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 $orderInfo = "Thanh toán qua MoMo";
 $amount = $_SESSION['total_amount'];
 $orderId = $_SESSION['order_code'];
-$redirectUrl = "http://thinhdh.com/guhastorephp/index.php?page=checkout";
-$ipnUrl = "http://thinhdh.com/guhastorephp/index.php?page=checkout";
+$redirectUrl = "https://guha.store/GuhaStorePHP/index.php?page=thankiu";
+$ipnUrl = "https://guha.store/GuhaStorePHP/index.php?page=thankiu";
 $extraData = "";
-
 
     $requestId = time() . "";
     $requestType = "captureWallet";

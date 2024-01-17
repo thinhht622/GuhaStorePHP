@@ -32,7 +32,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ $query_customer_list = mysqli_query($mysqli, $sql_customer_list);
         <div class="header__list d-flex space-between align-center">
             <h3 class="card-title" style="margin: 0;">Danh sách khách hàng</h3>
             <div class="action_group">
-                <a href="modules/customer/export.php" class="button button-dark">Export</a>
+                <a href="modules/customer/export.php" class="button button-dark">Xuất</a>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@ $query_customer_list = mysqli_query($mysqli, $sql_customer_list);
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>

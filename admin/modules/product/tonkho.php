@@ -7,8 +7,8 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
         <div class="header__list d-flex space-between align-center">
             <h4 class="card-title" style="margin: 0;">Danh sách sản phẩm tồn kho</h4>
             <div class="action_group">
-                <a href="#" class="button button-light">Export</a>
-                <button class="button button-light">Import</button>
+                <a href="#" class="button button-light">Nhập</a>
+                <button class="button button-light">Xuất</button>
                 
                 <a href="?action=inventory&query=inventory_list" class="button button-dark">Nhập thêm</a>
             </div>
@@ -23,7 +23,7 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=product&query=product_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" name="product_search" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" name="product_search" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>
@@ -69,13 +69,13 @@ $query_product_list = mysqli_query($mysqli, $sql_product_list);
                                         <?php if ($row['product_status'] == 1) {
                                         ?>
                                             <div class="product__status product__status--active">
-                                                <span class="show-status">Active</span>
+                                                <span class="show-status">Hoạt động</span>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
                                             <div class="product__status product__status--pause">
-                                                <span class="show-status">Pause</span>
+                                                <span class="show-status">Tạm dừng</span>
                                             </div>
                                         <?php
                                         }

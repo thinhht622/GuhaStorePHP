@@ -3,7 +3,7 @@
         <div class="header__list d-flex space-between align-center">
             <h4 class="card-title" style="margin: 0;">Thống kê đơn hàng</h4>
             <div class="action_group">
-                <a href="" id="btnExport" class="button button-dark">Export</a>
+                <a href="" id="btnExport" class="button button-dark">Xuất</a>
             </div>
         </div>
     </div>

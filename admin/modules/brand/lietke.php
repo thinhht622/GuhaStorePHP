@@ -5,7 +5,7 @@ $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
 <div class="row">
     <div class="col">
         <div class="header__list d-flex space-between align-center">
-            <h3 class="card-title" style="margin: 0;">Danh thương hiệu</h3>
+            <h3 class="card-title" style="margin: 0;">Danh sách thương hiệu</h3>
             <div class="action_group">
                 <a href="?action=brand&query=brand_add" class="button button-dark">Thêm thương hiệu</a>
             </div>
@@ -20,7 +20,7 @@ $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
                     <div class="input__search p-relative">
                         <form class="search-form" action="#">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>

@@ -21,7 +21,7 @@ $query_inventory_list = mysqli_query($mysqli, $sql_inventory_list);
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=inventory&query=inventory_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" name="inventory_search" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" name="inventory_search" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>

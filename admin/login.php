@@ -33,7 +33,7 @@
         <div class="form-box">
             <div class="form-value">
                 <form action="" autocomplete="on" method="POST">
-                    <h2>Login</h2>
+                    <h2>Đăng nhập</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
                         <input type="email" name="account_email" required>
@@ -42,15 +42,15 @@
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                         <input type="password" name="account_password" required>
-                        <label for="">Password</label>
+                        <label for="">Mật khẩu</label>
                     </div>
                     <div class="forget">
-                        <label for=""><input type="checkbox">Remember Me  <a href="#">Forget Password</a></label>
+                        <label for=""><input type="checkbox">Nhớ tài khoản  <a href="#">Quên mật khẩu</a></label>
                       
                     </div>
-                    <button type="submit" name="login">Log in</button>
+                    <button type="submit" name="login">Đăng nhập</button>
                     <div class="register">
-                        <p>Don't have a account <a href="#">Register</a></p>
+                        <p>Không có tài khoản <a href="#">Đăng ký</a></p>
                     </div>
                 </form>
             </div>

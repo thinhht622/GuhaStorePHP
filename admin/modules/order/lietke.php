@@ -30,7 +30,7 @@ if (isset($_GET['order_status'])) {
         <div class="header__list d-flex space-between align-center">
             <h3 class="card-title" style="margin: 0;">Danh sách đơn hàng online</h3>
             <div class="action_group">
-                <a href="#" class="button button-dark">Export</a>
+                <a href="#" class="button button-dark">Xuất</a>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@ if (isset($_GET['order_status'])) {
                     <div class="input__search p-relative">
                         <form class="search-form" action="?action=order&query=order_search" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" name="order_search" class="form-control" placeholder="Search Here" title="Search here">
+                            <input type="search" name="order_search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                     <div class="dropdown dropdown__item">
@@ -53,7 +53,7 @@ if (isset($_GET['order_status'])) {
                                 if (isset($_GET['order_status']) && $_GET['order_status'] == 0) {
                                     echo "Đơn đang xử lý";
                                 } elseif(isset($_GET['order_status']) && $_GET['order_status'] == 1) {
-                                    echo "Đang chuyển bị hàng";
+                                    echo "Đang chuẩn bị hàng";
                                 } elseif(isset($_GET['order_status']) && $_GET['order_status'] == 2) {
                                     echo "Đang giao hàng";
                                 } elseif(isset($_GET['order_status']) && $_GET['order_status'] == 3) {
@@ -68,7 +68,7 @@ if (isset($_GET['order_status'])) {
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2">
                             <a class="dropdown-item" href="index.php?action=order&query=order_list">Đơn đang thực hiện</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuyển bị hàng</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuẩn bị hàng</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=2">Đang giao hàng</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a>

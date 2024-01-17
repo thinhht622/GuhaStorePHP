@@ -26,7 +26,7 @@ if (isset($_POST['account_keyword'])) {
                     <div class="input__search p-relative">
                         <form class="search-form" action="" method="POST">
                             <i class="icon-search p-absolute"></i>
-                            <input type="search" class="form-control" name="account_keyword" placeholder="Search Here" title="Search here">
+                            <input type="search" class="form-control" name="account_keyword" placeholder="Tìm kiếm" title="Tìm kiếm">
                         </form>
                     </div>
                 </div>

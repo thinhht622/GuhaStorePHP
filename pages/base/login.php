@@ -11,17 +11,17 @@
                 <div class="inputbox">
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <input type="password" name="account_password" required>
-                    <label for="">Password</label>
+                    <label for="">Mật khẩu</label>
                 </div>
                 <div class="forget">
-                    <label for=""><input type="checkbox">Remember Me <a href="#">Forget Password</a></label>
+                    <label for=""><input type="checkbox">Nhớ tài khoản     <a href="#">Quên mật khẩu</a></label>
 
                 </div>
                 <button type="submit" name="login">Đăng nhập</button>
                 <div class="register">
                     <p>Chưa có tài khoản <a href="index.php?page=register">Đăng ký</a></p>
                 </div>
-            </form>
+            </form> 
         </div>
     </div>
 </section>
