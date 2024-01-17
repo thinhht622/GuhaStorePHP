@@ -39,7 +39,11 @@
                     <div class="card-content">
                         <div class="main-pane-top">
                             <div class="input-item form-group">
+<<<<<<< HEAD
                                 <label for="image" class="d-block">Hình ảnh</label>
+=======
+                                <label for="image" class="d-block">Image</label>
+>>>>>>> 7e9a9bbe000abd6007cd84ac5f34719bd1af4114
                                 <div class="image-box w-100">
                                     <figure class="image-container p-relative">
                                         <img id="chosen-image">

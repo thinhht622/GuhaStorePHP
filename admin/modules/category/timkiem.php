@@ -1,7 +1,12 @@
 <?php
-$sql_category_list = "SELECT * FROM category ORDER BY category_id DESC";
+if (isset($_POST['category_search'])) {
+    $keyword = $_POST['category_search'];
+}
+$sql_category_list = "SELECT * FROM category WHERE category_name LIKE '%" . $keyword . "%' ORDER BY category_id DESC";
 $query_category_list = mysqli_query($mysqli, $sql_category_list);
 ?>
+
+
 <div class="row">
     <div class="col">
         <div class="header__list d-flex space-between align-center">
@@ -20,13 +25,9 @@ $query_category_list = mysqli_query($mysqli, $sql_category_list);
                 <div class="card-content">
                     <div class="main-pane-top d-flex justify-center align-center">
                     <div class="input__search p-relative">
-                        <form method="POST" class="search-form" action="?action=category&query=category_search">
+                        <form class="search-form" action="?action=category&query=category_search">
                             <i class="icon-search p-absolute"></i>
-<<<<<<< HEAD
-                            <input type="search" class="form-control" placeholder="Tìm kiếm" title="Tìm kiếm">
-=======
-                            <input type="search" class="form-control" name="category_search" placeholder="Search Here" title="Search here">
->>>>>>> 7e9a9bbe000abd6007cd84ac5f34719bd1af4114
+                            <input type="search" class="form-control"  name="category_search" placeholder="Search Here" title="Search here">
                         </form>
                     </div>
                 </div>

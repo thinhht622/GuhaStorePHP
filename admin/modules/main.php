@@ -42,6 +42,9 @@
         elseif($action =='category' && $query == 'category_list') {
             include("./modules/category/lietke.php");
         }
+        elseif($action =='category' && $query == 'category_search') {
+            include("./modules/category/timkiem.php");
+        }
         elseif($action =='category' && $query == 'category_edit') {
             include("./modules/category/sua.php");
         } 
